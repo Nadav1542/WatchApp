@@ -9,10 +9,6 @@ body {
     align-items: center;
 }
 
-body.left{
-    align-items: flex-start;
-}
-
 .registration {
     font-size: 35px;
     font-weight: bold;
@@ -39,9 +35,7 @@ button {
     border-radius: 4px;
     font-size: 16px;
 }
-.list-group {
-    align-items: left;
-}
+
 button a{
     text-decoration: none;
     color: white;

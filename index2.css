@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: #f4f4f4;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div.list-group{
+    margin-top: 10%;
+    text-align: center;
+    width: 18%;
+}
+a.list-group-item:hover {
+    background-color: #cc0000;
+    color: white;
+}
