@@ -12,7 +12,8 @@ body {
 .registration {
     font-size: 35px;
     font-weight: bold;
-    margin-bottom: 80px;
+    margin-top: 40px;
+    margin-bottom: 50px;
     text-align: center;
 }
 
@@ -35,6 +36,12 @@ button {
     border-radius: 4px;
     font-size: 16px;
 }
+.dark-mode-button{
+    background-color: black; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
 
 button a{
     text-decoration: none;
@@ -43,4 +50,7 @@ button a{
 
 button:hover {
     background-color: #cc0000;
+}
+.dark-mode-button:hover{
+    background-color: #585555; 
 }
