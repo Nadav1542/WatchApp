@@ -7,6 +7,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .registration {
@@ -36,14 +37,22 @@ button {
     border-radius: 4px;
     font-size: 16px;
 }
-.dark-mode-button{
-    background-color: black; 
-    margin-top: 20px;
+
+.dark-mode-button {
+    margin-top: 0px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: black;
     margin-bottom: 20px;
+    padding: 10px 20px;
     border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    border: none;
 }
 
-button a{
+button a {
     text-decoration: none;
     color: white;
 }
@@ -51,6 +60,7 @@ button a{
 button:hover {
     background-color: #cc0000;
 }
-.dark-mode-button:hover{
-    background-color: #585555; 
+
+.dark-mode-button:hover {
+    background-color: #585555;
 }

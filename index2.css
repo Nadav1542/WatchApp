@@ -35,6 +35,16 @@ form {
     width: 100%;
     padding: 6px 10px;
   }
+  .container {
+    margin: 0;
+    font-family: Arial;
+    background-color: #f4f4f4;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 
   ::placeholder {
     color: black;
