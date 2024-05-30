@@ -1,81 +1,8 @@
-body {
-    margin: 0;
-    font-family: Arial;
-    background-color: #f4f4f4;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.list-group-item {
+  border: 0;
+  background-color: transparent;
 }
-
-form {
-    background-color: white;
-    width: 500px;
-    height: 44px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-left: 32%;
-    margin-top: 1%;
-    
-  }
-
-  form:hover {
-    background-color: #cc0000;
-    color: white;
-    text-decoration-color: white;
-}
-
-  input {
-    all: unset;
-    font: 16px system-ui;
-    color: white;
-    height: 100%;
-    width: 100%;
-    padding: 6px 10px;
-  }
-  .container {
-    margin: 0;
-    font-family: Arial;
-    background-color: #f4f4f4;
-    height: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-
-  ::placeholder {
-    color: black;
-    opacity: 0.7; 
-  }
-
-  button {
-    all: unset;
-    cursor: pointer;
-    width: 44px;
-    height: 44px;
-  }
-  
-  svg {
-    color: black;
-    fill: currentColor;
-    width: 35px;
-    height: 35px;
-    padding: 10px;
-  }
-
-  svg:hover{
-    color: white;
-  }
-
-div.list-group{
-    margin-top: 10%;
-    text-align: center;
-    width: 18%;
-}
-a.list-group-item:hover {
-    background-color: #cc0000;
-    color: white;
+.list-group-item:hover {
+  background-color: lightgray;
+  cursor: pointer;
 }
