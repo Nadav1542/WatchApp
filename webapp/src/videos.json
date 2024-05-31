@@ -1,0 +1,41 @@
+
+
+
+ [
+        {
+            "title": "Movie 1",
+            "description": "Description of movie 1",
+            "image": "img1.jpg"
+        },
+        {
+            "title": "Movie 2",
+            "description": "Description of movie 2",
+            "image": "img1.jpg"
+        },
+        {
+            "title": "Movie 3",
+            "description": "Description of movie 3",
+            "image": "img2.jpg"
+        },
+        {
+            "title": "Movie 1",
+            "description": "Description of movie 1",
+            "image": "img3.jpg"
+        },
+        {
+            "title": "Movie 1",
+            "description": "Description of movie 1",
+            "image": "img1.jpg"
+        },
+        {
+            "title": "Movie 1",
+            "description": "Description of movie 1",
+            "image": "img1.jpg"
+        },
+        {
+            "title": "Movie 1",
+            "description": "Description of movie 1",
+            "image": "img1.jpg"
+        }
+        
+    ]
