@@ -1,5 +1,4 @@
-import movies from './videos.json'
-import VideoItem from './videoItem/VideoItem';
+import VideoItem from './VideoItem';
 
 
 function Videolist({moviesObj}){

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import movies from './videos.json'
-const moviesObj = JSON.parse(JSON.stringify(movies));
+import movies from './data/videos.json'
 
 
 
@@ -10,7 +9,7 @@ function SearchBar({addVideo}){
   
     
     return(
-<nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
                         <div className="container-fluid">
                           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
@@ -34,7 +33,7 @@ function SearchBar({addVideo}){
                             </form>
                           </div>
                         </div>
-                        {console.log(moviesObj)}
+                        
                       </nav>
                       
 

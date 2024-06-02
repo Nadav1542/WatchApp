@@ -1,11 +1,14 @@
 
-import movies from './videos.json'
-import VideoItem from './videoItem/VideoItem';
-import LeftMenu from './LeftMenu';
+import movies from './data/videos.json'
+import LeftMenu from './LeftMenu/LeftMenu';
 import SearchBar from './SearchBar';
-import Videolist from './Videolist';
+import Videolist from './videoItem/Videolist';
 import { useState } from 'react';
+import buttons from './data/buttons.json';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
+
+const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 
 function App() {
@@ -32,7 +35,7 @@ const addVideo = () => {
   return(
   <div className="container-fluid">
         <div className="row">
-            <LeftMenu/>
+            <LeftMenu buttons={menubuttons}/>
             <div className="col-9">
                 <div className="row"> </div>
                 <div className="row">
