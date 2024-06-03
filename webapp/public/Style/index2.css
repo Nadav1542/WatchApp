@@ -34,34 +34,71 @@ body.dark-mode .list-group-item {
 .list-group-item:hover {
   background-color: lightgray;
   cursor: pointer;
-  transform: scale(1.05);
-}
-body.dark-mode .list-group-item:hover {
-  background-color: rgb(41, 40, 40);
-  cursor: pointer;
-}
-body.dark-mode {
-  background-color: var(--clr-dark);
-  color: var(--clr-light);
-}
-/* buttons styles */
-.btn-outline-red {
-  color: red;
-  border-color: red;
-}
-.btn-outline-red:hover {
-  background-color: red;
-  color: var(--clr-light);
-}
-.dark-mode .btn-dark {
-    background-color: var(--clr-light);
-    color: var(--clr-dark);
-}
-.btn-dark {
+  :root {
+    --clr-dark: #070a13;
+    --clr-light: #f1f5f9;
+  }
+  .transparent-bg {
+    background-color: transparent !important;
+  }
+  /* card styles */
+  .card {
+    padding: 2px;
+    background-color: transparent;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+  }
+  .dark-mode .card:hover {
+    background-color: #ffffff21;
+  }
+  .card:hover {
+    background-color: #00000020;
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+  /* left menu styles */
+  .list-group-item {
+    border: 0;
+    background-color: transparent;
+    transition: transform 0.3s ease-in-out;
+  }
+  body.dark-mode .list-group-item {
+    border: 0;
+    background-color: transparent;
+    color: var(--clr-light);
+  }
+  .list-group-item:hover {
+    background-color: lightgray;
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+  body.dark-mode .list-group-item:hover {
+    background-color: rgb(41, 40, 40);
+    cursor: pointer;
+  }
+  body.dark-mode {
     background-color: var(--clr-dark);
     color: var(--clr-light);
-}
-body.dark-mode .navbar-brand .bi,
-body.dark-mode .navbar-nav .nav-link .bi {
-  color: var(--clr-light);
-}
+  }
+  /* buttons styles */
+  .btn-outline-red {
+    color: red;
+    border-color: red;
+  }
+  .btn-outline-red:hover {
+    background-color: red;
+    color: var(--clr-light);
+  }
+  .dark-mode .btn-dark {
+      background-color: var(--clr-light);
+      color: var(--clr-dark);
+  }
+  .btn-dark {
+      background-color: var(--clr-dark);
+      color: var(--clr-light);
+  }
+  body.dark-mode .navbar-brand .bi,
+  body.dark-mode .navbar-nav .nav-link .bi {
+    color: var(--clr-light);
+  }
+  

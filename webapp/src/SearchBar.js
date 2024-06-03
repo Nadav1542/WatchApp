@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import movies from './data/videos.json'
 import React from 'react';
 import movies from './videos.json';
 
