@@ -37,15 +37,7 @@ function AppContent({ addVideo, videoList }) {
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
         <div className="row">
-            <LeftMenu buttons={menubuttons}/>
-            <div className="col-9">
-                <div className="row"> </div>
-                <div className="row">
-                    <SearchBar addVideo={addVideo}/>
-                </div>
-                <div className="row"> 
-                <Videolist moviesObj={videoList}/>
-                </div>
+        <LeftMenu buttons={menubuttons}/>
           <div className="col-9">
             <div className="row">
               <SearchBar darkMode={darkMode} addVideo={addVideo} />
@@ -56,7 +48,7 @@ function AppContent({ addVideo, videoList }) {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 
