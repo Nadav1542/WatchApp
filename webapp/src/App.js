@@ -1,18 +1,12 @@
-
 import movies from './data/videos.json'
 import LeftMenu from './LeftMenu/LeftMenu';
 import React, { useState } from 'react';
-import movies from './videos.json';
 import VideoItem from './videoItem/VideoItem';
-import LeftMenu from './LeftMenu';
 import SearchBar from './SearchBar';
 import Videolist from './videoItem/Videolist';
-import { useState } from 'react';
 import buttons from './data/buttons.json';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Videolist from './Videolist';
 import { DarkModeProvider, useDarkMode } from './DarkModeContext';
-
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
@@ -52,7 +46,6 @@ function AppContent({ addVideo, videoList }) {
                 <div className="row"> 
                 <Videolist moviesObj={videoList}/>
                 </div>
-          <LeftMenu />
           <div className="col-9">
             <div className="row">
               <SearchBar darkMode={darkMode} addVideo={addVideo} />

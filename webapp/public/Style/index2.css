@@ -34,6 +34,7 @@ body.dark-mode .list-group-item {
 .list-group-item:hover {
   background-color: lightgray;
   cursor: pointer;
+}
   :root {
     --clr-dark: #070a13;
     --clr-light: #f1f5f9;
@@ -79,6 +80,13 @@ body.dark-mode .list-group-item {
   body.dark-mode {
     background-color: var(--clr-dark);
     color: var(--clr-light);
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:hover{
+    color: inherit;
   }
   /* buttons styles */
   .btn-outline-red {
