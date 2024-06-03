@@ -1,6 +1,6 @@
 function LeftMenu(){
     return(
-        <div className="col-3 bg-light vh-100">
+        <div className="col-3 bg-light vh-100 transparent-bg">
                 <ul className="list-group">
                     <li className="list-group-item d-flex align-items-center">
                         <i className="bi bi-house-door-fill"></i>
