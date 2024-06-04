@@ -49,7 +49,7 @@ function SearchBar({ darkMode, addVideo }) {
           </form>
         </div>
       </div>
-      {console.log(moviesObj)}
+      
     </nav>
   );
 }

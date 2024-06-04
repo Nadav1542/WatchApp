@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import './Sign.css';
 
 function Signin({darkMode}){
+    console.log(localStorage.getItem('user'));
     const handleDarkModeToggle = () => {
     const event = new Event('toggleDarkMode');
     window.dispatchEvent(event);
