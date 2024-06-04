@@ -32,9 +32,7 @@ const addVideo = () => {
     return (
 
 <div className={darkMode ? 'dark-mode' : ''}>
-    
     <div className="row">
-   
         <LeftMenu buttons={menubuttons}/>
             <div className="col-9">
                  <div className="row">

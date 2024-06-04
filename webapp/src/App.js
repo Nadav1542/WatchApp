@@ -27,8 +27,8 @@ function AppContent() {
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<Mainpage darkMode={darkMode}/>}/>
-      <Route path='/signup' element={<Signup />}/>
-      <Route path='/signin' element={<Signin />}/>
+      <Route path='/signup' element={<Signup darkMode={darkMode}/>}/>
+      <Route path='/signin' element={<Signin darkMode={darkMode}/>}/>
       
       </Routes>
     

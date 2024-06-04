@@ -1,8 +1,9 @@
 
-
-
-
-function Signup(){
+function Signup({darkMode}){
+        const handleDarkModeToggle = () => {
+        const event = new Event('toggleDarkMode');
+        window.dispatchEvent(event);
+            };
 return (
 <>
 <link href="Style/Sign.css" rel="stylesheet"></link>  
@@ -12,7 +13,7 @@ return (
                 <form id="registration-form" className="card p-4 shadow-sm needs-validation" novalidate>
                     <div className="d-flex justify-content-between align-items-center mb-3">
                         <h3 className="mb-0">Sign Up</h3>
-                        <button className="btn btn-dark" type="button">Dark Mode</button>
+                        <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
                     </div>
                     <div className="mb-3">
                         <label for="username" className="form-label">Username</label>
