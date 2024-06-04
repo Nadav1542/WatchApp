@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import './Sign.css';
 
 function Signin({darkMode}){
@@ -26,7 +27,9 @@ function Signin({darkMode}){
                     </div>
                     <div className="d-flex justify-content-between">
                         <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>
+                        <Link to='/'><button className="btn btn-sign">Home</button></Link>
                         <button className="btn btn-sign" type="button" id="register-button">Sign Up</button>
+                     
                     </div>
                 </form>
             </div>

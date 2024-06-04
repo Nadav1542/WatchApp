@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+
 
 function Signup({darkMode}){
         const handleDarkModeToggle = () => {
@@ -35,7 +37,10 @@ return (
                         <label for="profile-picture" className="form-label">Profile Picture</label>
                         <input className="form-control" type="file" id="profile-picture"/>
                     </div>
-                    <button className="btn btn-sign" type="submit" id="register-button">Sign Up</button>
+                    <div className="d-flex justify-content-between">
+                        <button className="btn btn-sign" type="submit" id="register-button">Sign Up</button>
+                        <Link to='/'><button className="btn btn-sign">Home</button></Link> 
+                    </div>
                 </form>
             </div>
         </div>
