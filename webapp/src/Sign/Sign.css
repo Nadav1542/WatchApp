@@ -1,3 +1,6 @@
+.transparent-bg {
+  background-color: transparent !important;
+}
 body {
     background-color: #f9f9f9;
 }
@@ -5,15 +8,15 @@ body {
     background-color: red;
     width: 15%;
 }
-.card {
+.cardreg {
     background-color: rgba(128, 128, 128, 0.208);
   }
-.card:hover {
+.cardreg:hover {
     background-color: rgba(128, 128, 128, 0.208);
     transform: none;
     cursor: default;
   }
- .dark-mode .card:hover {
+ .dark-mode .cardreg:hover {
     background-color: rgba(128, 128, 128, 0.208);
   }
   

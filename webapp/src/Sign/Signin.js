@@ -1,4 +1,4 @@
-
+import './Sign.css';
 
 function Signin({darkMode}){
     const handleDarkModeToggle = () => {
@@ -8,11 +8,10 @@ function Signin({darkMode}){
     return (
 <>
 
-<link href="Style/Sign.css" rel="stylesheet"></link>
 <div className="container mt-5">
         <div className="row justify-content-center">
             <div className="col-md-7">
-                <form id="registration-form" className="card p-4 shadow-sm" novalidate>
+                <form id="registration-form" className="cardreg p-4 shadow-sm" novalidate>
                     <div className="d-flex justify-content-between align-items-center mb-3">
                         <h3 className="mb-0">Sign In</h3>
                         <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>

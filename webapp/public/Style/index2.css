@@ -3,45 +3,8 @@
   --clr-light: #f1f5f9;
 }
 .transparent-bg {
-  background-color: transparent !important;
+      background-color: transparent !important;
 }
-/* card styles */
-.card {
-  padding: 2px;
-  background-color: transparent;
-  border-radius: 15px;
-  transition: transform 0.3s ease-in-out;
-}
-.dark-mode .card:hover {
-  background-color: #ffffff21;
-}
-.card:hover {
-  background-color: #00000020;
-  transform: scale(1.05);
-  cursor: pointer;
-}
-/* left menu styles */
-.list-group-item {
-  border: 0;
-  background-color: transparent;
-  transition: transform 0.3s ease-in-out;
-}
-body.dark-mode .list-group-item {
-  border: 0;
-  background-color: transparent;
-  color: var(--clr-light);
-}
-.list-group-item:hover {
-  background-color: lightgray;
-  cursor: pointer;
-}
-  :root {
-    --clr-dark: #070a13;
-    --clr-light: #f1f5f9;
-  }
-  .transparent-bg {
-    background-color: transparent !important;
-  }
   /* card styles */
   .card {
     padding: 2px;

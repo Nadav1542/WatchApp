@@ -2,12 +2,12 @@ import movies from './data/videos.json'
 import LeftMenu from './LeftMenu/LeftMenu';
 import React, { useState } from 'react';
 import VideoItem from './videoItem/VideoItem';
-import SearchBar from './SearchBar';
+import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
 import buttons from './data/buttons.json';
 import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
 import { DarkModeProvider, useDarkMode } from './DarkModeContext';
-import Signup from './Signup';
+import Signup from './Sign/Signup';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
