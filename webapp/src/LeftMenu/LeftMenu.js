@@ -1,4 +1,5 @@
 import Menubutton from "./Menubutton";
+import './Itemslist.css';
 
 function LeftMenu({buttons}){
     return (

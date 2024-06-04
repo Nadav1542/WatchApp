@@ -1,0 +1,15 @@
+.transparent-bg {
+    background-color: transparent !important;
+}
+.dark-mode .btn-dark {
+    background-color: var(--clr-light);
+    color: var(--clr-dark);
+}
+.btn-dark {
+    background-color: var(--clr-dark);
+    color: var(--clr-light);
+}
+body.dark-mode .navbar-brand .bi,
+body.dark-mode .navbar-nav .nav-link .bi {
+  color: var(--clr-light);
+}

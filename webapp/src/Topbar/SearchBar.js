@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import movies from './data/videos.json'
+import movies from '../data/videos.json'
+import './Searchbar.css';
 
 const moviesObj = JSON.parse(JSON.stringify(movies));
 

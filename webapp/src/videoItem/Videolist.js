@@ -1,5 +1,5 @@
 import VideoItem from './VideoItem';
-
+import './Card.css';
 
 function Videolist({moviesObj}){
     

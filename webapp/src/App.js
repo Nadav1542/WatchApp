@@ -2,14 +2,14 @@ import movies from './data/videos.json'
 import LeftMenu from './LeftMenu/LeftMenu';
 import React, { useState } from 'react';
 import VideoItem from './videoItem/VideoItem';
-import SearchBar from './SearchBar';
+import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
 import buttons from './data/buttons.json';
 import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
 import { DarkModeProvider, useDarkMode } from './DarkModeContext';
-import Signup from './Signup';
+import Signup from './Sign/Signup';
 import Mainpage from './Mainpage';
-import Signin from './Signin';
+import Signin from './Sign/Signin';
 
 function App() {
   
@@ -27,8 +27,8 @@ function AppContent() {
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<Mainpage darkMode={darkMode}/>}/>
-      <Route path='/signup' element={<Signup />}/>
-      <Route path='/signin' element={<Signin />}/>
+      <Route path='/signup' element={<Signup darkMode={darkMode}/>}/>
+      <Route path='/signin' element={<Signin darkMode={darkMode}/>}/>
       
       </Routes>
     
