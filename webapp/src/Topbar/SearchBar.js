@@ -43,7 +43,7 @@ function SearchBar({ darkMode, addVideo }) {
           </ul>
           {/* SearchBar */}
           <form className="d-flex align-items-center">
-            <input className="form-control me-2 transparent-bg" type="search" placeholder="Search" aria-label="Search" />
+            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
             <button className="btn btn-outline-red" type="submit">Search</button>
             <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
           </form>

@@ -13,3 +13,18 @@ body.dark-mode .navbar-brand .bi,
 body.dark-mode .navbar-nav .nav-link .bi {
   color: var(--clr-light);
 }
+.btn-outline-red {
+    color: red;
+    border-color: red;
+}
+.btn-outline-red:hover {
+    background-color: red;
+    color: var(--clr-light);
+}
+.dark-mode .form-control{
+    background-color: rgba(128, 128, 128, 0.208);
+    color: white;
+}
+.form-control{
+    background-color:white ;
+}
