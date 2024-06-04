@@ -5,37 +5,37 @@
         {
             "title": "Movie 1",
             "description": "Description of movie 1",
-            "image": "img1.jpg"
-        },
-        {
-            "title": "Movie 200",
-            "description": "Description of movie 2",
-            "image": "img1.jpg"
-        },
-        {
-            "title": "Movie 3",
-            "description": "Description of movie 3",
-            "image": "img2.jpg"
+            "source": "video1.mp4"
         },
         {
             "title": "Movie 1",
             "description": "Description of movie 1",
-            "image": "img3.jpg"
+            "source": "video1.mp4"
         },
         {
             "title": "Movie 1",
             "description": "Description of movie 1",
-            "image": "img1.jpg"
+            "source": "video1.mp4"
         },
         {
             "title": "Movie 1",
             "description": "Description of movie 1",
-            "image": "img1.jpg"
+            "source": "video1.mp4"
         },
         {
             "title": "Movie 1",
             "description": "Description of movie 1",
-            "image": "img1.jpg"
+            "source": "video1.mp4"
+        },
+        {
+            "title": "Movie 1",
+            "description": "Description of movie 1",
+            "source": "video1.mp4"
+        },
+        {
+            "title": "Movie 1",
+            "description": "Description of movie 1",
+            "source": "video1.mp4"
         }
         
     ]

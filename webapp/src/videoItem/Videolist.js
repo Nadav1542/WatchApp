@@ -3,10 +3,10 @@ import './Card.css';
 
 function Videolist({moviesObj}){
     
-    
+    console.log(moviesObj);
     return (
 <>
-    {moviesObj.map((video, key) =>{return<VideoItem title={video.title} description={video.description} image={video.image} key={key}/>})}
+    {moviesObj.map((video, key) =>{return<VideoItem title={video.title} description={video.description} source={video.source} key={key}/>})}
 </>
     );
 

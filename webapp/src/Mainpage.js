@@ -25,7 +25,7 @@ const addVideo = () => {
   const newVideo = {
     title: "new Movie",
     description: "description of new movie",
-    image: "img2.jpg"
+    source: "video2.mp4"
   };
   setVideolist([...videoList, newVideo]);
 };
