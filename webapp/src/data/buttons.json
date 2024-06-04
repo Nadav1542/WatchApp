@@ -1,15 +1,15 @@
 [
     {
         "description": "Home",
-        "link": "./App.js"
+        "link": "/"
     },
     {
-        "description": "blblb",
-        "link": "./Signup.js"
+        "description": "Signup",
+        "link": "/signup"
     },
     {
-        "description": "fasjhfajksfhajfs",
-        "link": "./App.js"
+        "description": "Signin",
+        "link": "/signin"
     },
     {
         "description": "Home",
