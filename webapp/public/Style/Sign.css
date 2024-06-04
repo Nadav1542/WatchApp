@@ -5,3 +5,15 @@ body {
     background-color: red;
     width: 15%;
 }
+.card {
+    background-color: rgba(128, 128, 128, 0.208);
+  }
+.card:hover {
+    background-color: rgba(128, 128, 128, 0.208);
+    transform: none;
+    cursor: default;
+  }
+ .dark-mode .card:hover {
+    background-color: rgba(128, 128, 128, 0.208);
+  }
+  
