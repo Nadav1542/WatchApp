@@ -3,11 +3,11 @@ function Comments(){
 
 return (
 
-    <div class="row">
-    <nav class="nav">
-        <a class="nav-link" href="#"><i class="bi bi-hand-thumbs-up"></i></a>
-        <a class="nav-link" href="#"><i class="bi bi-hand-thumbs-down"></i></a>
-        <a class="nav-link" href="#"><i class="bi bi-share"></i></a>
+    <div className="row">
+    <nav className="nav">
+        <a className="nav-link" href="#"><i className="bi bi-hand-thumbs-up"></i></a>
+        <a className="nav-link" href="#"><i className="bi bi-hand-thumbs-down"></i></a>
+        <a className="nav-link" href="#"><i className="bi bi-share"></i></a>
       </nav>
 </div>
 
