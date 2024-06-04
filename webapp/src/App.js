@@ -10,7 +10,7 @@ import { DarkModeProvider, useDarkMode } from './DarkModeContext';
 import Signup from './Sign/Signup';
 import Mainpage from './Mainpage';
 import Signin from './Sign/Signin';
-
+import Videowatch from './Videowatch/Videowatch';
 function App() {
   
 return (
@@ -29,7 +29,7 @@ function AppContent() {
       <Route path='/' element={<Mainpage darkMode={darkMode}/>}/>
       <Route path='/signup' element={<Signup darkMode={darkMode}/>}/>
       <Route path='/signin' element={<Signin darkMode={darkMode}/>}/>
-      
+      <Route path='/videowatch' element={<Videowatch darkMode={darkMode}/>}/>
       </Routes>
     
     </BrowserRouter>
