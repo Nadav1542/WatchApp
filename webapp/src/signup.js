@@ -5,9 +5,7 @@
 function Signup(){
 return (
 <>
-<link href="Style/index.css" rel="stylesheet"></link>
-  
-  
+<link href="Style/Sign.css" rel="stylesheet"></link>  
 <div className="container mt-5">
         <div className="row justify-content-center">
             <div className="col-md-7">
