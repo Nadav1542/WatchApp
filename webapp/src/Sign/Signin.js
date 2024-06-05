@@ -2,7 +2,8 @@ import {Link} from 'react-router-dom';
 import './Sign.css';
 import { useState } from 'react'
 
-function Signin({darkMode, usersData, setusersData}){
+function Signin({darkMode, usersData, userConnect, setuserConnect}){
+  
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -20,6 +21,7 @@ function Signin({darkMode, usersData, setusersData}){
   
       if (userExists) {
         setError('');
+        setuserConnect(true);
         alert('Sign in successful');
         // Perform further actions on successful sign-in
       } else {
@@ -61,7 +63,7 @@ function Signin({darkMode, usersData, setusersData}){
                         <input type="password" className="form-control" id="password" placeholder="Enter a password" onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                     <div className="d-flex justify-content-between">
-                        <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>
+                       <Link to='/'> <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button></Link>
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                         <Link to='/'><button className="btn btn-sign">Home</button></Link>
                         <button className="btn btn-sign" type="button" id="register-button">Sign Up</button>

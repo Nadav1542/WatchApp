@@ -15,7 +15,7 @@ const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 
 
-function Mainpage({darkMode}){
+function Mainpage({darkMode, userConnect}){
 // Set the JSON list of videos as current state.
 
 const [videoList, setVideolist] = useState(JSON.parse(JSON.stringify(movies)));
@@ -36,7 +36,7 @@ const addVideo = () => {
         <LeftMenu buttons={menubuttons}/>
             <div className="col-9">
                  <div className="row">
-                    <SearchBar darkMode={darkMode} addVideo={addVideo}/>
+                    <SearchBar darkMode={darkMode} addVideo={addVideo} userConnect={userConnect}/>
                 </div>
              <div className="row">
          <Videolist moviesObj={videoList} />

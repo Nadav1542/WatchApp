@@ -4,7 +4,7 @@ import './Searchbar.css';
 
 const moviesObj = JSON.parse(JSON.stringify(movies));
 
-function SearchBar({ darkMode, addVideo }) {
+function SearchBar({ darkMode, addVideo, userConnect }) {
   const handleDarkModeToggle = () => {
     const event = new Event('toggleDarkMode');
     window.dispatchEvent(event);
@@ -35,11 +35,14 @@ function SearchBar({ darkMode, addVideo }) {
                 <i className="bi bi-camera-video"></i>
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link active" onClick={addVideo} aria-current="page" href="#">
+            
+              
+            {userConnect && <> <li className="nav-item"><a className="nav-link active" onClick={addVideo} aria-current="page" href="#">
                 <i className="bi bi-plus-circle"></i>
               </a>
-            </li>
+            </li>  </>}
+              
+              
           </ul>
           {/* SearchBar */}
           <form className="d-flex align-items-center">
