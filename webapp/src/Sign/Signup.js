@@ -95,7 +95,7 @@ function Signup({darkMode}){
 return (
 <>
 <link href="Style/Sign.css" rel="stylesheet"></link>  
-<div className="container mt-5">
+<div className="container mt-10">
         <div className="row justify-content-center">
             <div className="col-md-7">
                 <form id="registration-form" onSubmit = {(event) => {
@@ -103,10 +103,13 @@ return (
         handleSubmit(event); // Calling the function with event argument
     }
 } className="cardreg p-4 shadow-sm needs-validation" novalidate>
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h3 className="mb-0">Sign Up</h3>
-                        <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+                  <div className="d-flex justify-content-end">
+                                <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+                            </div>
+                    <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
+                      <h3 className="mb-0">Sign Up</h3>
                     </div>
+                    
                     
                     <div className="validinput">Enter your name</div>
                     <div className="form-floating mb-3">
