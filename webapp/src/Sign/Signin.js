@@ -45,23 +45,34 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
 
 <div className="container mt-5">
         <div className="row justify-content-center">
-            <div className="col-md-7">
-                <form id="registration-form" className="cardreg p-4 shadow-sm" onSubmit = {(event) => {
+            <div className="col-md-7 p-0 bg-body-tertiary rounded mt-5">
+                <form id="registration-form" className="cardreg p-4 shadow-lg" onSubmit = {(event) => {
     
     handleSubmit(event); // Calling the function with event argument
 }} novalidate>
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h3 className="mb-0">Sign In</h3>
-                        <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+                            <div className="d-flex justify-content-end">
+                                <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+                            </div>
+                    <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
+                      <h2 className="mb-0">Sign In</h2>
                     </div>
-                    <div className="mb-3">
-                        <label for="username" className="form-label">Username</label>
-                        <input type="text" className="form-control" id="username" placeholder="Enter a username" onChange={(e) => setUsername(e.target.value)}/>
+
+
+                    <div className="validinput">Enter your name</div>
+                    <div className="form-floating mb-3">
+                      <input type="text" name="username" className="form-control" id="floatingInput" onChange={(e) =>
+                        {setUsername(e.target.value)}}
+                        placeholder="text" required/> <label for="floatingInput">Username</label>
                     </div>
-                    <div className="mb-3">
-                        <label for="password" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="password" placeholder="Enter a password" onChange={(e) => setPassword(e.target.value)}/>
+
+
+                    <div className="validinput">Enter your password</div>
+                    <div className="form-floating mb-3" >
+                      <input type="password" name="password" className="form-control" id="floatingPassword" onChange={(e) => 
+                      {setPassword(e.target.value)}}
+                        placeholder="Password" required/> <label for="floatingPassword">Password</label>
                     </div>
+
                     <div className="d-flex justify-content-between">
                        <Link to='/'> <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button></Link>
                         {error && <p style={{ color: 'red' }}>{error}</p>}

@@ -13,6 +13,9 @@ body {
 .cardreg {
   margin-top: 5px;
     background-color: rgba(128, 128, 128, 0.208);
+    border-radius: 5px;
+    
+  
   }
 .cardreg:hover {
     background-color: rgba(128, 128, 128, 0.208);
