@@ -11,6 +11,7 @@ body {
   color: white;
 }
 .cardreg {
+  margin-top: 5px;
     background-color: rgba(128, 128, 128, 0.208);
   }
 .cardreg:hover {
@@ -21,4 +22,11 @@ body {
  .dark-mode .cardreg:hover {
     background-color: rgba(128, 128, 128, 0.208);
   }
-  
+  .validinput{
+    font-size: x-small;
+    color: rgba(128, 128, 128, 0.811);
+  }
+  .dark-mode .validinput{
+    font-size: x-small;
+    color: rgba(255, 255, 255, 0.669);
+  }
