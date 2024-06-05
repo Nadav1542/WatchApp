@@ -54,14 +54,23 @@ function Signin({darkMode, usersData, setusersData}){
                     <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
                       <h2 className="mb-0">Sign In</h2>
                     </div>
-                    <div className="mb-3">
-                        <label for="username" className="form-label">Username</label>
-                        <input type="text" className="form-control" id="username" placeholder="Enter a username" onChange={(e) => setUsername(e.target.value)}/>
+
+
+                    <div className="validinput">Enter your name</div>
+                    <div className="form-floating mb-3">
+                      <input type="text" name="username" className="form-control" id="floatingInput" onChange={(e) =>
+                        {setUsername(e.target.value)}}
+                        placeholder="text" required/> <label for="floatingInput">Username</label>
                     </div>
-                    <div className="mb-3">
-                        <label for="password" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="password" placeholder="Enter a password" onChange={(e) => setPassword(e.target.value)}/>
+
+
+                    <div className="validinput">Enter your password</div>
+                    <div className="form-floating mb-3" >
+                      <input type="password" name="password" className="form-control" id="floatingPassword" onChange={(e) => 
+                      {setPassword(e.target.value)}}
+                        placeholder="Password" required/> <label for="floatingPassword">Password</label>
                     </div>
+
                     <div className="d-flex justify-content-between">
                         <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>
                         {error && <p style={{ color: 'red' }}>{error}</p>}
