@@ -21,4 +21,8 @@ body {
  .dark-mode .cardreg:hover {
     background-color: rgba(128, 128, 128, 0.208);
   }
-  
+  .validinput{
+    font-size: x-small;
+    color: gray;
+    float: top;
+  }

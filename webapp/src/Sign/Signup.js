@@ -107,39 +107,48 @@ return (
                         <h3 className="mb-0">Sign Up</h3>
                         <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
                     </div>
-                    <div className="mb-3">
-                        <label for="username" className="form-label">Username</label>
-                        <input type="text" name="username" className="form-control" id="username" onChange={(e) => {
-                            
-                            
-                            handleChange(e)
+                    
+                    <div className="validinput">Enter your name</div>
+                    <div className="form-floating mb-3">
+                      <input type="text" name="username" className="form-control" id="floatingInput" onChange={(e) => {
+                           handleChange(e)}} 
+                           placeholder="text" required/> <label for="floatingInput">Username</label>
+                    </div>
+                    
 
-                            }} placeholder="Enter a username" required/>
+                    <div className="validinput">Enter a display name</div>
+                    <div className="form-floating mb-3">
+                      <input type="text" name="displayname" className="form-control" id="floatingInput" onChange={(e) => {
+                           handleChange(e)}} 
+                           placeholder="text" required/> <label for="floatingInput">Display name</label>
                     </div>
-                    <div className="mb-3">
-                        <label for="display-username" className="form-label">Display Name</label>
-                        <input type="text" name="displayname" className="form-control" id="display-username" onChange={(e) => {
-                          
-                          handleChange(e)
-                          
-                          }} placeholder="Enter a display username" required/>
-                    </div>
-                    <div className="mb-3">
-                        <label for="password" className="form-label">Password</label>
-                        <input type="password" name="password" className="form-control" id="password"  onChange={(e) => {
-                            
-                            handleChange(e)
+                    
 
-                            }} placeholder="Enter a password" required/>
+
+                    <div className="validinput">The password must be a minimum of 8 characters in length and contain at least one alphabetical character</div>
+                    <div className="form-floating mb-3" >
+                      <input type="password" name="password" className="form-control" id="floatingPassword" onChange={(e) => {
+                         handleChange(e)
+                            }} 
+                            placeholder="Password" required/> <label for="floatingPassword">Password</label>
                     </div>
-                    <div className="mb-3">
-                        <label for="confirm-password" className="form-label">Confirm Password</label>
-                        <input type="password" name="confirmpassword" className="form-control" id="confirm-password" onChange={(e) => {
-                          
-                          handleChange(e)
-                          
-                          }} placeholder="Enter the password again" required/>
+                    
+                    <div className="validinput">Enter the password again</div>
+                    <div className="form-floating mb-3">
+                      <input type="password" name="confirmpassword" className="form-control" id="floatingPassword" onChange={(e) => {
+                         handleChange(e)
+                            }} 
+                            placeholder="Password" required/> <label for="floatingPassword">Confirm Password</label>
                     </div>
+                    
+
+
+
+
+
+
+
+
                     <div className="mb-3">
                         <label for="profile-picture" className="form-label">Profile Picture</label>
                         <input className="form-control" name ="img" type="file" id="profile-picture" onChange={(e) => {
@@ -149,6 +158,7 @@ return (
                           }} required />
                            {formData.img && <img src={formData.img} alt="Selected" style={{ maxWidth: '50%', maxHeight: '100px' }} />}
                     </div>
+                    
                     <div className="d-flex justify-content-between">
                         <button className="btn btn-sign" type="submit"  id="register-button"> Sign Up</button>            
                         <Link to='/'><button className="btn btn-sign">Home</button></Link> 
