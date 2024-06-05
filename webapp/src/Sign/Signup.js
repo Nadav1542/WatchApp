@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-function Signup({darkMode}){
+function Signup({darkMode,usersData,setusersData}){
 
         const handleDarkModeToggle = () => {
         const event = new Event('toggleDarkMode');
@@ -83,7 +83,8 @@ function Signup({darkMode}){
     }
 
     //const newUser = new User(formData.username, formData.displayname, formData.password, formData.img);
-    localStorage.setItem('user', JSON.stringify(formData));
+    
+    setusersData([...usersData, formData]);
     alert("Registaration succes.");
     
     navigate('/signin');
