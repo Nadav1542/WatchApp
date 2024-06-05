@@ -22,13 +22,18 @@ return (
 
 
 function AppContent() {
+  
   const { darkMode } = useDarkMode();
+  const [usersData, setusersData] = useState([]);
+  const [userConnect,setuserConnect] = useState(false);
+  
+  
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Mainpage darkMode={darkMode}/>}/>
-        <Route path='/signup' element={<Signup darkMode={darkMode}/>}/>
-        <Route path='/signin' element={<Signin darkMode={darkMode}/>}/>
+        <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData}/>}/>
+        <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData} setusersData={setusersData}/>}/>
         <Route path='/videowatch' element={<Videowatch darkMode={darkMode}/>}/>
       </Routes>
     </BrowserRouter>
