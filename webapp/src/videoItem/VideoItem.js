@@ -4,12 +4,18 @@ function VideoItem({ title, description, source }) {
   const videoRef = useRef(null);
 
   const handleMouseEnter = () => {
-    videoRef.current.play();
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.error('Error playing video:', error);
+      });
+    }
   };
 
   const handleMouseLeave = () => {
-    videoRef.current.pause();
-    videoRef.current.currentTime = 0;
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
   };
 
   return (

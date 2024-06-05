@@ -31,7 +31,6 @@ function AppContent() {
       <Route path='/signin' element={<Signin darkMode={darkMode}/>}/>
       <Route path='/videowatch' element={<Videowatch darkMode={darkMode}/>}/>
       </Routes>
-    
     </BrowserRouter>
   );
 }
