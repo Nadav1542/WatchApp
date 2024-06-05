@@ -95,9 +95,9 @@ function Signup({darkMode}){
 return (
 <>
 <link href="Style/Sign.css" rel="stylesheet"></link>  
-<div className="container mt-10">
+<div className="container">
         <div className="row justify-content-center">
-            <div className="col-md-7">
+            <div className="col-md-7 shadow p-0 bg-body-tertiary rounded">
                 <form id="registration-form" onSubmit = {(event) => {
     
         handleSubmit(event); // Calling the function with event argument
@@ -107,7 +107,7 @@ return (
                                 <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
                             </div>
                     <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
-                      <h3 className="mb-0">Sign Up</h3>
+                      <h2 className="mb-0">Sign Up</h2>
                     </div>
                     
                     
