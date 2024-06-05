@@ -43,14 +43,16 @@ function Signin({darkMode, usersData, setusersData}){
 
 <div className="container mt-5">
         <div className="row justify-content-center">
-            <div className="col-md-7">
-                <form id="registration-form" className="cardreg p-4 shadow-sm" onSubmit = {(event) => {
+            <div className="col-md-7 p-0 bg-body-tertiary rounded mt-5">
+                <form id="registration-form" className="cardreg p-4 shadow-lg" onSubmit = {(event) => {
     
     handleSubmit(event); // Calling the function with event argument
 }} novalidate>
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h3 className="mb-0">Sign In</h3>
-                        <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+                            <div className="d-flex justify-content-end">
+                                <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+                            </div>
+                    <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
+                      <h2 className="mb-0">Sign In</h2>
                     </div>
                     <div className="mb-3">
                         <label for="username" className="form-label">Username</label>

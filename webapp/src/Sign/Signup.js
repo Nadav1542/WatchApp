@@ -98,12 +98,12 @@ return (
 <link href="Style/Sign.css" rel="stylesheet"></link>  
 <div className="container">
         <div className="row justify-content-center">
-            <div className="col-md-7 shadow p-0 bg-body-tertiary rounded">
+            <div className="col-md-7 p-0 bg-body-tertiary rounded">
                 <form id="registration-form" onSubmit = {(event) => {
     
         handleSubmit(event); // Calling the function with event argument
     }
-} className="cardreg p-4 shadow-sm needs-validation" novalidate>
+} className="cardreg p-4 shadow-lg needs-validation" novalidate>
                   <div className="d-flex justify-content-end">
                                 <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
                             </div>
