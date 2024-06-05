@@ -4,7 +4,7 @@ function Videodisplay(){
 
         <div className="row"> 
         <div>
-            <video src="video1.mp4"className="card-img-top" alt="..."/>
+            <video src="video1.mp4" className="card-img-top" controls autoPlay/>
             <div className="card-body">
                 <div className="card-text">Title</div>
                 <div className="card-text">Description</div> 

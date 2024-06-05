@@ -7,6 +7,9 @@ body {
 .btn-sign {
     background-color: red;
 }
+.dark-mode .btn-sign {
+  color: white;
+}
 .cardreg {
     background-color: rgba(128, 128, 128, 0.208);
   }

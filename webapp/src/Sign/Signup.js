@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+
 function Signup({darkMode}){
 
         const handleDarkModeToggle = () => {
@@ -12,8 +13,8 @@ function Signup({darkMode}){
             const [displayName, setdisplayName] = useState('') // useState to store Last Name
             const [password, setPassword] = useState('') // useState to store Password
             const [confirmpass, setConfirmpass] = useState('') // useState to store Password
-            
-            const [userData, setuserData] = useState({ name: '', pass: '' });
+      
+            const [userData, setuserData] = useState({ name: '', pass: ''});
             const navigate = useNavigate();
             
             
@@ -53,30 +54,7 @@ function Signup({darkMode}){
                 let countSpecialCharacters = 0
             
                 for (let i = 0; i < password.length; i++) {
-                  const specialChars = [
-                    '!',
-                    '@',
-                    '#',
-                    '$',
-                    '%',
-                    '^',
-                    '&',
-                    '*',
-                    '(',
-                    ')',
-                    '_',
-                    '-',
-                    '+',
-                    '=',
-                    '[',
-                    '{',
-                    ']',
-                    '}',
-                    ':',
-                    ';',
-                    '<',
-                    '>',
-                  ]
+                  const specialChars = ['!','@','#', '$','%', '^','&','*','(',')','_','-','+','=','[','{',']','}',':',';','<','>']
             
                   if (specialChars.includes(password[i])) {
                     // this means that the character is special, so increment countSpecialCharacters
@@ -96,29 +74,23 @@ function Signup({darkMode}){
                   }
                 }
             
-                if (countLowerCase == 0) {
-                  // invalid form, 0 lowercase characters
-                  alert('Invalid Form, 0 lower case characters in password')
-                  return false;
-                }
+                // if (countLowerCase == 0) {
+                //   // invalid form, 0 lowercase characters
+                //   alert('Invalid Form, 0 lower case characters in password')
+                //   return false;
+                // }
             
-                if (countUpperCase == 0) {
-                  // invalid form, 0 upper case characters
-                  alert('Invalid Form, 0 upper case characters in password')
-                  return false;
-                }
+                // if (countUpperCase == 0) {
+                //   // invalid form, 0 upper case characters
+                //   alert('Invalid Form, 0 upper case characters in password')
+                //   return false;
+                // }
             
-                if (countDigit == 0) {
-                  // invalid form, 0 digit characters
-                  alert('Invalid Form, 0 digit characters in password')
-                  return false;
-                }
-            
-                if (countSpecialCharacters == 0) {
-                  // invalid form, 0 special characters characters
-                  alert('Invalid Form, 0 special characters in password')
-                  return false;
-                }
+                // if (countDigit == 0) {
+                //   // invalid form, 0 digit characters
+                //   alert('Invalid Form, 0 digit characters in password')
+                //   return false;
+                // }
 
                 if(confirmpass!=password){
                     alert('Confirmation password is incorrect')
@@ -126,8 +98,6 @@ function Signup({darkMode}){
                 }
             
                 // if all the conditions are valid, this means that the form is valid
-               
-                
                
                 return true;
               }
@@ -144,6 +114,7 @@ function Signup({darkMode}){
                 
                 localStorage.setItem('user', JSON.stringify(userData));
                 console.log(JSON.stringify(userData));
+                alert('Registaration sucssess!')
                 // Navigate to Home page
                 navigate('/');
               };
@@ -195,17 +166,8 @@ return (
                         <input className="form-control" type="file" id="profile-picture"/>
                     </div>
                     <div className="d-flex justify-content-between">
-                    
-                        <button className="btn btn-sign" type="submit"  id="register-button">
-                            
-                            Sign Up
-                          
-                            </button>
-                        
-                
+                        <button className="btn btn-sign" type="submit"  id="register-button"> Sign Up</button>            
                         <Link to='/'><button className="btn btn-sign">Home</button></Link> 
-                    
-                    
                     </div>
                 </form>
             </div>
