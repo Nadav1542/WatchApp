@@ -1,22 +1,23 @@
-import movies from './data/videos.json'
-import LeftMenu from './LeftMenu/LeftMenu';
-import React, { useState } from 'react';
-import VideoItem from './videoItem/VideoItem';
-import SearchBar from './Topbar/SearchBar';
-import Videolist from './videoItem/Videolist';
-import buttons from './data/buttons.json';
-import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
-import { DarkModeProvider, useDarkMode } from './DarkModeContext';
-import Signup from './Sign/Signup';
-import Quicksearch from './Videowatch/Quicksearch';
 
+import movies from '../data/videos.json'
+import LeftMenu from '../LeftMenu/LeftMenu';
+import React, { useState } from 'react';
+import VideoItem from '../videoItem/VideoItem';
+import SearchBar from '../Topbar/SearchBar';
+import Videolist from '../videoItem/Videolist';
+import buttons from '../data/buttons.json';
+import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
+import { DarkModeProvider, useDarkMode } from '../DarkModeContext';
+import Signup from '../Sign/Signup';
+import Quicksearch from '../Videowatch/Quicksearch';
+import Videosuser from './Videosuser';
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 
 
 
 
-function Mainpage({darkMode, userConnect}){
+function Uservideospage({darkMode, userConnect}){
 // Set the JSON list of videos as current state.
 
 const [videoList, setVideolist] = useState(JSON.parse(JSON.stringify(movies)));
@@ -42,11 +43,11 @@ const addVideo = () => {
                 <div className="row">
                   <Quicksearch darkMode={darkMode}/></div>
              <div className="row">
-         <Videolist moviesObj={videoList}/>
+         <Videosuser userConnect={userConnect}/>
         </div>
       </div>
     </div>
   </div>
 );
 }
-export default Mainpage;
+export default Uservideospage;

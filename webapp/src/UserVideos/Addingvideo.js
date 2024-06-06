@@ -1,5 +1,5 @@
-import './Addingvideo';
-function Addingvideo() {
+import './Addingvideo.css';
+function Addingvideo({drakMode,userConnect,userVideos,setuserVideos}) {
   
 
     return (
