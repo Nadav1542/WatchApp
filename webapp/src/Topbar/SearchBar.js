@@ -18,12 +18,14 @@ function SearchBar({ darkMode, addVideo, userConnect }) {
           <span className="navbar-toggler-icon"></span>
         </button>
         {/* buttons */}
+       
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-          {/* account button */}
+          
+         {userConnect && <>
           <a className="navbar-brand" href="#">
             <i className="bi bi-person-circle"></i>
           </a>
-          {/* notification account */}
+          
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">
@@ -37,13 +39,19 @@ function SearchBar({ darkMode, addVideo, userConnect }) {
             </li>
             
               
-            {userConnect && <> <li className="nav-item"><a className="nav-link active" onClick={addVideo} aria-current="page" href="#">
+             <> <li className="nav-item"><a className="nav-link active" onClick={addVideo} aria-current="page" href="#">
                 <i className="bi bi-plus-circle"></i>
               </a>
-            </li>  </>}
+            </li>  </>
               
               
           </ul>
+          </>} 
+          
+          
+         
+         
+         
           {/* SearchBar */}
           <form className="d-flex align-items-center">
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />

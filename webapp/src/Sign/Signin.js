@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import './Sign.css';
-import { useState } from 'react'
+import React,{ useState } from 'react'
 
 function Signin({darkMode, usersData, userConnect, setuserConnect}){
   
@@ -9,7 +9,7 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
     const [error, setError] = useState('');
     
     console.log(usersData);
-  
+    console.log(userConnect);
    
              // Function to handle form submission
   const handleSubmit = (event) => {
@@ -21,8 +21,12 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
   
       if (userExists) {
         setError('');
-        setuserConnect(true);
-        alert('Sign in successful');
+          if (!userConnect) {
+            setuserConnect(true);
+          }
+        
+        console.log(userConnect);
+        
         // Perform further actions on successful sign-in
       } else {
         setError('Invalid username or password');
@@ -74,10 +78,16 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
                     </div>
 
                     <div className="d-flex justify-content-between">
-                       <Link to='/'> <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button></Link>
+                      
+                      {!userConnect && <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>} 
+                      
+                      {userConnect && <p style={{ color: 'red' }}>You signed in successfully. Click the Home button</p>}
+                      
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                         <Link to='/'><button className="btn btn-sign">Home</button></Link>
-                        <button className="btn btn-sign" type="button" id="register-button">Sign Up</button>
+                       
+                       {!userConnect && <button className="btn btn-sign" type="button" id="register-button">Sign Up</button>} 
+                     
                     </div>
                 </form>
             </div>

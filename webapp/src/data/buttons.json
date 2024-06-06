@@ -12,20 +12,12 @@
         "link": "/signin"
     },
     {
-        "description": "Home",
-        "link": "./App.js"
+        "description": "My Videos",
+        "link": "./uservideos"
     },
     {
-        "description": "Home",
-        "link": "./App.js"
-    },
-    {
-        "description": "Home",
-        "link": "./App.js"
-    },
-    {
-        "description": "Home",
-        "link": "./App.js"
+        "description": "Subscriptions",
+        "link": "./subscriptions"
     }
     
 ]

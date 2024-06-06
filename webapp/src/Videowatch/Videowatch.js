@@ -7,6 +7,7 @@ import Comments from './Comments';
 import LeftVideos from './LeftVideos';
 import Searchbarvideo from './Searchbarvideo';
 import Videodisplay from './Videodisplay';
+import SearchBar from '../Topbar/SearchBar';
 
 const videos = JSON.parse(JSON.stringify(movies));
 
@@ -14,7 +15,7 @@ const videos = JSON.parse(JSON.stringify(movies));
 
 
 
-function Videowatch({darkMode}){
+function Videowatch({darkMode, userConnect}){
 // Set the JSON list of videos as current state.
 
 const [videoList, setVideolist] = useState(JSON.parse(JSON.stringify(movies)));
@@ -38,7 +39,7 @@ const addVideo = () => {
       </div>
       
       <div className="col-9">
-          <Searchbarvideo darkMode={darkMode}/>
+          <SearchBar darkMode={darkMode} addVideo={addVideo} userConnect={userConnect}/>
           <Videodisplay/>
           <Comments/>
       </div>

@@ -16,6 +16,8 @@ function Signup({darkMode,usersData,setusersData}){
               confirmpassword: "",
               img: null
             });
+
+            const [signedUp, setsignedUp] = useState(false);
       
               const navigate = useNavigate();
             
@@ -85,9 +87,8 @@ function Signup({darkMode,usersData,setusersData}){
     //const newUser = new User(formData.username, formData.displayname, formData.password, formData.img);
     
     setusersData([...usersData, formData]);
-    alert("Registaration succes.");
+    setsignedUp(true);
     
-    navigate('/signin');
   };   
               
               
@@ -164,7 +165,15 @@ return (
                     </div>
                     
                     <div className="d-flex justify-content-between">
-                        <button className="btn btn-sign" type="submit"  id="register-button"> Sign Up</button>            
+                  
+                  {!signedUp && <button className="btn btn-sign" type="submit"  id="register-button"> Sign Up</button> }                  
+                  
+                  {signedUp && 
+                  <>
+                  <p style={{ color: 'red' }}>You signed up successfully.<br></br> Click the Sign In button</p> 
+                  <Link to='/signin'><button className="btn btn-sign" type="submit"  id="register-button"> Sign In</button></Link>
+                  </>
+                  }       
                         <Link to='/'><button className="btn btn-sign">Home</button></Link> 
                     </div>
                 </form>
