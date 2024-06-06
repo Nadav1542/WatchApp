@@ -12,28 +12,27 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
     console.log(userConnect);
    
              // Function to handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-    const userExists = usersData.some(
-        (user) => user.username === username && user.password === password
-      );
-  
-      if (userExists) {
-        setError('');
-          if (!userConnect) {
-            setuserConnect(true);
-          }
-        
-        console.log(userConnect);
-        
-        // Perform further actions on successful sign-in
-      } else {
-        setError('Invalid username or password');
-      }
-    
-  };   
-   
+             const handleSubmit = (event) => {
+              event.preventDefault();
+          
+              const user = usersData.find((user) => user.username === username);
+          
+              if (user) {
+                  if (user.password === password) {
+                      setError('');
+                      if (!userConnect) {
+                          setuserConnect(true);
+                      }
+                      console.log(userConnect);
+                      // Perform further actions on successful sign-in
+                  } else {
+                      setError('Incorrect password');
+                  }
+              } else {
+                  setError('Username not found');
+              }
+          };
+          
    
     const handleDarkModeToggle = () => {
     const event = new Event('toggleDarkMode');
@@ -62,7 +61,7 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
                     </div>
 
 
-                    <div className="validinput">Enter your name</div>
+                    <div className="validinput">{error==="Username not found" && <p style={{ color: 'red' }}>{error}</p> || "Enter your name" }</div>
                     <div className="form-floating mb-3">
                       <input type="text" name="username" className="form-control" id="floatingInput" onChange={(e) =>
                         {setUsername(e.target.value)}}
@@ -70,7 +69,7 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
                     </div>
 
 
-                    <div className="validinput">Enter your password</div>
+                    <div className="validinput">{error==="Incorrect password" && <p style={{ color: 'red' }}>{error}</p> || "Enter your password" }</div>
                     <div className="form-floating mb-3" >
                       <input type="password" name="password" className="form-control" id="floatingPassword" onChange={(e) => 
                       {setPassword(e.target.value)}}
@@ -79,18 +78,14 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
 
                     <div className="d-flex justify-content-between">
                      
-                     
                         {!userConnect && <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>}
-                        
-                        
                         
                         <Link to='/'><button className="btn btn-sign">Home</button></Link>
                        
                        {!userConnect && <button className="btn btn-sign" type="button" id="register-button">Sign Up</button>} 
-            
-                        {userConnect && <p style={{ color: 'blue' }}>You signed in successfully. Click the Home button</p>}
-                        {error && <label style={{ color: 'red' }}>{error}</label>}
                       
+                        {userConnect && <p style={{ color: 'blue' }}>You signed in successfully. Click the Home button</p>}
+                        
                     </div>
                 </form>
             </div>

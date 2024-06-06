@@ -1,0 +1,13 @@
+.cardreg {
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.validinput {
+    font-weight: 500;
+    margin-bottom: .5rem;
+}
+.container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
