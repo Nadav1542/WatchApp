@@ -13,6 +13,10 @@ body.dark-mode .navbar-brand .bi,
 body.dark-mode .navbar-nav .nav-link .bi {
   color: var(--clr-light);
 }
+.navbar-expand-lg .navbar-collapse {
+    display: flex !important;
+    justify-content: flex-end;
+}
 .btn-outline-red {
     color: red;
     border-color: red;

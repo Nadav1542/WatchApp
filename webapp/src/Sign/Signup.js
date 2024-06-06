@@ -161,19 +161,22 @@ return (
                           handleImageChange(e)
                           
                           }} required />
-                           {formData.img && <img src={formData.img} alt="Selected" style={{ maxWidth: '50%', maxHeight: '100px' }} />}
+                           {formData.img && <img src={formData.img} alt="Selected" style={{ maxWidth: '60%', maxHeight: '100px' }} />}
                     </div>
                     
                     <div className="d-flex justify-content-between">
                   
                   {!signedUp && <button className="btn btn-sign" type="submit"  id="register-button"> Sign Up</button> }                  
-                  
+                  <div>
                   {signedUp && 
-                  <>
-                  <p style={{ color: 'red' }}>You signed up successfully.<br></br> Click the Sign In button</p> 
-                  <Link to='/signin'><button className="btn btn-sign" type="submit"  id="register-button"> Sign In</button></Link>
-                  </>
-                  }       
+                  <label style={{ color: 'blue' }}>You signed up successfully!<br />to connect, click the Sign In button.</label> 
+                  } 
+                  {signedUp && 
+                  <div>
+                  <Link to='/signin'><button className="btn btn-sign mt-2" type="submit"  id="register-button"> Sign In</button></Link>
+                  </div>
+                  }  
+                  </div>     
                         <Link to='/'><button className="btn btn-sign">Home</button></Link> 
                     </div>
                 </form>
