@@ -8,6 +8,7 @@ import buttons from './data/buttons.json';
 import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
 import { DarkModeProvider, useDarkMode } from './DarkModeContext';
 import Signup from './Sign/Signup';
+import Quicksearch from './Videowatch/Quicksearch';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
@@ -38,6 +39,8 @@ const addVideo = () => {
                  <div className="row">
                     <SearchBar darkMode={darkMode} addVideo={addVideo} userConnect={userConnect}/>
                 </div>
+                <div className="row">
+                  <Quicksearch darkMode={darkMode}/></div>
              <div className="row">
          <Videolist moviesObj={videoList} />
         </div>
