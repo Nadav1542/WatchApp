@@ -20,11 +20,6 @@
         "icon": "bi bi-person-video3"
     },
     {
-        "description": "Subscriptions",
-        "link": "./subscriptions",
-        "icon": "Subscriptions"
-    },
-    {
         "description": "Upload video",
         "link": "./Addingvideo",
         "icon": "bi bi-plus-circle"
