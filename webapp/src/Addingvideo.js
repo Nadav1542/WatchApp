@@ -1,40 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Upload</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="addingvideo.css">
-</head>
+import './Addingvideo';
+function Addingvideo() {
+  
 
-<body>
-    <div class="container mt-5">
-        <!-- headline -->
+    return (
+        <div class="container mt-5">
+        
         <h2 class="mb-4">Upload New Video</h2>
-        <!-- details -->
+        {/* <!-- details --> */}
         <form>
-            <!-- video title -->
+            {/* <!-- video title --> */}
             <div class="mb-3">
                 <label for="videoTitle" class="form-label">Video Title</label>
-                <input type="text" class="form-control" id="videoTitle" placeholder="Enter video title" required>
+                <input type="text" class="form-control" id="videoTitle" placeholder="Enter video title" required/>
             </div>
-            <!-- video description -->
+            {/* <!-- video description --> */}
             <div class="mb-3">
                 <label for="videoDescription" class="form-label">Description</label>
                 <textarea class="form-control" id="videoDescription" rows="3" placeholder="Enter video description"></textarea>
             </div>
-            <!-- uploading -->
+            {/* <!-- uploading --> */}
             <div class="mb-3">
                 <label for="videoFile" class="form-label">Upload Video</label>
-                <input type="file" class="form-control" id="videoFile">
+                <input type="file" class="form-control" id="videoFile"/>
             </div>
-            <!-- Thumbnail Image
+            {/* <!-- Thumbnail Image
             <div class="mb-3">
                 <label for="videoThumbnail" class="form-label">Thumbnail Image</label>
                 <input type="file" class="form-control" id="videoThumbnail">
-            </div> -->
-            <!-- category -->
+            </div> --> */}
+            {/* <!-- category --> */}
             <div class="mb-3">
                 <label for="videoCategory" class="form-label">Category</label>
                 <select class="form-select" id="videoCategory">
@@ -50,6 +44,9 @@
             <button type="submit" class="btn btn-primary">Upload Video</button>
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    );
+  }
+  
+  export default Addingvideo;
+  
+  

@@ -18,8 +18,8 @@ body.dark-mode .navbar-nav .nav-link .bi {
     justify-content: flex-end;
 }
 .btn-outline-red {
-    color: red;
-    border-color: red;
+    color: var(--clr-dark);
+    background-color: red;
 }
 .btn-outline-red:hover {
     background-color: red;
@@ -27,8 +27,8 @@ body.dark-mode .navbar-nav .nav-link .bi {
 }
 .dark-mode .form-control{
     background-color: rgba(128, 128, 128, 0.208);
-    color: white;
+    color: var(--clr-light);
 }
 .form-control{
-    background-color:white ;
+    background-color:var(--clr-light) ;
 }

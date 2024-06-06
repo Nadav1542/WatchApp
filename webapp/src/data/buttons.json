@@ -18,6 +18,10 @@
     {
         "description": "Subscriptions",
         "link": "./subscriptions"
+    },
+    {
+        "description": "Upload video",
+        "link": "./Addingvideo"
     }
     
 ]
