@@ -2,7 +2,7 @@ import './Addingvideo.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function Addingvideo({darkMode}) {
+function Addingvideo({darkMode,userConnect,userVideos,setuserVideos}) {
 
     const handleDarkModeToggle = () => {
         const event = new Event('toggleDarkMode');
@@ -90,4 +90,4 @@ function Addingvideo({darkMode}) {
     );
 }
 
-export default Addingvideo;
+  

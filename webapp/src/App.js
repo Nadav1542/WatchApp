@@ -11,7 +11,11 @@ import Signup from './Sign/Signup';
 import Mainpage from './Mainpage';
 import Signin from './Sign/Signin';
 import Videowatch from './Videowatch/Videowatch';
-import Addingvideo from './UserVideos/Addingvideo.css';
+import Addingvideo from './UserVideos/Addingvideo';
+import Uservideospage from './UserVideos/Uservideospage';
+
+
+
 function App() {
   
 return (
@@ -27,16 +31,19 @@ function AppContent() {
   const { darkMode } = useDarkMode();
   const [usersData, setusersData] = useState([]);
   const [userConnect,setuserConnect] = useState(false);
+  const [userVideos, setuserVideos] = useState([]);
+  const [connectedUser, setconnectedUser] = useState();
   
   
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect}/>}/>
-        <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData}/>}/>
-        <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData}  userConnect={userConnect} setuserConnect={setuserConnect}/>}/>
-        <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} userConnect={userConnect}/>}/>
+        <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData} userVideos={userVideos}/>}/>
+        <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData}  userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser}/>}/>
+        <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} userConnect={userConnect} userVideos={userVideos} setuserVideos={setuserVideos}/>}/>
         <Route path='/videowatch' element={<Videowatch darkMode={darkMode} userConnect={userConnect}/>}/>
+        <Route path='uservideos' element={<Uservideospage darkMode={darkMode} userConnect={userConnect}/>}/>
       </Routes>
     </BrowserRouter>
   );

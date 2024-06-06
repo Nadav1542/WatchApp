@@ -42,7 +42,7 @@ const addVideo = () => {
                 <div className="row">
                   <Quicksearch darkMode={darkMode}/></div>
              <div className="row">
-         <Videolist moviesObj={videoList} />
+         <Videolist moviesObj={videoList}/>
         </div>
       </div>
     </div>
