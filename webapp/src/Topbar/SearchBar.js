@@ -4,7 +4,7 @@ import './Searchbar.css';
 
 const moviesObj = JSON.parse(JSON.stringify(movies));
 
-function SearchBar({ darkMode, addVideo, userConnect }) {
+function SearchBar({ darkMode }) {
   const handleDarkModeToggle = () => {
     const event = new Event('toggleDarkMode');
     window.dispatchEvent(event);

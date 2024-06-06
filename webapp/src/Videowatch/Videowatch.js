@@ -15,20 +15,8 @@ const videos = JSON.parse(JSON.stringify(movies));
 
 
 
-function Videowatch({darkMode, userConnect}){
-// Set the JSON list of videos as current state.
+function Videowatch({darkMode}){
 
-const [videoList, setVideolist] = useState(JSON.parse(JSON.stringify(movies)));
-
-// function to add video to video list.
-const addVideo = () => {
-  const newVideo = {
-    title: "new Movie",
-    description: "description of new movie",
-    source: "video2.mp4"
-  };
-  setVideolist([...videoList, newVideo]);
-};
     return (
 
 <div className={darkMode ? 'dark-mode' : ''}>
@@ -39,7 +27,7 @@ const addVideo = () => {
       </div>
       
       <div className="col-9">
-          <SearchBar darkMode={darkMode} addVideo={addVideo} userConnect={userConnect}/>
+          <SearchBar darkMode={darkMode}/>
           <Videodisplay/>
           <Comments/>
       </div>

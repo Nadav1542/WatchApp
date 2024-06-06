@@ -7,8 +7,8 @@ function Signin({darkMode, usersData, userConnect, setuserConnect,connectedUser,
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    
-    
+    console.log(userConnect);
+    console.log(usersData);
    
              // Function to handle form submission
   const handleSubmit = (event) => {
@@ -54,7 +54,7 @@ function Signin({darkMode, usersData, userConnect, setuserConnect,connectedUser,
                 <form id="registration-form" className="cardreg p-4 shadow-lg" onSubmit = {(event) => {
     
     handleSubmit(event); // Calling the function with event argument
-}} novalidate>
+}} noValidate>
                             <div className="d-flex justify-content-end">
                                 <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
                             </div>
@@ -87,6 +87,7 @@ function Signin({darkMode, usersData, userConnect, setuserConnect,connectedUser,
                        
                        {!userConnect && <button className="btn btn-sign" type="button" id="register-button">Sign Up</button>} 
                       
+                       {error && <p style={{ color: 'blue' }}>Invalid username or password</p>}
                         {userConnect && <p style={{ color: 'blue' }}>You signed in successfully. Click the Home button</p>}
                         
                     </div>

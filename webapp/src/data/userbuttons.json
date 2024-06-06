@@ -1,18 +1,20 @@
 [
     {
-        "description": "Uplaod Video",
-        "link": "/addvideo",
-        "icon":"bi bi-plus-circle"
+        "description": "Sign Out",
+        "link": "/",
+        "icon":"bi bi-minus-circle",
+        "OnClick": "handleSignedout"
     },
     {
-        "description": "My Videos",
-        "link": "/uservideos",
-        "icon": "bi bi-camera-video"
+        "description": "Uplaod Video",
+        "link": "/Addingvideo",
+        "icon":"bi bi-plus-circle"
     },
     {
         "description": "Notifications",
         "link": "/",
         "icon": "bi bi-bell"
     }
+    
    
 ]
