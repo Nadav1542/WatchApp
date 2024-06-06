@@ -2,37 +2,39 @@ import {Link} from 'react-router-dom';
 import './Sign.css';
 import React,{ useState } from 'react'
 
-function Signin({darkMode, usersData, userConnect, setuserConnect}){
+function Signin({darkMode, usersData, userConnect, setuserConnect,connectedUser,setconnectedUser}){
   
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     
-    console.log(usersData);
-    console.log(userConnect);
+    
    
              // Function to handle form submission
-             const handleSubmit = (event) => {
-              event.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    const user = usersData.find(
+      (user) => user.username === username && user.password === password
+    );
+  
+      if (user) {
+        setError('');
+          if (!userConnect) {
+            
+            setuserConnect(true);
+            setconnectedUser(user);
           
-              const user = usersData.find((user) => user.username === username);
-          
-              if (user) {
-                  if (user.password === password) {
-                      setError('');
-                      if (!userConnect) {
-                          setuserConnect(true);
-                      }
-                      console.log(userConnect);
-                      // Perform further actions on successful sign-in
-                  } else {
-                      setError('Incorrect password');
-                  }
-              } else {
-                  setError('Username not found');
-              }
-          };
-          
+          }
+        
+        
+        // Perform further actions on successful sign-in
+      } else {
+        setError('Invalid username or password');
+      }
+    
+  };   
+   
    
     const handleDarkModeToggle = () => {
     const event = new Event('toggleDarkMode');
