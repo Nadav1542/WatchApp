@@ -2,30 +2,31 @@ import {Link} from 'react-router-dom';
 import './Sign.css';
 import React,{ useState } from 'react'
 
-function Signin({darkMode, usersData, userConnect, setuserConnect}){
+function Signin({darkMode, usersData, userConnect, setuserConnect,connectedUser,setconnectedUser}){
   
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     
-    console.log(usersData);
-    console.log(userConnect);
+    
    
              // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    const userExists = usersData.some(
-        (user) => user.username === username && user.password === password
-      );
+    const user = usersData.find(
+      (user) => user.username === username && user.password === password
+    );
   
-      if (userExists) {
+      if (user) {
         setError('');
           if (!userConnect) {
+            
             setuserConnect(true);
+            setconnectedUser(user);
+          
           }
         
-        console.log(userConnect);
         
         // Perform further actions on successful sign-in
       } else {

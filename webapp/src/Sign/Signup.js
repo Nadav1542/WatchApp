@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-function Signup({darkMode,usersData,setusersData}){
+function Signup({darkMode,usersData,setusersData,userVideos}){
 
         const handleDarkModeToggle = () => {
         const event = new Event('toggleDarkMode');
@@ -14,7 +14,8 @@ function Signup({darkMode,usersData,setusersData}){
               displayname:"",
               password: "",
               confirmpassword: "",
-              img: null
+              img: null,
+              userVideos: userVideos
             });
 
             const [signedUp, setsignedUp] = useState(false);
