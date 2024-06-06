@@ -34,7 +34,7 @@ function AppContent() {
         <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect}/>}/>
         <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData}/>}/>
         <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData}  userConnect={userConnect} setuserConnect={setuserConnect}/>}/>
-        <Route path='/videowatch' element={<Videowatch darkMode={darkMode}/>}/>
+        <Route path='/videowatch' element={<Videowatch darkMode={darkMode} userConnect={userConnect}/>}/>
       </Routes>
     </BrowserRouter>
   );

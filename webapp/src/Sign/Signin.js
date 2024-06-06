@@ -26,7 +26,7 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
           }
         
         console.log(userConnect);
-        alert('Sign in successful');
+        
         // Perform further actions on successful sign-in
       } else {
         setError('Invalid username or password');
@@ -78,10 +78,15 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
                     </div>
 
                     <div className="d-flex justify-content-between">
-                        <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>
+                      
+                      {!userConnect && <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>} 
+                      
+                      {userConnect && <p style={{ color: 'red' }}>You signed in successfully. Click the Home button</p>}
+                      
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                         <Link to='/'><button className="btn btn-sign">Home</button></Link>
-                        <button className="btn btn-sign" type="button" id="register-button">Sign Up</button>
+                       
+                       {!userConnect && <button className="btn btn-sign" type="button" id="register-button">Sign Up</button>} 
                      
                     </div>
                 </form>
