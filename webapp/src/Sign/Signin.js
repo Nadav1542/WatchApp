@@ -59,7 +59,8 @@ function Signin({darkMode, usersData, userConnect, setuserConnect,connectedUser,
                                 <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
                             </div>
                     <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
-                      <h2 className="mb-0">Sign In</h2>
+                      <h2 className="mb-3">Sign In</h2>
+                      <div className="sign-in-message">Sign in to like videos, comment, and subscribe.</div>
                     </div>
 
 
