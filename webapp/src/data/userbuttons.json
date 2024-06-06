@@ -1,0 +1,18 @@
+[
+    {
+        "description": "Uplaod Video",
+        "link": "/addvideo",
+        "icon":"bi bi-plus-circle"
+    },
+    {
+        "description": "My Videos",
+        "link": "/uservideos",
+        "icon": "bi bi-camera-video"
+    },
+    {
+        "description": "Notifications",
+        "link": "/",
+        "icon": "bi bi-bell"
+    }
+   
+]

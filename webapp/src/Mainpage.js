@@ -34,7 +34,7 @@ const addVideo = () => {
 
 <div className={darkMode ? 'dark-mode' : ''}>
     <div className="row">
-        <LeftMenu buttons={menubuttons}/>
+        <LeftMenu userConnect={userConnect}/>
             <div className="col-9">
                  <div className="row">
                     <SearchBar darkMode={darkMode} addVideo={addVideo} userConnect={userConnect}/>

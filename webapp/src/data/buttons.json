@@ -1,27 +1,19 @@
 [
     {
         "description": "Home",
-        "link": "/"
+        "link": "/",
+        "icon":"bi bi-house-door-fill"
     },
     {
         "description": "Signup",
-        "link": "/signup"
+        "link": "/signup",
+        "icon": "bi bi-house-door-fill"
     },
     {
         "description": "Signin",
-        "link": "/signin"
-    },
-    {
-        "description": "My Videos",
-        "link": "./uservideos"
-    },
-    {
-        "description": "Subscriptions",
-        "link": "./subscriptions"
-    },
-    {
-        "description": "Upload video",
-        "link": "./Addingvideo"
+        "link": "/signin",
+        "icon": "bi bi-house-door-fill"
     }
+   
     
 ]

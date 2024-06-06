@@ -21,7 +21,7 @@ function SearchBar({ darkMode, addVideo, userConnect }) {
        
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
           
-         {userConnect && <>
+         {/*userConnect && <>
           <a className="navbar-brand" href="#">
             <i className="bi bi-person-circle"></i>
           </a>

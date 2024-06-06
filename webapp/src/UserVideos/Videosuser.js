@@ -1,7 +1,7 @@
 
 
 
-function Videosuser({userConnect}){
+function Videosuser(){
 
    
 
