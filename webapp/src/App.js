@@ -11,7 +11,7 @@ import Signup from './Sign/Signup';
 import Mainpage from './Mainpage';
 import Signin from './Sign/Signin';
 import Videowatch from './Videowatch/Videowatch';
-import Addingvideo from './Addingvideo/Addingvideo';
+import Addingvideo from './UserVideos/Addingvideo.css';
 function App() {
   
 return (
