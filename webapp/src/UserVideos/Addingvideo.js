@@ -63,7 +63,7 @@ function Addingvideo({darkMode,userConnect,userVideos,setuserVideos}) {
 
                         {/* Video Category */}
                         <div className="validinput">Select category</div>
-                        <div className="form-floating mb-3">
+                        <div className="form-floating mb-4">
                             <select 
                                 className="form-select p-2" 
                                 name="videoCategory" 

@@ -33,3 +33,7 @@ body {
     font-size: x-small;
     color: rgba(255, 255, 255, 0.669);
   }
+  .sign-in-message {
+    font-family: 'Ariel, sans-serif';
+    font-size: 16px; 
+}

@@ -9,6 +9,7 @@ import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
 import { DarkModeProvider, useDarkMode } from './DarkModeContext';
 import Signup from './Sign/Signup';
 import Quicksearch from './Videowatch/Quicksearch';
+import Menu from './data/menu';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
@@ -33,6 +34,7 @@ const addVideo = () => {
     return (
 
 <div className={darkMode ? 'dark-mode' : ''}>
+  <div ><Menu buttons={buttons}/></div>
     <div className="row">
         <LeftMenu userConnect={userConnect}/>
             <div className="col-9">
