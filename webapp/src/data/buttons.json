@@ -1,27 +1,33 @@
 [
     {
         "description": "Home",
-        "link": "/"
+        "link": "/",
+        "icon": "i bi-house-door-fill"
     },
     {
         "description": "Signup",
-        "link": "/signup"
+        "link": "/signup",
+        "icon": "bi bi-person-add"
     },
     {
         "description": "Signin",
-        "link": "/signin"
+        "link": "/signin",
+        "icon": "bi bi-person-circle"
     },
     {
         "description": "My Videos",
-        "link": "./uservideos"
+        "link": "./uservideos",
+        "icon": "bi bi-person-video3"
     },
     {
         "description": "Subscriptions",
-        "link": "./subscriptions"
+        "link": "./subscriptions",
+        "icon": "Subscriptions"
     },
     {
         "description": "Upload video",
-        "link": "./Addingvideo"
+        "link": "./Addingvideo",
+        "icon": "bi bi-plus-circle"
     }
     
 ]

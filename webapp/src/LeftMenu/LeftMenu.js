@@ -6,7 +6,7 @@ function LeftMenu({buttons}){
     <>
         <div className="col-3 bg-light transparent-bg">
             <ul className="list-group">
-                {buttons.map((button, key) =>{return<Menubutton description={button.description} link={button.link} key={key}/>})}
+                {buttons.map((button, key) =>{return<Menubutton icon={button.icon} description={button.description} link={button.link} key={key}/>})}
             </ul>
         </div>
     </>
