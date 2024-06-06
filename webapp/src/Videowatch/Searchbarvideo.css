@@ -1,0 +1,8 @@
+.btn-outline-red {
+    color: red;
+    border-color: red;
+}
+.btn-outline-red:hover {
+    background-color: red;
+    color: var(--clr-light);
+}

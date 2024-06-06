@@ -78,7 +78,6 @@ function Signin({darkMode, usersData, userConnect, setuserConnect}){
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                         <Link to='/'><button className="btn btn-sign">Home</button></Link>
                         <button className="btn btn-sign" type="button" id="register-button">Sign Up</button>
-                     
                     </div>
                 </form>
             </div>

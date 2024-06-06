@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './Searchbarvideo';
 function Serachbarvideo({darkMode}){
     const handleDarkModeToggle = () => {
         const event = new Event('toggleDarkMode');
@@ -25,7 +25,7 @@ return (
                             </ul>
                             <form className="d-flex">
                               <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                              <button className="btn btn-outline-success" type="submit">Search</button>
+                              <button className="btn btn-outline-red" type="submit">Search</button>
                               <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
 
                             </form>

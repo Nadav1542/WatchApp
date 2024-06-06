@@ -5,7 +5,7 @@ return (
 
 
 
-<li className="list-group-items d-flex align-items-center border-0">
+<li className="list-group-items m-3 d-flex align-items-center border-0">
                 <div className="leftvideos border-0" >
                     <video src={source} className="card-img-top" alt="..."/>
                     <div className="card-body">
