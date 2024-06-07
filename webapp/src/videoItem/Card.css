@@ -1,7 +1,4 @@
-/* card styles */
-.transparent-bg {
-    background-color: transparent !important;
-}
+
 .card {
     padding: 2px;
     background-color: transparent;

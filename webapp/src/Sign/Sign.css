@@ -1,47 +1,28 @@
-.transparent-bg {
-  background-color: transparent !important;
+.cardreg {
+  background-color: rgba(128, 128, 128, 0.208);
+  border-radius: 5px;
+} .cardreg {
+    background-color: rgba(128, 128, 128, 0.208);
+    border-radius: 5px;
 }
-body {
-    background-color: #f9f9f9;
+.dark-mode .cardreg {
+  background-color: rgba(0, 0, 0, 0.781);
+  border-radius: 5px;
 }
 .btn-sign {
     background-color: red;
 }
+.btn-sign:hover{
+  background-color: rgb(187, 1, 1);
+}
 .dark-mode .btn-sign:hover{
-  background-color: rgba(255, 0, 0, 0.658);
-}
-.dark-mode .btn-sign {
-  color: var(--clr-light);
-}
-.form-control {
-  background-color: transparent;
-}
-.cardreg {
-    background-color: rgba(128, 128, 128, 0.208);
-    border-radius: 5px;
-  
-  }
-.cardreg:hover {
-    background-color: rgba(128, 128, 128, 0.208);
-    transform: none;
-    cursor: default;
-  }
-  body.dark-mode {
-    background-color: var(--clr-dark);
-    color: var(--clr-dark);
-}
- .dark-mode .cardreg {
-    background-color: rgba(128, 128, 128, 0.208);
-  }
-  .validinput{
+  background-color: rgb(187, 1, 1);
+}  
+.validinput{
     font-size: x-small;
     color: rgba(128, 128, 128, 0.811);
-  }
-  .dark-mode .validinput{
+}
+.dark-mode .validinput{
     font-size: x-small;
-    color: var(--clr-dark);
-  }
-  .sign-in-message {
-    font-family: 'Ariel, sans-serif';
-    font-size: 16px; 
+    color: var(--clr-light);
 }
