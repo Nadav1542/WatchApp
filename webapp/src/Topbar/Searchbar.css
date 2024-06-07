@@ -17,13 +17,6 @@
     background-color: red;
     color: var(--clr-light);
 }
-.menu-button {
-    font-size: 1.5rem;
-    color: var(--clr-dark);
-}
-.dark-mode .menu-button {
-    color: var(--clr-light);
-}
 .dark-mode .form-control::placeholder{
     color: var(--clr-light);
 }
