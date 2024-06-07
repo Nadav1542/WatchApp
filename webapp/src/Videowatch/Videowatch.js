@@ -15,7 +15,7 @@ const videos = JSON.parse(JSON.stringify(movies));
 
 
 
-function Videowatch({darkMode}){
+function Videowatch({darkMode, userConnect}){
 
     return (
 
@@ -29,7 +29,7 @@ function Videowatch({darkMode}){
       <div className="col-9">
           <SearchBar darkMode={darkMode}/>
           <Videodisplay/>
-          <Comments/>
+          <Comments userConnect={userConnect}/>
       </div>
     </div>
     </div>
