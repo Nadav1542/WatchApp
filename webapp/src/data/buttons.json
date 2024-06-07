@@ -2,27 +2,18 @@
     {
         "description": "Home",
         "link": "/",
-        "icon": "i bi-house-door-fill"
+        "icon":"bi bi-house-door-fill"
     },
     {
         "description": "Signup",
         "link": "/signup",
-        "icon": "bi bi-person-add"
+        "icon": "bi bi-house-door-fill"
     },
     {
         "description": "Signin",
         "link": "/signin",
-        "icon": "bi bi-person-circle"
-    },
-    {
-        "description": "My Videos",
-        "link": "./uservideos",
-        "icon": "bi bi-person-video3"
-    },
-    {
-        "description": "Upload video",
-        "link": "./Addingvideo",
-        "icon": "bi bi-plus-circle"
+        "icon": "bi bi-house-door-fill"
     }
+   
     
 ]

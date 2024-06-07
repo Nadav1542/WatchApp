@@ -4,7 +4,7 @@ import './Searchbar.css';
 
 const moviesObj = JSON.parse(JSON.stringify(movies));
 
-function SearchBar({ darkMode, addVideo, userConnect }) {
+function SearchBar({ darkMode }) {
   const handleDarkModeToggle = () => {
     const event = new Event('toggleDarkMode');
     window.dispatchEvent(event);
@@ -21,7 +21,7 @@ function SearchBar({ darkMode, addVideo, userConnect }) {
        
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
           
-         {userConnect && <>
+         {/*userConnect && <>
           <a className="navbar-brand" href="#">
             <i className="bi bi-person-circle"></i>
           </a>
