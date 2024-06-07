@@ -13,7 +13,7 @@ function Mainpage({ darkMode, userConnect, videoList, setuserConnect }) {
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="row align-items-center mb-3">
         <div className="col-auto">
-          <Menu buttons={buttons} />
+          <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
         </div>
         <div className="col">
           <SearchBar darkMode={darkMode} />
