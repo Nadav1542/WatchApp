@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../Topbar/Searchbar.css'
 
 function Comments({ userConnect }) {
   const [comments, setComments] = useState([]);
