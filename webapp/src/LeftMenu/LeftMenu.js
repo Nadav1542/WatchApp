@@ -3,7 +3,7 @@ import buttons from '../data/buttons.json';
 import userbuttons from '../data/userbuttons.json';
 import './Itemslist.css';
 
-function LeftMenu({userConnect,setuserConnect}){
+function LeftMenu({userConnect, setuserConnect}){
     
     const handleSignedout = (e) => {
         e.preventDefault();

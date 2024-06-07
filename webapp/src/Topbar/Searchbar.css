@@ -1,3 +1,6 @@
+.container-fluid {
+    margin-right: 5%;
+}
 .transparent-bg {
     background-color: transparent !important;
 }

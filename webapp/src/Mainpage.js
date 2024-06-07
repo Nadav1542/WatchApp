@@ -1,44 +1,32 @@
-import movies from './data/videos.json'
-import LeftMenu from './LeftMenu/LeftMenu';
-import React, { useState } from 'react';
+import React from 'react';
 import VideoItem from './videoItem/VideoItem';
 import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
-import buttons from './data/buttons.json';
-import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
-import { DarkModeProvider, useDarkMode } from './DarkModeContext';
-import Signup from './Sign/Signup';
-import Quicksearch from './Videowatch/Quicksearch';
+import Quicksearch from './Topbar/Quicksearch';
 import Menu from './menu';
+import buttons from './data/buttons.json';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-
-
-
-
-function Mainpage({darkMode, userConnect,videoList,setuserConnect}){
-
-    
-
-return (
-
-<div className={darkMode ? 'dark-mode' : ''}>
-  <div ><Menu buttons={buttons}/></div>
-    <div className="row">
-        <LeftMenu userConnect={userConnect} setuserConnect={setuserConnect}/>
-            <div className="col-9">
-                 <div className="row">
-                    <SearchBar darkMode={darkMode}/>
-                </div>
-                <div className="row">
-                  <Quicksearch darkMode={darkMode}/></div>
-             <div className="row">
-         <Videolist moviesObj={videoList}/>
+function Mainpage({ darkMode, userConnect, videoList, setuserConnect }) {
+  return (
+    <div className={darkMode ? 'dark-mode' : ''}>
+      <div className="row align-items-center mb-3">
+        <div className="col-auto">
+          <Menu buttons={buttons} />
+        </div>
+        <div className="col">
+          <SearchBar darkMode={darkMode} />
         </div>
       </div>
+      <div className="row">
+        <Quicksearch darkMode={darkMode} />
+      </div>
+      <div className="row m-4">
+        <Videolist moviesObj={videoList} />
+      </div>
     </div>
-  </div>
-);
+  );
 }
+
 export default Mainpage;

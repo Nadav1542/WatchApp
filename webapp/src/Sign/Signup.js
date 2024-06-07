@@ -148,13 +148,6 @@ return (
                     </div>
                     
 
-
-
-
-
-
-
-
                     <div className="mb-3">
                         <label for="profile-picture" className="form-label">Profile Picture</label>
                         <input className="form-control" name ="img" type="file" id="profile-picture" onChange={(e) => {
@@ -170,7 +163,7 @@ return (
                   {!signedUp && <button className="btn btn-sign" type="submit"  id="register-button"> Sign Up</button> }                  
                   <div>
                   {signedUp && 
-                  <label style={{ color: 'blue' }}>You signed up successfully!<br />to connect, click the Sign In button.</label> 
+                  <label style={{ color: 'red' }}>You signed up successfully!<br />to connect, click the Sign In button.</label> 
                   } 
                   {signedUp && 
                   <div>
