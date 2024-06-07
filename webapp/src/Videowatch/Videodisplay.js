@@ -1,12 +1,11 @@
 import './Singlevideo.css';
+import { useParams } from 'react-router-dom';
 
-import { useLocation } from 'react-router-dom';
 
-
-function Videodisplay() {
+function Videodisplay({title,description,source,views,uploadtime}) {
     
-    const location = useLocation();
-    const { title, description, source, views, uploadtime } = location.state || {};
+    
+    
     
     
     
@@ -14,11 +13,11 @@ function Videodisplay() {
 
         <div className="row m-4"> 
         <div>
-            <video src="video1.mp4" className="card-img-top rounded" controls autoPlay/>
-            <div className="card-body singlevideo">
-                <div className="card-text">Title</div>
-                <div className="card-text">Description</div> 
-                <div className="card-text">100M views - 1 week ago</div>
+        <video src={decodeURIComponent(source)} className="card-img-top rounded" controls autoPlay />
+        <div className="card-body singlevideo">
+          <div className="card-text">{decodeURIComponent(title)}</div>
+          <div className="card-text">{decodeURIComponent(description)}</div>
+          <div className="card-text">{views} views - {decodeURIComponent(uploadtime)}</div>
             </div>
         </div>
       </div>

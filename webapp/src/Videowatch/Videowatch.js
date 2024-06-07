@@ -9,7 +9,7 @@ import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
 import Menu from '../Menu';
 import buttons from '../data/buttons.json';
-
+import { useParams } from 'react-router-dom';
 const videos = JSON.parse(JSON.stringify(movies));
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
@@ -17,6 +17,7 @@ const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 
 function Videowatch({darkMode, userConnect,setuserConnect}){
+  const { title, description, source, views, uploadtime } = useParams();
 
     return (
 
@@ -35,7 +36,7 @@ function Videowatch({darkMode, userConnect,setuserConnect}){
         <div className="col">
           <SearchBar darkMode={darkMode} />
         </div>
-          <Videodisplay/>
+          <Videodisplay title={title} description={description} source={source} views={views} uploadtime={uploadtime} />
           <Comments userConnect={userConnect}/>
       </div>
     </div>
