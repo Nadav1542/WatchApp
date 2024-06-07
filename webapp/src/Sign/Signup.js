@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import './Sign.css'
 
 function Signup({darkMode,usersData,setusersData}){
 
@@ -96,80 +97,73 @@ function Signup({darkMode,usersData,setusersData}){
 
 
 return (
-<>
-<link href="Style/Sign.css" rel="stylesheet"></link>  
+<> 
 <div className="container">
-        <div className="row justify-content-center">
-            <div className="col-md-7 p-0 bg-body-tertiary rounded">
-                <form id="registration-form" onSubmit = {(event) => {
-    
-        handleSubmit(event); // Calling the function with event argument
-    }
-} className="cardreg p-4 shadow-lg needs-validation" novalidate>
-                  <div className="d-flex justify-content-end">
-                                <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
-                            </div>
-                    <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
-                      <h2 className="mb-0">Sign Up</h2>
-                    </div>
+  <div className="row justify-content-center">
+      <div className="col-md-7 p-0 bg-body-tertiary rounded">
+        <form id="registration-form" onSubmit = {(event) => {handleSubmit(event);}} className="cardreg p-4 shadow-lg needs-validation" novalidate>
+          <div className="d-flex justify-content-end">
+             <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+         </div>
+          <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
+           <h2 className="mb-0">Sign Up</h2>
+          </div>
                     
+  
+
                     
-                    <div className="validinput">Enter your name</div>
-                    <div className="form-floating mb-3">
-                      <input type="text" name="username" className="form-control" id="floatingInput" onChange={(e) => {
-                           handleChange(e)}} 
-                           placeholder="text" required/> <label for="floatingInput">Username</label>
-                    </div>
+          <div className="validinput">Enter your name</div>
+          <div className="form-floating mb-3">
+            <input type="text" name="username" className="form-control" id="floatingInput" onChange={(e) => {handleChange(e)}} placeholder="text" required/> 
+            <label className="float" for="floatingInput">Username</label>
+         </div>
                     
 
-                    <div className="validinput">Enter a display name</div>
-                    <div className="form-floating mb-3">
-                      <input type="text" name="displayname" className="form-control" id="floatingInput" onChange={(e) => {
-                           handleChange(e)}} 
-                           placeholder="text" required/> <label for="floatingInput">Display name</label>
-                    </div>
+          <div className="validinput">Enter a display name</div>
+          <div className="form-floating mb-3">
+            <input type="text" name="displayname" className="form-control" id="floatingInput" onChange={(e) => {
+                 handleChange(e)}} 
+                 placeholder="text" required/> 
+                 <label for="floatingInput">Display name</label>
+           </div>
                     
 
 
-                    <div className="validinput">The password must be a minimum of 8 characters in length and contain at least one alphabetical character</div>
-                    <div className="form-floating mb-3" >
-                      <input type="password" name="password" className="form-control" id="floatingPassword" onChange={(e) => {
-                         handleChange(e)
-                            }} 
-                            placeholder="Password" required/> <label for="floatingPassword">Password</label>
-                    </div>
+           <div className="validinput">The password must be a minimum of 8 characters in length and contain at least one alphabetical character</div>
+           <div className="form-floating mb-3" >
+             <input type="password" name="password" className="form-control" id="floatingPassword" onChange={(e) => {
+                handleChange(e)
+                   }} 
+                   placeholder="Password" required/> 
+                   <label  for="floatingPassword">Password</label>
+           </div>
                     
-                    <div className="validinput">Enter the password again</div>
-                    <div className="form-floating mb-3">
-                      <input type="password" name="confirmpassword" className="form-control" id="floatingPassword" onChange={(e) => {
-                         handleChange(e)
-                            }} 
-                            placeholder="Password" required/> <label for="floatingPassword">Confirm Password</label>
-                    </div>
+            <div className="validinput">Enter the password again</div>
+            <div className="form-floating mb-3">
+              <input type="password" name="confirmpassword" className="form-control" id="floatingPassword" onChange={(e) => {
+                 handleChange(e)
+                    }} 
+                    placeholder="Password" required/> <label for="floatingPassword">Confirm Password</label>
+             </div>
                     
 
-                    <div className="mb-3">
-                        <label for="profile-picture" className="form-label">Profile Picture</label>
-                        <input className="form-control" name ="img" type="file" id="profile-picture" onChange={(e) => {
-                          
-                          handleImageChange(e)
-                          
-                          }} required />
-                           {formData.img && <img src={formData.img} alt="Selected" style={{ maxWidth: '60%', maxHeight: '100px' }} />}
-                    </div>
-                    
-                    <div className="d-flex justify-content-between">
+             <div className="mb-3">
+                <label for="profile-picture" className="form-label">Profile Picture</label>
+                <input className="form-control" name ="img" type="file" id="profile-picture" onChange={(e) => {
+                  
+                  handleImageChange(e)
+                  
+                  }} required />
+                    {formData.img && <img src={formData.img} alt="Selected" style={{ maxWidth: '60%', maxHeight: '100px' }} />}
+             </div>
+            
+            <div className="d-flex justify-content-between">
                   
                   {!signedUp && <button className="btn btn-sign" type="submit"  id="register-button"> Sign Up</button> }                  
                   <div>
-                  {signedUp && 
-                  <label style={{ color: 'red' }}>You signed up successfully!<br />to connect, click the Sign In button.</label> 
-                  } 
-                  {signedUp && 
-                  <div>
-                  <Link to='/signin'><button className="btn btn-sign mt-2" type="submit"  id="register-button"> Sign In</button></Link>
-                  </div>
-                  }  
+                    {signedUp && <div><Link to='/signin'><button className="btn btn-sign mt-2" type="submit"  id="register-button"> Sign In</button></Link></div>}  
+                  {signedUp && <label style={{ color: 'red' , margin:4}}>You signed up successfully! to connect, click the Sign In button.</label>} 
+                  
                   </div>     
                         <Link to='/'><button className="btn btn-sign">Home</button></Link> 
                     </div>

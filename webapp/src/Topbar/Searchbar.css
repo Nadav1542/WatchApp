@@ -17,6 +17,9 @@
     background-color: red;
     color: var(--clr-light);
 }
+.dark-mode .form-control{
+    background-color: transparent;
+}
 .dark-mode .form-control::placeholder{
     color: var(--clr-light);
 }
