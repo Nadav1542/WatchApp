@@ -23,7 +23,7 @@ function Mainpage({ darkMode, userConnect, videoList, setuserConnect }) {
         <Quicksearch darkMode={darkMode} />
       </div>
       <div className="row m-4">
-        <Videolist moviesObj={videoList} />
+        <Videolist moviesObj={videoList}/>
       </div>
     </div>
   );

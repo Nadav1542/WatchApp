@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import {Link} from 'react-router-dom';
-function VideoItem({ title, description, source }) {
+function VideoItem({ title, description, source,views,uploadtime }) {
   const videoRef = useRef(null);
 
   const handleMouseEnter = () => {
@@ -20,7 +20,10 @@ function VideoItem({ title, description, source }) {
 
   return (
     <div className="card col-md-4 col-lg-3 col-sm-6 border-0 p-2">
-      <Link to ='/videowatch'>
+      <Link  to={{
+          pathname: '/videowatch',
+          state: { title, description, source, views, uploadtime }
+        }}>
       <video
         src={source}
         className="card-img-top"
@@ -33,7 +36,7 @@ function VideoItem({ title, description, source }) {
       <div className="card-body">
         <p className="card-text">{title}</p>
         <p className="card-text">{description}</p>
-        <p className="card-text">100M views - 1 week ago</p>
+        <p className="card-text">{views} views - {uploadtime}</p>
       </div>
       </Link>
     </div>

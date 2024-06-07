@@ -1,5 +1,10 @@
 [
     {
+        "description": "Home",
+        "link": "/",
+        "icon":"bi bi-house-door-fill"
+    },
+    {
         "description": "Sign Out",
         "link": "/",
         "icon":"bi bi-minus-circle",
