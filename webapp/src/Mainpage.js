@@ -3,7 +3,7 @@ import VideoItem from './videoItem/VideoItem';
 import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
 import Quicksearch from './Topbar/Quicksearch';
-import Menu from './menu';
+import Menu from './Menu';
 import buttons from './data/buttons.json';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));

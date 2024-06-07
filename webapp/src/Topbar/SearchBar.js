@@ -1,7 +1,7 @@
 import React from 'react';
 import movies from '../data/videos.json';
 import './Searchbar.css';
-import Menu from '../menu';
+import Menu from '../Menu';
 import buttons from '../data/buttons.json';
 
 //const moviesObj = JSON.parse(JSON.stringify(movies));
