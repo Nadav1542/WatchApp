@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-function LeftMenu({userConnect,setuserConnect}){
+function LeftMenu({darkMode,buttons,userConnect,setuserConnect}){
     const navigate = useNavigate();
     
     const handleSignedout = (e) => {
