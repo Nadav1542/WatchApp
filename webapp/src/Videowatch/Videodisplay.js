@@ -1,3 +1,4 @@
+import './Singlevideo.css';
 
 import { useLocation } from 'react-router-dom';
 
@@ -10,14 +11,15 @@ function Videodisplay() {
     
     
     return (
-      <div className="row m-4"> 
-        <div className="card">
-          <video src={source} className="card-img-top" controls autoPlay />
-          <div className="card-body">
-            <h5 className="card-title">{title}</h5>
-            <p className="card-text">{description}</p> 
-            <p className="card-text">{views} views - {uploadtime}</p>
-          </div>
+
+        <div className="row m-4"> 
+        <div>
+            <video src="video1.mp4" className="card-img-top rounded" controls autoPlay/>
+            <div className="card-body singlevideo">
+                <div className="card-text">Title</div>
+                <div className="card-text">Description</div> 
+                <div className="card-text">100M views - 1 week ago</div>
+            </div>
         </div>
       </div>
     );

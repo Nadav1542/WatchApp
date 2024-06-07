@@ -17,16 +17,24 @@
     background-color: red;
     color: var(--clr-light);
 }
+.menu-button {
+    font-size: 1.5rem;
+    color: var(--clr-dark);
+}
+.dark-mode .menu-button {
+    color: var(--clr-light);
+}
 .dark-mode .form-control::placeholder{
     color: var(--clr-light);
 }
 .form-control::placeholder{
     color: var(--clr-dark);
 }
-.menu-button {
+
+.form-control:focus {
     color: var(--clr-dark);
+    background-color: transparent !important;
 }
-.dark-mode .menu-button {
+.dark-mode .form-control:focus {
     color: var(--clr-light);
 }
-
