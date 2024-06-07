@@ -19,7 +19,7 @@ function LeftMenu({userConnect,setuserConnect}){
     return (
     <>
         
-        <div className="col-3 bg-light transparent-bg">
+        <div className="bg-light transparent-bg">
             
         {!userConnect && (
     
