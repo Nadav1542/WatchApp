@@ -8,7 +8,8 @@ body, html {
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: var(--clr-dark);
     background-color: #c1c1c18e;
-    margin: 18px;
+    margin: 15px;
+    margin-top: 10px;
     font-size: 1rem; 
     border-radius: 6px;
     padding-top: 3px;
@@ -28,10 +29,9 @@ body, html {
     background-color: #cbcbcb;
 }
 
-/* Ensure the container doesn't cause overflow */
 .nav-pills-container {
     margin-top: 6px;
     margin-left: 5%;
     display: flex;
-    justify-content: flex-start; /* Align items to the start */
+    justify-content: flex-start;
 }

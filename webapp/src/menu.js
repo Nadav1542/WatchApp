@@ -1,11 +1,16 @@
 import React from 'react';
 import LeftMenu from './LeftMenu/LeftMenu';
 import Menubutton from './LeftMenu/Menubutton';
+import './Topbar/Searchbar.css'
+
+   
 
 function Menu({darkMode,buttons,userConnect,setuserConnect}) {
+
+
     return (
         <>
-            <button className="btn p-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+            <button className="btn menu-button p-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
                 <i className="bi bi-list"></i>
             </button>
 

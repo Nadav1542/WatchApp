@@ -16,7 +16,7 @@ function SearchBar({ darkMode }) {
     <>
         
           {/* SearchBar */}
-          <form className="d-flex">
+          <form className="d-flex p-2">
             <input className="form-control me-2" type="search" placeholder="Search" />
             <button className="btn btn-outline-red" type="submit">Search</button>
             <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>

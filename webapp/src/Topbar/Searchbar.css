@@ -21,6 +21,12 @@
     color: var(--clr-light);
 }
 .form-control::placeholder{
-
     color: var(--clr-dark);
 }
+.menu-button {
+    color: var(--clr-dark);
+}
+.dark-mode .menu-button {
+    color: var(--clr-light);
+}
+
