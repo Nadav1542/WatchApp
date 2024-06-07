@@ -9,7 +9,7 @@ import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
 import { DarkModeProvider, useDarkMode } from './DarkModeContext';
 import Signup from './Sign/Signup';
 import Quicksearch from './Videowatch/Quicksearch';
-import Menu from './data/menu';
+import Menu from './menu';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 

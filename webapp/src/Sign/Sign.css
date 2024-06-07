@@ -7,14 +7,18 @@ body {
 .btn-sign {
     background-color: red;
 }
+.dark-mode .btn-sign:hover{
+  background-color: rgba(255, 0, 0, 0.658);
+}
 .dark-mode .btn-sign {
-  color: white;
+  color: var(--clr-light);
+}
+.form-control {
+  background-color: transparent;
 }
 .cardreg {
-  margin-top: 5px;
     background-color: rgba(128, 128, 128, 0.208);
     border-radius: 5px;
-    
   
   }
 .cardreg:hover {
@@ -22,7 +26,11 @@ body {
     transform: none;
     cursor: default;
   }
- .dark-mode .cardreg:hover {
+  body.dark-mode {
+    background-color: var(--clr-dark);
+    color: var(--clr-dark);
+}
+ .dark-mode .cardreg {
     background-color: rgba(128, 128, 128, 0.208);
   }
   .validinput{
@@ -31,7 +39,7 @@ body {
   }
   .dark-mode .validinput{
     font-size: x-small;
-    color: rgba(255, 255, 255, 0.669);
+    color: var(--clr-dark);
   }
   .sign-in-message {
     font-family: 'Ariel, sans-serif';

@@ -8,6 +8,9 @@
     border-radius: 15px;
     transition: transform 0.3s ease-in-out;
 }
+.dark-mode .card {
+    color: var(--clr-light);
+}
 .dark-mode .card:hover {
     background-color: #ffffff21;
 }
