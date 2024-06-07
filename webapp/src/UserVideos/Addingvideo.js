@@ -1,13 +1,44 @@
 import './Addingvideo.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Addingvideo({darkMode,videoList,setVideolist}) {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [source, setSource] = useState(null);
-    //const { videos, setVideos } = useContext(VideoContext);
+    const navigate = useNavigate();
+    const [error,setError] = useState();
+    //const [validation,setValidation] = useState(false);
+    
+    
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        const validation = validateVideoFile(file);
+        if (validation.isValid) {
+          setSource(file);
+          setError('');
+        } else {
+          setSource(null);
+          setError(validation.error);
+        }
+      };
+
+      const validateVideoFile = (file) => {
+        if (!file) {
+          return { isValid: false, error: 'No file selected' };
+        }
+      
+        const validVideoType = 'video/mp4';
+      
+        if (file.type === validVideoType) {
+          return { isValid: true, error: '' };
+        } else {
+          return { isValid: false, error: 'Invalid file type. Please upload a video file in MP4 format.' };
+        }
+      };
+    
     
     const handleUpload = (event) => {
         event.preventDefault(); // Prevent form submission from refreshing the page
@@ -20,8 +51,10 @@ function Addingvideo({darkMode,videoList,setVideolist}) {
           
           
           setVideolist([...videoList, newVideo]);
+          navigate('/');
         }
       };
+
     
     const handleDarkModeToggle = () => {
         const event = new Event('toggleDarkMode');
@@ -79,11 +112,12 @@ function Addingvideo({darkMode,videoList,setVideolist}) {
                             <input 
                                 type="file" 
                                 name="videoFile" 
-                                onChange={(e) => setSource(e.target.files[0])}
+                                onChange={handleFileChange}
                                 className="form-control mb-2" 
                                 id="videoFile" 
                                 required
                             />
+                            {error && <p style={{ color: 'red' }}>{error}</p>}
 
                         {/* Video Category */}
                         <div className="validinput">Select category</div>
@@ -104,6 +138,7 @@ function Addingvideo({darkMode,videoList,setVideolist}) {
                             </select>
                         </div>
                         <div className="d-flex justify-content-between">
+                            
                             <button className="btn btn-primary" type="submit">Upload Video</button>
                             <Link to='/'><button className="btn btn-sign">Home</button></Link>
                         </div>
