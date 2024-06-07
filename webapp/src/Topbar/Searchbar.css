@@ -1,6 +1,3 @@
-.container-fluid {
-    margin-right: 5%;
-}
 .transparent-bg {
     background-color: transparent !important;
 }
@@ -12,14 +9,6 @@
     background-color: var(--clr-dark);
     color: var(--clr-light);
 }
-body.dark-mode .navbar-brand .bi,
-body.dark-mode .navbar-nav .nav-link .bi {
-  color: var(--clr-light);
-}
-.navbar-expand-lg .navbar-collapse {
-    display: flex !important;
-    justify-content: flex-end;
-}
 .btn-outline-red {
     color: var(--clr-dark);
     background-color: red;
@@ -28,10 +17,10 @@ body.dark-mode .navbar-nav .nav-link .bi {
     background-color: red;
     color: var(--clr-light);
 }
-.dark-mode .form-control{
-    background-color: rgba(128, 128, 128, 0.208);
+.dark-mode .form-control::placeholder{
     color: var(--clr-light);
 }
-.form-control{
-    background-color:var(--clr-light) ;
+.form-control::placeholder{
+
+    color: var(--clr-dark);
 }

@@ -23,8 +23,6 @@ function SearchBar({ darkMode }) {
               {darkMode ? 'Light Mode' : 'Dark Mode'}
             </button>
           </form>
-
-      
     </>
   );
 }
