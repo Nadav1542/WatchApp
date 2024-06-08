@@ -9,6 +9,8 @@ import buttons from './data/buttons.json';
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 function Mainpage({ darkMode, userConnect, videoList, setuserConnect }) {
+  console.log(videoList);
+  
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="row align-items-center mb-3">
@@ -23,7 +25,7 @@ function Mainpage({ darkMode, userConnect, videoList, setuserConnect }) {
         <Quicksearch darkMode={darkMode} />
       </div>
       <div className="row m-4">
-        <Videolist moviesObj={videoList}/>
+        <Videolist videoList={videoList}/>
       </div>
     </div>
   );

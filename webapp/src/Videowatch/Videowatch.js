@@ -16,8 +16,8 @@ const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 
 
-function Videowatch({darkMode, userConnect,setuserConnect}){
-  const { title, description, source, views, uploadtime } = useParams();
+function Videowatch({darkMode, userConnect,setuserConnect,updatevideoList,deleteVideo}){
+  const { id,title, description, source, views, uploadtime } = useParams();
 
     return (
 
@@ -36,7 +36,9 @@ function Videowatch({darkMode, userConnect,setuserConnect}){
         <div className="col">
           <SearchBar darkMode={darkMode} />
         </div>
-          <Videodisplay title={title} description={description} source={source} views={views} uploadtime={uploadtime} />
+          <Videodisplay 
+            id={id} title={title} description={description} source={source} views={views} uploadtime={uploadtime} userConnect={userConnect}
+           updatevideoList={ updatevideoList} deleteVideo={deleteVideo} />
           <Comments userConnect={userConnect}/>
       </div>
     </div>

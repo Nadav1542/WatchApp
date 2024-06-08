@@ -46,7 +46,11 @@ function Addingvideo({darkMode,videoList,setVideolist}) {
           const newVideo = {
             title,
             description,
-            source: URL.createObjectURL(source)
+            source: URL.createObjectURL(source),
+            views: "100",
+            uploadtime: "now",
+            id: videoList.length.toString()
+
           };
           
           

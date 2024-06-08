@@ -33,8 +33,22 @@ function AppContent() {
   const [userConnect,setuserConnect] = useState(false);
   
   const [connectedUser, setconnectedUser] = useState();
-  const [videoList, setVideolist] = useState(JSON.parse(JSON.stringify(movies)));
   
+  const [videoList, setVideolist] = useState(JSON.parse(JSON.stringify(movies)));
+  const updatevideoList = (index, newTitle, newDescription) => {
+    const updatedVideos = videoList.map(video => {
+      if (video.id === index) {
+        return { ...video, title: newTitle, description: newDescription };
+      }
+      return video;
+    });
+    setVideolist(updatedVideos);
+  };
+
+  const deleteVideo = (id) => {
+    const updatedVideos = videoList.filter(video => video.id !== id);
+    setVideolist(updatedVideos);
+  };
   return (
     <BrowserRouter>
       <Routes>
@@ -42,7 +56,7 @@ function AppContent() {
         <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData}/>}/>
         <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData}  userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser}/>}/>
         <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist}/>}/>
-        <Route path="/videowatch/:title/:description/:source/:views/:uploadtime" element={<Videowatch darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect}/>}/>
+        <Route path="/videowatch/:id/:title/:description/:source/:views/:uploadtime" element={<Videowatch darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList} deleteVideo={deleteVideo}/>}/>
        
       </Routes>
     </BrowserRouter>

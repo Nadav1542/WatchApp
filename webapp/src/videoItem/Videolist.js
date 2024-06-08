@@ -1,14 +1,15 @@
 import VideoItem from './VideoItem';
 import './Card.css';
 
-function Videolist({moviesObj}){
+function Videolist({videoList}){
     
     
     return (
 <>
-    {moviesObj.map((video, key) =>{return<VideoItem title={video.title} description={video.description} source={video.source}
+    {videoList.map((video, key) =>{return<VideoItem title={video.title} description={video.description} source={video.source}
     views={video.views}
     uploadtime={video.uploadtime}
+    id={video.id} 
     key={key}/>})}
 </>
     );
