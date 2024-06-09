@@ -10,7 +10,6 @@ function Addingvideo({darkMode,videoList,setVideolist}) {
     const [source, setSource] = useState(null);
     const navigate = useNavigate();
     const [error,setError] = useState();
-    //const [validation,setValidation] = useState(false);
     
     
     const handleFileChange = (event) => {
@@ -49,6 +48,9 @@ function Addingvideo({darkMode,videoList,setVideolist}) {
             source: URL.createObjectURL(source),
             views: "100",
             uploadtime: "now",
+            comments: [],
+            likes: 0,
+            dislike: 0
           
           };
           

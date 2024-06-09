@@ -36,7 +36,79 @@ function AppContent() {
   
   const [connectedUser, setconnectedUser] = useState();
   
-  const [videoList, setVideolist] = useState(JSON.parse(JSON.stringify(movies)));
+  const [videoList, setVideolist] = useState(
+    JSON.parse(JSON.stringify(movies)).map(video => ({
+      ...video,
+      comments: [],
+      likes: 0,
+      dislikes: 0
+    }))
+  );
+
+  
+    
+    const addComment = (videoIndex, comment) => {
+      setVideolist(videoList =>
+        videoList.map((video, index) =>
+          index === videoIndex
+            ? { ...video, comments: [...video.comments, comment] }
+            : video
+        )
+      );
+     };
+
+     const editComment = (videoIndex, commentIndex, updatedContent) => {
+      setVideolist(videoList =>
+        videoList.map((video, index) =>
+          index === videoIndex
+            ? {
+                ...video,
+                comments: video.comments.map((comment, i) =>
+                  i === commentIndex ? { ...comment, text: updatedContent } : comment
+                )
+              }
+            : video
+        )
+      );
+    };
+    
+    const deleteComment = (videoIndex, commentIndex) => {
+      setVideolist(videoList =>
+        videoList.map((video, index) =>
+          index === videoIndex
+            ? {
+                ...video,
+                comments: video.comments.filter((_, i) => i !== commentIndex)
+              }
+            : video
+        )
+      );
+    };
+
+    const addLike = (videoIndex) => {
+      setVideolist(videoList =>
+        videoList.map((video, index) =>
+          index === videoIndex
+            ? { ...video, likes: video.likes + 1 }
+            : video
+        )
+      );
+    };
+    
+    const addDislike = (videoIndex) => {
+      setVideolist(videoList =>
+        videoList.map((video, index) =>
+          index === videoIndex
+            ? { ...video, dislikes: video.dislikes + 1 }
+            : video
+        )
+      );
+    };
+
+    
+  
+
+
   const updatevideoList = (id, newTitle, newDescription) => {
   
     const updatedVideos = videoList.map((video,index) => {
@@ -67,7 +139,21 @@ function AppContent() {
         <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData}/>}/>
         <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData}  userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser}/>}/>
         <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist}/>}/>
-        <Route path="/videowatch/:id/:title/:description/:source/:views/:uploadtime" element={<Videowatch darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList}connectedUser={connectedUser} deleteVideo={deleteVideo} videoList={videoList}/>}/>
+        <Route path="/videowatch/:id" element={<Videowatch 
+        darkMode={darkMode} 
+        userConnect={userConnect} 
+        setuserConnect={setuserConnect} 
+        updatevideoList={updatevideoList}
+        connectedUser={connectedUser} 
+        deleteVideo={deleteVideo} 
+        videoList={videoList}
+        addComment={addComment}
+        editComment={editComment}
+        deleteComment={deleteComment}
+        addLike={addLike}
+        addDislike={addDislike}/>
+        
+        }/>
        
       </Routes>
     

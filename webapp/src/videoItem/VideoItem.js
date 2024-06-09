@@ -20,7 +20,7 @@ function VideoItem({ title, description, source, views, uploadtime,id }) {
 
   return (
     <div className="card col-md-4 col-lg-3 col-sm-6 border-0 p-2">
-    <Link  to={`/videowatch/${encodeURIComponent(id)}/${encodeURIComponent(title)}/${encodeURIComponent(description)}/${encodeURIComponent(source)}/${views}/${encodeURIComponent(uploadtime)}`}>
+    <Link  to={`/videowatch/${encodeURIComponent(id)}`}>
       <video
         src={source}
         className="card-img-top"

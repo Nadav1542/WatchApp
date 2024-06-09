@@ -17,10 +17,13 @@ const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 
 
-function Videowatch({darkMode, userConnect,setuserConnect,updatevideoList,connectedUser,deleteVideo,videoList}){
-  const { id,title, description, source, views, uploadtime } = useParams();
-
-console.log(title)
+function Videowatch({darkMode, userConnect,setuserConnect,updatevideoList,connectedUser,deleteVideo,videoList,addComment,editComment,deleteComment,
+  addLike,addDislike}){
+  
+  
+  
+  const { id } = useParams();
+  
 
     return (
 
@@ -44,9 +47,10 @@ console.log(title)
         </div>
         </div>
           <Videodisplay 
-            id={id} title={title} description={description} source={source} views={views} uploadtime={uploadtime} userConnect={userConnect}
-           updatevideoList={ updatevideoList} deleteVideo={deleteVideo} />
-          <Comments userConnect={userConnect}/>
+            id={id}  userConnect={userConnect}
+           updatevideoList={ updatevideoList} deleteVideo={deleteVideo} videoList={videoList} addComment={addComment}
+           editComment={editComment} deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} />
+            
       </div>
     </div>
     </div>

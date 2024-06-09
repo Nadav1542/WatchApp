@@ -25,7 +25,7 @@ function Singlevideo({id,title,description,source,views,uploadtime}){
 
 <li className="list-group-items m-3 d-flex align-items-center border-0">
                 <div className="leftvideos border-0" >
-                <Link  to={`/videowatch/${encodeURIComponent(id)}/${encodeURIComponent(title)}/${encodeURIComponent(description)}/${encodeURIComponent(source)}/${views}/${encodeURIComponent(uploadtime)}`}>
+                <Link  to={`/videowatch/${encodeURIComponent(id)}`}>
                 <video src={source} className="card-img-top rounded" alt={title}
                  ref={videoRef}
                  onMouseEnter={handleMouseEnter}
