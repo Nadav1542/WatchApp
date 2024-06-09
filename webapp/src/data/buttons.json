@@ -7,12 +7,12 @@
     {
         "description": "Signup",
         "link": "/signup",
-        "icon": "bi bi-house-door-fill"
+        "icon": "bi bi-person-add"
     },
     {
         "description": "Signin",
         "link": "/signin",
-        "icon": "bi bi-house-door-fill"
+        "icon": "bi bi-box-arrow-in-right"
     }
    
     

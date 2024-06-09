@@ -34,7 +34,7 @@ function Usericon({ userConnect, connectedUser,setuserConnect }) {
                 />
             
             
-            <button style={{ float:"right", marginLeft: "50px"}} className="btn btn-sign" onClick={handleSignedout} type="button" id="register-button">Log out</button>
+            <button style={{ float:"right", marginLeft: "50px"}} className="btn btn-sign" onClick={handleSignedout} type="button" id="register-button"><i class="bi bi-box-arrow-left"></i>    Log out</button>
             <p style={{ float:"right", marginLeft: "50px"}}>Hello {connectedUser.displayname}!</p>
             </>
             
