@@ -11,8 +11,9 @@ function Quicksearch() {
             <a className="nav-link active" href="#">Politics</a>
             <a className="nav-link active" href="#">Comedy</a>
             <a className="nav-link active" href="#">Nature</a>
-            <a className="nav-link active" href="#">Watched</a>
-            <a className="nav-link active" href="#">For you</a>
+            <a className="nav-link active" href="#">Mixes</a>
+            <a className="nav-link active" href="#">Lives</a>
+            <a className="nav-link active" href="#">Animated</a>
         </nav>
     );
 }

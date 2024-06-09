@@ -161,13 +161,11 @@ return (
                   
                   {!signedUp && <button className="btn btn-sign" type="submit"  id="register-button"> Sign Up</button> }                  
                   <div>
-                    {signedUp && <div><Link to='/signin'><button className="btn btn-sign mt-2" type="submit" id="register-button"> Sign In</button></Link></div>}  
-                  {signedUp && <label style={{ color: 'red' , margin:4}}>You signed up successfully! to connect, click the Sign In button.</label>
-                  } 
-                  
+                    {signedUp && <div><Link to='/signin'><button className="btn btn-sign mt-2" type="submit" id="register-button"> Sign In</button></Link></div>} 
                   </div>     
                         <Link to='/'><button className="btn btn-sign">Home</button></Link> 
                     </div>
+                    <div className="callout">{signedUp && <label style={{ color: 'red' , margin:4}}><strong>You signed up successfully!</strong> to connect, click the Sign In button.</label>} </div>
                 </form>
             </div>
         </div>
