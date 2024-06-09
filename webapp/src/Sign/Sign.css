@@ -1,7 +1,8 @@
 .cardreg {
   background-color: rgba(128, 128, 128, 0.208);
   border-radius: 5px;
-} .cardreg {
+} 
+.cardreg {
     background-color: rgba(128, 128, 128, 0.208);
     border-radius: 5px;
 }
@@ -28,4 +29,7 @@
 }
 .dark-mode .form-control::placeholder {
   color: transparent;
+}
+.dark-mode .form-control {
+  color: var(--clr-light);
 }

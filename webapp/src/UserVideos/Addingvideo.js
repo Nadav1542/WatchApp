@@ -132,17 +132,16 @@ function Addingvideo({darkMode,videoList,setVideolist}) {
                                 id="videoCategory" 
                                 required
                             >
-                                <option value="" selected disabled>Select category</option>
-                                <option value="Education">Education</option>
-                                <option value="Entertainment">Entertainment</option>
-                                <option value="Sports">Sports</option>
-                                <option value="News">News</option>
-                                <option value="Music">Music</option>
-                                <option value="Other">Other</option>
+                                <option className="options" value="" selected disabled>Select category</option>
+                                <option className="options" value="Education">Education</option>
+                                <option className="options" value="Entertainment">Entertainment</option>
+                                <option className="options" value="Sports">Sports</option>
+                                <option className="options" value="News">News</option>
+                                <option className="options" value="Music">Music</option>
+                                <option className="options" value="Other">Other</option>
                             </select>
                         </div>
                         <div className="d-flex justify-content-between">
-                            
                             <button className="btn btn-primary" type="submit">Upload Video</button>
                             <Link to='/'><button className="btn btn-sign">Home</button></Link>
                         </div>
