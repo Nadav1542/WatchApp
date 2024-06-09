@@ -10,17 +10,17 @@ import Usericon from './Usericon';
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 function Mainpage({ darkMode, userConnect, videoList, setuserConnect, connectedUser}) {
-  console.log(videoList);
+  console.log(connectedUser);
   
   return (
     
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="row align-items-center mb-3">
         <div className="col-auto">
-          <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
+          <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect}  />
         </div>
         <div className="col-auto">
-          <Usericon userConnect={userConnect} connectedUser={connectedUser}/>
+          <Usericon userConnect={userConnect} connectedUser={connectedUser} setuserConnect={setuserConnect}/>
         </div>
         <div className="col">
           <SearchBar darkMode={darkMode} />

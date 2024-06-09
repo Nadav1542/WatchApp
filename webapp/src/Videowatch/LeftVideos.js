@@ -1,13 +1,16 @@
 import Singlevideo from './Singlevideo';
 import './videostyle.css';
-
+import VideoItem from '../videoItem/VideoItem';
 function LeftVideos({videos}){
 
 return (
 
 
    <>
-    {videos.map((video, key) =>{return<Singlevideo title={video.title} description={video.description} source={video.source} key={key}/>})}
+    {videos.map((video, key) =>{return<Singlevideo title={video.title} description={video.description} source={video.source}
+    views={video.views} uploadtime={video.uploadtime}
+    
+    key={key}/>})}
 
 </>
 );
@@ -21,7 +24,10 @@ export default LeftVideos;
 
  // left menu
     <div className="col-3 bg-light vh-100">
-        <ul className="list-group">
+       
+    {videos.map((video, key) =>{return<Singlevideo title={video.title} description={video.description} source={video.source} key={key}/>})}
+    
+    <ul className="list-group">
             <li className="list-group-item d-flex align-items-center border-0">
                 <div className="card border-0" >
                     <img src="img1.jpg" className="card-img-top" alt="..."/>

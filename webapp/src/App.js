@@ -5,29 +5,31 @@ import VideoItem from './videoItem/VideoItem';
 import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
 import buttons from './data/buttons.json';
-import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
+import {BrowserRouter , Router, Routes, Route} from 'react-router-dom';
 import { DarkModeProvider, useDarkMode } from './DarkModeContext';
 import Signup from './Sign/Signup';
 import Mainpage from './Mainpage';
 import Signin from './Sign/Signin';
 import Videowatch from './Videowatch/Videowatch';
 import Addingvideo from './UserVideos/Addingvideo';
-
+import { useNavigate } from 'react-router-dom';
 
 
 
 function App() {
   
 return (
-    <DarkModeProvider>
-      <AppContent/>
-    </DarkModeProvider>
+  <DarkModeProvider>
+  <BrowserRouter>
+    <AppContent />
+  </BrowserRouter>
+</DarkModeProvider>
   );
 }
 
 
 function AppContent() {
-  
+  const navigate = useNavigate();
   const { darkMode } = useDarkMode();
   const [usersData, setusersData] = useState([]);
   const [userConnect,setuserConnect] = useState(false);
@@ -48,9 +50,10 @@ function AppContent() {
   const deleteVideo = (id) => {
     const updatedVideos = videoList.filter(video => video.id !== id);
     setVideolist(updatedVideos);
+    navigate('/');
   };
   return (
-    <BrowserRouter>
+    
       <Routes>
         <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser}/>}/>
         <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData}/>}/>
@@ -59,7 +62,7 @@ function AppContent() {
         <Route path="/videowatch/:id/:title/:description/:source/:views/:uploadtime" element={<Videowatch darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList} deleteVideo={deleteVideo}/>}/>
        
       </Routes>
-    </BrowserRouter>
+    
   );
 }
 
