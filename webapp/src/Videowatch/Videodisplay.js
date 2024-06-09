@@ -70,7 +70,7 @@ function Videodisplay({id,title,description,source,views,uploadtime,userConnect,
                     onClick={handleEditTitle} 
                     className="btn btn-sm btn-outline-primary ms-2 edit-button"
                   >
-                    Edit
+                    <i class="bi bi-pencil"></i>   Edit
                   </button>
                 )}
               </>
@@ -98,7 +98,7 @@ function Videodisplay({id,title,description,source,views,uploadtime,userConnect,
                     onClick={handleEditDescription} 
                     className="btn btn-sm btn-outline-primary ms-2 edit-button"
                   >
-                    Edit
+                    <i class="bi bi-pencil"></i>   Edit
                   </button>
                 )}
               </>
@@ -106,7 +106,7 @@ function Videodisplay({id,title,description,source,views,uploadtime,userConnect,
           <div className="card-text">{views} views - {decodeURIComponent(uploadtime)}</div>
           {userConnect && (
             <button onClick={handleDelete} className="btn btn-sm btn-outline-danger ms-2">
-              Delete
+             <i class="bi bi-trash"></i>   Delete
             </button>
           )}
             </div>

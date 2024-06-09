@@ -67,7 +67,7 @@ function AppContent() {
         <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData}/>}/>
         <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData}  userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser}/>}/>
         <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist}/>}/>
-        <Route path="/videowatch/:id/:title/:description/:source/:views/:uploadtime" element={<Videowatch darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList} deleteVideo={deleteVideo} videoList={videoList}/>}/>
+        <Route path="/videowatch/:id/:title/:description/:source/:views/:uploadtime" element={<Videowatch darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList}connectedUser={connectedUser} deleteVideo={deleteVideo} videoList={videoList}/>}/>
        
       </Routes>
     
