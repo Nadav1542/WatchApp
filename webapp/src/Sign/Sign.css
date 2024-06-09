@@ -26,3 +26,6 @@
     font-size: x-small;
     color: var(--clr-light);
 }
+.dark-mode .form-control::placeholder {
+  color: transparent;
+}
