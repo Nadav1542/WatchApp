@@ -7,7 +7,7 @@
     {
         "description": "Sign Out",
         "link": "/",
-        "icon":"bi bi-minus-circle",
+        "icon":"bi bi-box-arrow-left",
         "OnClick": "handleSignedout"
     },
     {
