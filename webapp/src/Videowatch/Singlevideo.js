@@ -1,5 +1,5 @@
 import './Singlevideo.css';
-function Single({source,title,description}){
+function Singlevideo({title,description,source,views,uploadtime}){
 
 return (
 
@@ -11,7 +11,7 @@ return (
                     <div className="card-body singlevideo">
                         <p className="card-text">{title}</p>
                         <p classNameName="card-text">{description}</p> 
-                        <p classNameName="card-text">100M views - 1 week ago</p>
+                        <p classNameName="card-text">{views} views - {uploadtime}</p>
                     </div>
                 </div>
             </li>
@@ -22,4 +22,4 @@ return (
 
 }
 
-export default Single;
+export default Singlevideo;

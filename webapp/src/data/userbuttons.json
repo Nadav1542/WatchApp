@@ -3,22 +3,20 @@
         "description": "Home",
         "link": "/",
         "icon":"bi bi-house-door-fill"
+        
     },
-    {
-        "description": "Sign Out",
-        "link": "/",
-        "icon":"bi bi-box-arrow-left",
-        "OnClick": "handleSignedout"
-    },
+   
     {
         "description": "Uplaod Video",
         "link": "/Addingvideo",
         "icon":"bi bi-plus-circle"
+        
     },
     {
         "description": "Notifications",
         "link": "/",
         "icon": "bi bi-bell"
+        
     }
     
    

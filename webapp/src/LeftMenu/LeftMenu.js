@@ -7,14 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function LeftMenu({darkMode,buttons,userConnect,setuserConnect}){
-    const navigate = useNavigate();
     
-    const handleSignedout = (e) => {
-        e.preventDefault();
-        setuserConnect(false);
-        // Perform any additional logout actions here (e.g., clear user data, redirect to login page, etc.)
-        console.log('User logged out');
-      };
     
     return (
     <>
@@ -29,6 +22,7 @@ function LeftMenu({darkMode,buttons,userConnect,setuserConnect}){
               description={button.description}
               link={button.link}
               icon={button.icon}
+              
               key={key}
             />
           ))}
@@ -45,7 +39,7 @@ function LeftMenu({darkMode,buttons,userConnect,setuserConnect}){
               description={button.description}
               link={button.link}
               icon={button.icon}
-              onClick={button.OnClick}
+              
               key={key}
             />
           ))}

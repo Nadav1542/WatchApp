@@ -25,6 +25,12 @@
 }
 .form-control::placeholder{
     color: var(--clr-dark);
+    
+}
+
+.righted{
+    width:150%;
+    margin-left: 600px;
 }
 
 .form-control:focus {
