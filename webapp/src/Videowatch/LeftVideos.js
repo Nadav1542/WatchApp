@@ -7,10 +7,10 @@ return (
 
 
    <>
-    {videos.map((video, key) =>{return<Singlevideo title={video.title} description={video.description} source={video.source}
+    {videos.map((video, index) =>{return<Singlevideo id={index} title={video.title} description={video.description} source={video.source}
     views={video.views} uploadtime={video.uploadtime}
     
-    key={key}/>})}
+    key={index}/>})}
 
 </>
 );

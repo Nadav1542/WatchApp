@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../Topbar/Searchbar.css'
 
-function Comments({ userConnect }) {
-  const [comments, setComments] = useState([]);
+function Comments({ id, videoList,addComment,editComment,deleteComment,addLike,addDislike }) {
+  
+  const [comments, setComments] = useState(videoList[id].comments);
   const [newComment, setNewComment] = useState('');
   const [editIndex, setEditIndex] = useState(null);
   const [editedComment, setEditedComment] = useState('');
-  const [videoLikes, setVideoLikes] = useState(0);
-  const [videoDislikes, setVideoDislikes] = useState(0);
+  const [videoLikes, setVideoLikes] = useState(videoList[id].likes);
+  const [videoDislikes, setVideoDislikes] = useState(videoList[id].dislikes);
+  
+  useEffect(() => {
+    setComments(videoList[id].comments);
+    setVideoLikes(videoList[id].likes);
+    setVideoDislikes(videoList[id].dislikes);
+  }, [id, videoList]);
 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
@@ -16,6 +23,7 @@ function Comments({ userConnect }) {
         text: newComment,
       };
       setComments([...comments, newCommentObj]);
+      addComment(id,newCommentObj)
       setNewComment('');
     }
   };
@@ -26,6 +34,7 @@ function Comments({ userConnect }) {
       const updatedComments = [...comments];
       updatedComments[index].text = editedComment;
       setComments(updatedComments);
+      editComment(id,index,editedComment)
       setEditIndex(null);
       setEditedComment('');
     }
@@ -33,15 +42,18 @@ function Comments({ userConnect }) {
 
   const handleDeleteComment = (index) => {
     const updatedComments = comments.filter((_, i) => i !== index);
+    deleteComment(id,index)
     setComments(updatedComments);
   };
 
   const handleLikeVideo = () => {
     setVideoLikes(videoLikes + 1);
+    addLike(id)
   };
 
   const handleDislikeVideo = () => {
     setVideoDislikes(videoDislikes + 1);
+    addDislike(id)
   };
 
   const handleShareVideo = () => {
@@ -73,7 +85,7 @@ function Comments({ userConnect }) {
           </button>
         </nav>
       </div>
-      {userConnect && (
+      
         <form onSubmit={handleCommentSubmit} className="mt-3">
           <div className="form-group">
             <label htmlFor="newComment">Add a Comment:</label>
@@ -88,7 +100,7 @@ function Comments({ userConnect }) {
           </div>
           <button type="submit" className="btn btn-primary mt-2">Submit</button>
         </form>
-      )}
+      
       <ul className="list-group mt-3">
         {comments.map((comment, index) => (
           <li key={index} className="list-group-item">
@@ -115,7 +127,7 @@ function Comments({ userConnect }) {
             ) : (
               <>
                 <p>{comment.text}</p>
-                {userConnect && (
+                
                   <div>
                     <button
                       className="btn btn-link"
@@ -133,7 +145,7 @@ function Comments({ userConnect }) {
                       Delete
                     </button>
                   </div>
-                )}
+                
               </>
             )}
           </li>

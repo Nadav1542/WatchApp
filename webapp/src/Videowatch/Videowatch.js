@@ -17,8 +17,13 @@ const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 
 
-function Videowatch({darkMode, userConnect,setuserConnect, updatevideoList,connectedUser,deleteVideo}){
-  const { id,title, description, source, views, uploadtime } = useParams();
+function Videowatch({darkMode, userConnect,setuserConnect,updatevideoList,connectedUser,deleteVideo,videoList,addComment,editComment,deleteComment,
+  addLike,addDislike}){
+  
+  
+  
+  const { id } = useParams();
+  
 
     return (
 
@@ -26,7 +31,7 @@ function Videowatch({darkMode, userConnect,setuserConnect, updatevideoList,conne
 <div className="container-fluid">
   <div className="row">
     <div className="col-3">
-        <LeftVideos videos={videos}/>
+        <LeftVideos videos={videoList}/>
       </div>
       
       <div className="col-9">
@@ -42,9 +47,10 @@ function Videowatch({darkMode, userConnect,setuserConnect, updatevideoList,conne
         </div>
         </div>
           <Videodisplay 
-            id={id} title={title} description={description} source={source} views={views} uploadtime={uploadtime} userConnect={userConnect}
-           updatevideoList={ updatevideoList} deleteVideo={deleteVideo} />
-          <Comments userConnect={userConnect}/>
+            id={id}  userConnect={userConnect}
+           updatevideoList={ updatevideoList} deleteVideo={deleteVideo} videoList={videoList} addComment={addComment}
+           editComment={editComment} deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} />
+            
       </div>
     </div>
     </div>

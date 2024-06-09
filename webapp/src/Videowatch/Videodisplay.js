@@ -1,37 +1,58 @@
 import './Singlevideo.css';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import Comments from './Comments';
 
-function Videodisplay({id,title,description,source,views,uploadtime,userConnect,updatevideoList,deleteVideo}) {
+function Videodisplay({id,userConnect,updatevideoList,deleteVideo,videoList,addComment,editComment,deleteComment,addLike,addDislike}) {
     
-    
-  const [title1, setTitle] = useState(decodeURIComponent(title));
-  const [description1, setDescription] = useState(decodeURIComponent(description));
+  const numeriId = parseInt(id,10)
+  const[title,setTitle] = useState(decodeURIComponent(videoList[numeriId].title))
+  const[description,setDescription] = useState(decodeURIComponent(videoList[numeriId].description))
+  const[source,setSource] = useState((videoList[numeriId].source))
+  const[views,setViews] = useState(decodeURIComponent(videoList[numeriId].views))
+  const[uploadtime,setuploadTime] = useState(decodeURIComponent(videoList[numeriId].uploadtime))
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
+  
+  
+  useEffect(() => {
+    if (videoList && videoList[numeriId]) {
+      setTitle(decodeURIComponent(videoList[numeriId].title));
+      setDescription(decodeURIComponent(videoList[numeriId].description));
+      setSource(videoList[numeriId].source);
+      setViews(decodeURIComponent(videoList[numeriId].views));
+      setuploadTime(decodeURIComponent(videoList[numeriId].uploadtime));
+    }
+  }, [videoList, numeriId]);
 
+  
   const handleTitleChange = (event) => setTitle(event.target.value);
+
   const handleDescriptionChange = (event) => setDescription(event.target.value);
+
   const handleEditTitle = () => setIsEditingTitle(!isEditingTitle);
+
   const handleEditDescription = () => setIsEditingDescription(!isEditingDescription);
+
   const handleSaveTitle = () => {
     setIsEditingTitle(false);
-    updatevideoList(id, title1, description1); // Persist the change
+    updatevideoList(numeriId, title, description); // Persist the change
   };
   const handleSaveDescription = () => {
     setIsEditingDescription(false);
-    updatevideoList(id, title1, description1); // Persist the change
+    updatevideoList(numeriId, title, description); // Persist the change
   };
 
-  //console.log(id);
+  
   const handleDelete = () => {
-    deleteVideo(id);
+    deleteVideo(numeriId);
   };
     
-    
+    console.log(videoList[id].comments)
+    console.log(videoList)
     
     return (
-
+<>
         <div className="row m-4"> 
         <div>
         <video src={decodeURIComponent(source)} className="card-img-top rounded" controls autoPlay />
@@ -40,7 +61,7 @@ function Videodisplay({id,title,description,source,views,uploadtime,userConnect,
               <>
                 <input 
                   type="text" 
-                  value={title1} 
+                  value={title} 
                   onChange={handleTitleChange} 
                   className="form-control d-inline w-auto"
                 />
@@ -53,7 +74,7 @@ function Videodisplay({id,title,description,source,views,uploadtime,userConnect,
               </>
             ) : (
               <>
-                {title1}
+                {title}
                 {userConnect && (
                   <button 
                     onClick={handleEditTitle} 
@@ -68,7 +89,7 @@ function Videodisplay({id,title,description,source,views,uploadtime,userConnect,
               <>
                 <input 
                   type="text" 
-                  value={description1} 
+                  value={description} 
                   onChange={handleDescriptionChange} 
                   className="form-control d-inline w-auto"
                 />
@@ -81,7 +102,7 @@ function Videodisplay({id,title,description,source,views,uploadtime,userConnect,
               </>
             ) : (
               <>
-                {description1}
+                {description}
                 {userConnect && (
                   <button 
                     onClick={handleEditDescription} 
@@ -101,6 +122,10 @@ function Videodisplay({id,title,description,source,views,uploadtime,userConnect,
             </div>
         </div>
       </div>
+        {userConnect && <Comments id={numeriId} videoList={videoList} addComment={addComment} editComment={editComment}
+        deleteComment={deleteComment} addLike={addLike} addDislike={addDislike}/>}
+      </>
     );
+    
   }
 export default Videodisplay;

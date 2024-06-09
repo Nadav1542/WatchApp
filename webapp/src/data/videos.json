@@ -9,6 +9,7 @@
             "views": "100",
             "uploadtime": "12/03/1998"
             
+            
         },
         {
             "title": "Movie 1",
@@ -78,7 +79,7 @@
             "title": "Movie 9",
             "description": "Description of movie 1",
             "source": "/video1.mp4",
-            "views": "100",
+            "views": "10000",
             "uploadtime": "12/03/1998"
             
         },
