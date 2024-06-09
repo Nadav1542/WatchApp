@@ -21,6 +21,7 @@ function Menu({darkMode,buttons,userConnect,setuserConnect}) {
                 <div className="offcanvas-body">
                     <LeftMenu darkMode={darkMode} buttons={buttons} userConnect={userConnect} setuserConnect={setuserConnect}/>
                 </div>
+            
             </div>
         </>
     );
