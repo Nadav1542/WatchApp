@@ -1,19 +1,30 @@
 import './Singlevideo.css';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 function Videodisplay({id,title,description,source,views,uploadtime,userConnect,updatevideoList,deleteVideo}) {
     
-    
+  
+
+
   const [title1, setTitle] = useState(decodeURIComponent(title));
   const [description1, setDescription] = useState(decodeURIComponent(description));
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
+  
+  useEffect(() => {
+    setTitle(decodeURIComponent(title));
+    setDescription(decodeURIComponent(description));
+  }, [title, description]); 
 
   const handleTitleChange = (event) => setTitle(event.target.value);
+
   const handleDescriptionChange = (event) => setDescription(event.target.value);
+
   const handleEditTitle = () => setIsEditingTitle(!isEditingTitle);
+
   const handleEditDescription = () => setIsEditingDescription(!isEditingDescription);
+
   const handleSaveTitle = () => {
     setIsEditingTitle(false);
     updatevideoList(id, title1, description1); // Persist the change

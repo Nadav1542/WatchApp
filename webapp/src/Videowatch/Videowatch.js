@@ -10,14 +10,16 @@ import SearchBar from '../Topbar/SearchBar';
 import Menu from '../Menu';
 import buttons from '../data/buttons.json';
 import { useParams } from 'react-router-dom';
-const videos = JSON.parse(JSON.stringify(movies));
+//const videos = JSON.parse(JSON.stringify(movies));
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 
 
 
-function Videowatch({darkMode, userConnect,setuserConnect,updatevideoList,deleteVideo}){
+function Videowatch({darkMode, userConnect,setuserConnect,updatevideoList,deleteVideo,videoList}){
   const { id,title, description, source, views, uploadtime } = useParams();
+
+console.log(title)
 
     return (
 
@@ -25,7 +27,7 @@ function Videowatch({darkMode, userConnect,setuserConnect,updatevideoList,delete
 <div className="container-fluid">
   <div className="row">
     <div className="col-3">
-        <LeftVideos videos={videos}/>
+        <LeftVideos videos={videoList}/>
       </div>
       
       <div className="col-9">
