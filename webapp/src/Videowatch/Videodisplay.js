@@ -23,7 +23,7 @@ function Videodisplay({id,title,description,source,views,uploadtime,userConnect,
     updatevideoList(id, title1, description1); // Persist the change
   };
 
-  console.log(id);
+  //console.log(id);
   const handleDelete = () => {
     deleteVideo(id);
   };

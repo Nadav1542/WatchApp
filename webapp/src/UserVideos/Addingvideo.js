@@ -49,8 +49,7 @@ function Addingvideo({darkMode,videoList,setVideolist}) {
             source: URL.createObjectURL(source),
             views: "100",
             uploadtime: "now",
-            id: videoList.length.toString()
-
+          
           };
           
           
