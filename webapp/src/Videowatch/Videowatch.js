@@ -23,8 +23,8 @@ function Videowatch({darkMode, userConnect,setuserConnect, updatevideoList,conne
     return (
 
 <div className={darkMode ? 'dark-mode' : ''}>
-<div class="container-fluid">
-  <div class="row">
+<div className="container-fluid">
+  <div className="row">
     <div className="col-3">
         <LeftVideos videos={videos}/>
       </div>

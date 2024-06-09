@@ -10,8 +10,9 @@ import Usericon from './Usericon';
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 function Mainpage({ darkMode, userConnect, videoList, setuserConnect, connectedUser}) {
-  console.log(connectedUser);
   
+  
+  console.log(videoList)
   return (
     
     <div className={darkMode ? 'dark-mode' : ''}>

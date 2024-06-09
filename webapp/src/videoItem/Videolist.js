@@ -6,11 +6,11 @@ function Videolist({videoList}){
     
     return (
 <>
-    {videoList.map((video, key) =>{return<VideoItem title={video.title} description={video.description} source={video.source}
+    {videoList.map((video, index) =>{return<VideoItem title={video.title} description={video.description} source={video.source}
     views={video.views}
     uploadtime={video.uploadtime}
-    id={video.id} 
-    key={key}/>})}
+    id={index} 
+    key={index}/>})}
 </>
     );
 

@@ -37,9 +37,12 @@ function AppContent() {
   const [connectedUser, setconnectedUser] = useState();
   
   const [videoList, setVideolist] = useState(JSON.parse(JSON.stringify(movies)));
-  const updatevideoList = (index, newTitle, newDescription) => {
-    const updatedVideos = videoList.map(video => {
-      if (video.id === index) {
+  const updatevideoList = (id, newTitle, newDescription) => {
+  
+    const updatedVideos = videoList.map((video,index) => {
+   
+      if (parseInt(id,10) === index) {
+        console.log('Match found. Updating video at index:', index);
         return { ...video, title: newTitle, description: newDescription };
       }
       return video;
@@ -48,7 +51,12 @@ function AppContent() {
   };
 
   const deleteVideo = (id) => {
-    const updatedVideos = videoList.filter(video => video.id !== id);
+    // Ensure the id is treated as a number (if necessary)
+    const numericId = parseInt(id, 10);
+  
+    // Use the filter method to remove the video at the given index
+    const updatedVideos = videoList.filter((video, index) => index !== numericId);
+  
     setVideolist(updatedVideos);
     navigate('/');
   };

@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 function Usericon({ userConnect, connectedUser,setuserConnect }) {
-    console.log(userConnect)
-    console.log(connectedUser)
+    
     const navigate = useNavigate();
     
     
