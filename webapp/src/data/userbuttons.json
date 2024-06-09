@@ -5,13 +5,7 @@
         "icon":"bi bi-house-door-fill"
         
     },
-    {
-        "description": "Sign Out",
-        "link": "/",
-        "icon":"bi bi-minus-circle"
-       
-        
-    },
+   
     {
         "description": "Uplaod Video",
         "link": "/Addingvideo",
