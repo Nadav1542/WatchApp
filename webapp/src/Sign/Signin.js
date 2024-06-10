@@ -88,14 +88,14 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
                 <label htmlFor="floatingPassword">Password</label>
               </div>
 
+              {error && <div className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>{error}</div>}
+              {userConnect && <div className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}><strong>You signed in successfully.</strong> Click the Home button</div>}
               <div className="d-flex justify-content-between">
                 {!userConnect && <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>}
                 <Link to='/'><button className="btn btn-sign">Home</button></Link>
                 {!userConnect && <Link to='/signup'><button className="btn btn-sign" type="button" id="register-button">Sign Up</button></Link>}
               </div>
 
-              {error && <p className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>{error}</p>}
-              {userConnect && <p className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>You signed in successfully. Click the Home button</p>}
             </form>
           </div>
         </div>

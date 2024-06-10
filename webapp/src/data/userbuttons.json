@@ -16,7 +16,16 @@
         "description": "Notifications",
         "link": "/",
         "icon": "bi bi-bell"
-        
+    },
+    {
+        "description": "Liked videos",
+        "link": "/",
+        "icon": "bi bi-hand-thumbs-up"
+    },
+    {
+        "description": "Profile",
+        "link": "/",
+        "icon": "bi bi-person"
     }
     
    

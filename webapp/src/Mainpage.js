@@ -3,9 +3,9 @@ import VideoItem from './videoItem/VideoItem';
 import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
 import Quicksearch from './Topbar/Quicksearch';
-import Menu from './Menu';
+import Menu from './Topbar/Menu';
 import buttons from './data/buttons.json';
-import Usericon from './Usericon';
+import Usericon from './Topbar/Usericon';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 

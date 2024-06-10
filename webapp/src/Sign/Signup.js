@@ -129,8 +129,8 @@ function Signup({ darkMode, usersData, setusersData }) {
                 {formData.img && <img src={formData.img} alt="Selected" style={{ maxWidth: '60%', maxHeight: '100px' }} />}
               </div>
 
-              {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-
+              {errorMessage && <div className="alert alert-danger"style={{ color: 'red'}}>{errorMessage}</div>}
+              {signedUp && <div className="alert alert-danger m-2" style={{ color: 'red' ,textAlign: 'center'}}><strong>You signed up successfully!</strong> to connect, click the Sign In button.</div>}
               <div className="d-flex justify-content-between">
                 {!signedUp && <button className="btn btn-sign" type="submit" id="register-button"> Sign Up</button>}
                 <div>
@@ -138,7 +138,6 @@ function Signup({ darkMode, usersData, setusersData }) {
                 </div>
                 <Link to='/'><button className="btn btn-sign">Home</button></Link>
               </div>
-              <div >{signedUp && <label className="alert alert-danger m-2" style={{ color: 'red', margin: 4 }}><strong>You signed up successfully!</strong> to connect, click the Sign In button.</label>}</div>
             </form>
           </div>
         </div>

@@ -3,14 +3,13 @@ import React, { useState } from 'react';
 import Videolist from '../videoItem/Videolist';
 import {BrowserRouter, Routes, Route, Router} from 'react-router-dom';
 import { DarkModeProvider, useDarkMode } from '../DarkModeContext';
-import Comments from './Comments';
 import LeftVideos from './LeftVideos';
 import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
-import Menu from '../Menu';
+import Menu from '../Topbar/Menu';
 import buttons from '../data/buttons.json';
 import { useParams } from 'react-router-dom';
-import Usericon from '../Usericon';
+import Usericon from '../Topbar/Usericon';
 const videos = JSON.parse(JSON.stringify(movies));
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
