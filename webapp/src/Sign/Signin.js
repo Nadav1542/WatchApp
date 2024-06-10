@@ -50,7 +50,8 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
             >
               <div className="d-flex justify-content-end">
                 <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>
-                  {darkMode ? 'Light Mode' : 'Dark Mode'}
+                <i className={darkMode ? 'bi bi-sun' : 'bi bi-moon-stars-fill'}></i>
+                  {darkMode ? '   Light Mode' : '   Dark Mode'}
                 </button>
               </div>
 

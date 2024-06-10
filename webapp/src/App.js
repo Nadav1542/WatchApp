@@ -138,21 +138,11 @@ function AppContent() {
         <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser}/>}/>
         <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData}/>}/>
         <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData}  userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser}/>}/>
-        <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist}/>}/>
-        <Route path="/videowatch/:id" element={<Videowatch 
-        darkMode={darkMode} 
-        userConnect={userConnect} 
-        setuserConnect={setuserConnect} 
-        updatevideoList={updatevideoList}
-        connectedUser={connectedUser} 
-        deleteVideo={deleteVideo} 
-        videoList={videoList}
-        addComment={addComment}
-        editComment={editComment}
+        <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist} userconnect={userConnect}/>}/>
+        <Route path="/videowatch/:id" element={<Videowatch darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect}  updatevideoList={updatevideoList} connectedUser={connectedUser} deleteVideo={deleteVideo} videoList={videoList}addComment={addComment}editComment={editComment}
         deleteComment={deleteComment}
         addLike={addLike}
         addDislike={addDislike}/>
-        
         }/>
        
       </Routes>

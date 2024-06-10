@@ -92,7 +92,8 @@ function Signup({ darkMode, usersData, setusersData }) {
             <form id="registration-form" onSubmit={handleSubmit} className="cardreg p-4 shadow-lg needs-validation" novalidate>
               <div className="d-flex justify-content-end">
                 <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>
-                  {darkMode ? 'Light Mode' : 'Dark Mode'}
+                <i className={darkMode ? 'bi bi-sun' : 'bi bi-moon-stars-fill'}></i>
+                  {darkMode ? '   Light Mode' : '   Dark Mode'}
                 </button>
               </div>
               <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
