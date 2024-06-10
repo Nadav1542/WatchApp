@@ -94,8 +94,8 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
                 {!userConnect && <Link to='/signup'><button className="btn btn-sign" type="button" id="register-button">Sign Up</button></Link>}
               </div>
 
-              {error && <p style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>{error}</p>}
-              {userConnect && <p style={{ color: 'blue', textAlign: 'center', marginTop: '1rem' }}>You signed in successfully. Click the Home button</p>}
+              {error && <p className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>{error}</p>}
+              {userConnect && <p className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>You signed in successfully. Click the Home button</p>}
             </form>
           </div>
         </div>
