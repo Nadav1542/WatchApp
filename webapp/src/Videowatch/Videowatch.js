@@ -48,7 +48,7 @@ function Videowatch({darkMode, userConnect,setuserConnect,updatevideoList,connec
           <Videodisplay 
             id={id}  userConnect={userConnect}
            updatevideoList={ updatevideoList} deleteVideo={deleteVideo} videoList={videoList} addComment={addComment}
-           editComment={editComment} deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} />
+           editComment={editComment} deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} connectedUser={connectedUser} />
             
       </div>
     </div>

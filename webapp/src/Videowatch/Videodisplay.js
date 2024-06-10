@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import Comments from './Comments';
 
-function Videodisplay({id,userConnect,updatevideoList,deleteVideo,videoList,addComment,editComment,deleteComment,addLike,addDislike}) {
+function Videodisplay({id,userConnect,updatevideoList,deleteVideo,videoList,addComment,editComment,deleteComment,addLike,addDislike,connectedUser}) {
     
   const numeriId = parseInt(id,10)
   const[title,setTitle] = useState(decodeURIComponent(videoList[numeriId].title))
@@ -122,8 +122,8 @@ function Videodisplay({id,userConnect,updatevideoList,deleteVideo,videoList,addC
             </div>
         </div>
       </div>
-        {userConnect && <Comments id={numeriId} videoList={videoList} addComment={addComment} editComment={editComment}
-        deleteComment={deleteComment} addLike={addLike} addDislike={addDislike}/>}
+        <Comments id={numeriId} videoList={videoList} addComment={addComment} editComment={editComment}
+        deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} connectedUser={connectedUser} userConnect={userConnect}/>
       </>
     );
     

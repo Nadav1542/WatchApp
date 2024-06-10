@@ -1,15 +1,14 @@
-import React, { useState,useEffect } from 'react';
-import '../Topbar/Searchbar.css'
+import React, { useState, useEffect } from 'react';
+import '../Topbar/Searchbar.css';
 
-function Comments({ id, videoList,addComment,editComment,deleteComment,addLike,addDislike }) {
-  
+function Comments({ id, videoList, addComment, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
   const [comments, setComments] = useState(videoList[id].comments);
   const [newComment, setNewComment] = useState('');
   const [editIndex, setEditIndex] = useState(null);
   const [editedComment, setEditedComment] = useState('');
   const [videoLikes, setVideoLikes] = useState(videoList[id].likes);
   const [videoDislikes, setVideoDislikes] = useState(videoList[id].dislikes);
-  
+
   useEffect(() => {
     setComments(videoList[id].comments);
     setVideoLikes(videoList[id].likes);
@@ -21,9 +20,10 @@ function Comments({ id, videoList,addComment,editComment,deleteComment,addLike,a
     if (newComment.trim()) {
       const newCommentObj = {
         text: newComment,
+        user: connectedUser.displayname // Add the connected user's name to the comment object
       };
       setComments([...comments, newCommentObj]);
-      addComment(id,newCommentObj)
+      addComment(id, newCommentObj);
       setNewComment('');
     }
   };
@@ -34,7 +34,7 @@ function Comments({ id, videoList,addComment,editComment,deleteComment,addLike,a
       const updatedComments = [...comments];
       updatedComments[index].text = editedComment;
       setComments(updatedComments);
-      editComment(id,index,editedComment)
+      editComment(id, index, editedComment);
       setEditIndex(null);
       setEditedComment('');
     }
@@ -42,18 +42,18 @@ function Comments({ id, videoList,addComment,editComment,deleteComment,addLike,a
 
   const handleDeleteComment = (index) => {
     const updatedComments = comments.filter((_, i) => i !== index);
-    deleteComment(id,index)
+    deleteComment(id, index);
     setComments(updatedComments);
   };
 
   const handleLikeVideo = () => {
     setVideoLikes(videoLikes + 1);
-    addLike(id)
+    addLike(id);
   };
 
   const handleDislikeVideo = () => {
     setVideoDislikes(videoDislikes + 1);
-    addDislike(id)
+    addDislike(id);
   };
 
   const handleShareVideo = () => {
@@ -74,10 +74,10 @@ function Comments({ id, videoList,addComment,editComment,deleteComment,addLike,a
     <div className="comments-section">
       <div className="row">
         <nav className="nav">
-          <button className="nav-link btn" onClick={handleLikeVideo}>
+          <button className="nav-link btn" onClick={handleLikeVideo} disabled={!userConnect}>
             <i className="bi bi-hand-thumbs-up"></i> {videoLikes}
           </button>
-          <button className="nav-link btn" onClick={handleDislikeVideo}>
+          <button className="nav-link btn" onClick={handleDislikeVideo} disabled={!userConnect}>
             <i className="bi bi-hand-thumbs-down"></i> {videoDislikes}
           </button>
           <button className="nav-link btn" onClick={handleShareVideo}>
@@ -86,6 +86,7 @@ function Comments({ id, videoList,addComment,editComment,deleteComment,addLike,a
         </nav>
       </div>
       
+      {userConnect && (
         <form onSubmit={handleCommentSubmit} className="mt-3">
           <div className="form-group">
             <label htmlFor="newComment">Add a Comment:</label>
@@ -100,34 +101,37 @@ function Comments({ id, videoList,addComment,editComment,deleteComment,addLike,a
           </div>
           <button type="submit" className="btn btn-primary mt-2">Submit</button>
         </form>
+      )}
       
       <ul className="list-group mt-3">
         {comments.map((comment, index) => (
           <li key={index} className="list-group-item">
             {editIndex === index ? (
-              <form onSubmit={(e) => handleEditCommentSubmit(e, index)}>
-                <div className="form-group">
-                  <textarea
-                    className="form-control"
-                    value={editedComment}
-                    onChange={(e) => setEditedComment(e.target.value)}
-                    placeholder="Edit your comment..."
-                    required
-                  ></textarea>
-                </div>
-                <button type="submit" className="btn btn-primary mt-2">Save</button>
-                <button
-                  type="button"
-                  className="btn btn-secondary mt-2"
-                  onClick={() => setEditIndex(null)}
-                >
-                  Cancel
-                </button>
-              </form>
+              userConnect && (
+                <form onSubmit={(e) => handleEditCommentSubmit(e, index)}>
+                  <div className="form-group">
+                    <textarea
+                      className="form-control"
+                      value={editedComment}
+                      onChange={(e) => setEditedComment(e.target.value)}
+                      placeholder="Edit your comment..."
+                      required
+                    ></textarea>
+                  </div>
+                  <button type="submit" className="btn btn-primary mt-2">Save</button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary mt-2"
+                    onClick={() => setEditIndex(null)}
+                  >
+                    Cancel
+                  </button>
+                </form>
+              )
             ) : (
               <>
-                <p>{comment.text}</p>
-                
+                <p><strong>{comment.user}</strong>: {comment.text}</p>
+                {userConnect && (
                   <div>
                     <button
                       className="btn btn-link"
@@ -145,7 +149,7 @@ function Comments({ id, videoList,addComment,editComment,deleteComment,addLike,a
                       Delete
                     </button>
                   </div>
-                
+                )}
               </>
             )}
           </li>
