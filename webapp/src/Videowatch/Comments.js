@@ -105,7 +105,7 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
       
       <ul className="list-group mt-3">
         {comments.map((comment, index) => (
-          <li key={index} className="list-group-item">
+          <li key={index} className="list-group-items">
             {editIndex === index ? (
               userConnect && (
                 <form onSubmit={(e) => handleEditCommentSubmit(e, index)}>
@@ -118,10 +118,10 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
                       required
                     ></textarea>
                   </div>
-                  <button type="submit" className="btn btn-primary mt-2">Save</button>
+                  <button type="submit" className="btn btn-primary m-2">Save</button>
                   <button
                     type="button"
-                    className="btn btn-secondary mt-2"
+                    className="btn btn-secondary m-2"
                     onClick={() => setEditIndex(null)}
                   >
                     Cancel
@@ -135,18 +135,18 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
                 {userConnect && (
                   <div>
                     <button
-                      className="btn btn-link"
+                      className="alert alert-info p-1 m-2" style={{ color: 'blue'}}
                       onClick={() => {
-                        setEditIndex(index);
-                        setEditedComment(comment.text);
+                      setEditIndex(index);
+                      setEditedComment(comment.text);
                       }}
-                    >
+                    ><i class="bi bi-pencil m-1"></i>
                       Edit
                     </button>
                     <button
-                      className="btn btn-link text-danger"
+                      className="alert alert-danger p-1 m-2" style={{ color: 'red'}}
                       onClick={() => handleDeleteComment(index)}
-                    >
+                    ><i className="bi bi-trash m-1"></i>
                       Delete
                     </button>
                   </div>
