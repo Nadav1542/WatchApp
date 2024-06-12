@@ -7,33 +7,39 @@ import Menu from './Topbar/Menu';
 import buttons from './data/buttons.json';
 import Usericon from './Topbar/Usericon';
 
+// Deep copy of buttons data from JSON
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Mainpage({ darkMode, userConnect, videoList, setuserConnect, connectedUser}) {
+function Mainpage({ darkMode, userConnect, videoList, setuserConnect, connectedUser }) {
+  console.log(videoList); // Logging the videoList prop for debugging
   
-  
-  console.log(videoList)
   return (
-    
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="row align-items-center mb-3">
         <div className="col-auto">
-          <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect}  />
+          {/* Menu component with darkMode, buttons, userConnect, and setuserConnect props */}
+          <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
         </div>
         <div className="col-auto">
-          <Usericon userConnect={userConnect} connectedUser={connectedUser} setuserConnect={setuserConnect}/>
+          {/* Usericon component with userConnect, connectedUser, and setuserConnect props */}
+          <Usericon userConnect={userConnect} connectedUser={connectedUser} setuserConnect={setuserConnect} />
         </div>
         <div className="col">
+          {/* SearchBar component with darkMode prop */}
           <SearchBar darkMode={darkMode} />
         </div>
-        </div>
-        <div className="row">
-          <Quicksearch darkMode={darkMode} />
-        </div>
-        <div className="row m-4">
-          <Videolist videoList={videoList}/>
-        </div>
       </div>
+
+      <div className="row">
+        {/* Quicksearch component with darkMode prop */}
+        <Quicksearch darkMode={darkMode} />
+      </div>
+
+      <div className="row m-4">
+        {/* Videolist component with videoList prop */}
+        <Videolist videoList={videoList} />
+      </div>
+    </div>
   );
 }
 

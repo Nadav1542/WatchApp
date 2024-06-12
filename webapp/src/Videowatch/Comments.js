@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import '../Topbar/Searchbar.css';
 
 function Comments({ id, videoList, addComment, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
-  const [comments, setComments] = useState(videoList[id].comments);
-  const [newComment, setNewComment] = useState('');
-  const [editIndex, setEditIndex] = useState(null);
-  const [editedComment, setEditedComment] = useState('');
-  const [videoLikes, setVideoLikes] = useState(videoList[id].likes);
-  const [videoDislikes, setVideoDislikes] = useState(videoList[id].dislikes);
+  const [comments, setComments] = useState(videoList[id].comments); // State to store comments of the video
+  const [newComment, setNewComment] = useState(''); // State to store new comment input
+  const [editIndex, setEditIndex] = useState(null); // State to track which comment is being edited
+  const [editedComment, setEditedComment] = useState(''); // State to store edited comment input
+  const [videoLikes, setVideoLikes] = useState(videoList[id].likes); // State to store likes of the video
+  const [videoDislikes, setVideoDislikes] = useState(videoList[id].dislikes); // State to store dislikes of the video
 
   useEffect(() => {
+    // Update comments, likes, and dislikes when videoList or id changes
     setComments(videoList[id].comments);
     setVideoLikes(videoList[id].likes);
     setVideoDislikes(videoList[id].dislikes);
@@ -22,9 +23,9 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
         text: newComment,
         user: connectedUser.displayname // Add the connected user's name to the comment object
       };
-      setComments([...comments, newCommentObj]);
-      addComment(id, newCommentObj);
-      setNewComment('');
+      setComments([...comments, newCommentObj]); // Update comments state
+      addComment(id, newCommentObj); // Call addComment function passed as a prop
+      setNewComment(''); // Reset new comment input
     }
   };
 
@@ -32,38 +33,40 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
     event.preventDefault();
     if (editedComment.trim()) {
       const updatedComments = [...comments];
-      updatedComments[index].text = editedComment;
-      setComments(updatedComments);
-      editComment(id, index, editedComment);
-      setEditIndex(null);
-      setEditedComment('');
+      updatedComments[index].text = editedComment; // Update the text of the edited comment
+      setComments(updatedComments); // Update comments state
+      editComment(id, index, editedComment); // Call editComment function passed as a prop
+      setEditIndex(null); // Reset edit index
+      setEditedComment(''); // Reset edited comment input
     }
   };
 
   const handleDeleteComment = (index) => {
-    const updatedComments = comments.filter((_, i) => i !== index);
-    deleteComment(id, index);
-    setComments(updatedComments);
+    const updatedComments = comments.filter((_, i) => i !== index); // Filter out the deleted comment
+    deleteComment(id, index); // Call deleteComment function passed as a prop
+    setComments(updatedComments); // Update comments state
   };
 
   const handleLikeVideo = () => {
-    setVideoLikes(videoLikes + 1);
-    addLike(id);
+    setVideoLikes(videoLikes + 1); // Increment likes state
+    addLike(id); // Call addLike function passed as a prop
   };
 
   const handleDislikeVideo = () => {
-    setVideoDislikes(videoDislikes + 1);
-    addDislike(id);
+    setVideoDislikes(videoDislikes + 1); // Increment dislikes state
+    addDislike(id); // Call addDislike function passed as a prop
   };
 
   const handleShareVideo = () => {
-    const videoUrl = window.location.href;
+    const videoUrl = window.location.href; // Get current URL
     if (navigator.share) {
+      // Use Web Share API if available
       navigator.share({
         title: 'Check out this video!',
         url: videoUrl,
       }).catch((error) => console.log('Error sharing:', error));
     } else {
+      // Fallback to copying URL to clipboard
       navigator.clipboard.writeText(videoUrl).then(() => {
         alert('Video URL copied to clipboard!');
       }).catch((error) => console.log('Error copying URL:', error));
@@ -85,7 +88,7 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
           </button>
         </nav>
       </div>
-      
+
       {userConnect && (
         <form onSubmit={handleCommentSubmit} className="mt-3">
           <div className="form-group">
@@ -102,7 +105,7 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
           <button type="submit" className="btn btn-primary mt-2">Submit</button>
         </form>
       )}
-      
+
       <ul className="list-group mt-3">
         {comments.map((comment, index) => (
           <li key={index} className="list-group-items">
@@ -140,7 +143,7 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
                       setEditIndex(index);
                       setEditedComment(comment.text);
                       }}
-                    ><i class="bi bi-pencil m-1"></i>
+                    ><i className="bi bi-pencil m-1"></i>
                       Edit
                     </button>
                     <button

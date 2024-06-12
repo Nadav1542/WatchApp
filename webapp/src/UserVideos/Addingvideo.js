@@ -2,31 +2,36 @@ import './Addingvideo.css';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+// Addingvideo component for uploading a new video
 function Addingvideo({ darkMode, videoList, setVideolist, userconnect }) {
+    // State variables for video details and error handling
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [source, setSource] = useState(null);
     const navigate = useNavigate();
     const [error, setError] = useState('');
 
+    // Check if user is connected, if not navigate to sign-in page
     useEffect(() => {
         if (!userconnect) {
             navigate('/Signin');
         }
     }, [userconnect, navigate]);
 
+    // Handle file input change
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        const validation = validateVideoFile(file);
+        const validation = validateVideoFile(file); // Validate the selected video file
         if (validation.isValid) {
             setSource(file);
-            setError('');
+            setError(''); // Clear any previous error messages
         } else {
             setSource(null);
-            setError(validation.error);
+            setError(validation.error); // Set validation error message
         }
     };
 
+    // Validate video file type
     const validateVideoFile = (file) => {
         if (!file) {
             return { isValid: false, error: 'No file selected' };
@@ -41,9 +46,11 @@ function Addingvideo({ darkMode, videoList, setVideolist, userconnect }) {
         }
     };
 
+    // Handle video upload form submission
     const handleUpload = (event) => {
         event.preventDefault(); // Prevent form submission from refreshing the page
         if (title && description && source) {
+            // Create new video object with provided details
             const newVideo = {
                 title,
                 description,
@@ -55,11 +62,13 @@ function Addingvideo({ darkMode, videoList, setVideolist, userconnect }) {
                 dislike: 0
             };
 
+            // Update video list with the new video
             setVideolist([...videoList, newVideo]);
-            navigate('/');
+            navigate('/'); // Navigate to the home page after uploading
         }
     };
 
+    // Handle dark mode toggle
     const handleDarkModeToggle = () => {
         const event = new Event('toggleDarkMode');
         window.dispatchEvent(event);

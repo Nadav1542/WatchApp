@@ -1,52 +1,48 @@
 import './Singlevideo.css';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-function Singlevideo({id,title,description,source,views,uploadtime}){
-   
+
+function Singlevideo({ id, title, description, source, views, uploadtime }) {
     const videoRef = useRef(null);
 
     const handleMouseEnter = () => {
-      if (videoRef.current) {
-        videoRef.current.play().catch((error) => {
-          console.error('Error playing video:', error);
-        });
-      }
+        if (videoRef.current) {
+            videoRef.current.play().catch((error) => {
+                console.error('Error playing video:', error);
+            });
+        }
     };
-  
+
     const handleMouseLeave = () => {
-      if (videoRef.current) {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-      }
+        if (videoRef.current) {
+            videoRef.current.pause();
+            videoRef.current.currentTime = 0;
+        }
     };
+
     return (
-
-
-
-<li className="list-group-items m-3 d-flex align-items-center border-0">
-                <div className="leftvideos border-0" >
-                <Link  to={`/videowatch/${encodeURIComponent(id)}`}>
-                <video src={source} className="card-img-top rounded" alt={title}
-                 ref={videoRef}
-                 onMouseEnter={handleMouseEnter}
-                 onMouseLeave={handleMouseLeave}
-                
-                muted
-        loop/>
-      
+        <li className="list-group-items m-3 d-flex align-items-center border-0">
+            <div className="leftvideos border-0">
+                <Link to={`/videowatch/${encodeURIComponent(id)}`}>
+                    <video
+                        src={source}
+                        className="card-img-top rounded"
+                        alt={title}
+                        ref={videoRef}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        muted
+                        loop
+                    />
                     <div className="card-body singlevideo">
                         <p className="card-text">{title}</p>
-                        <p className="card-text">{description}</p> 
+                        <p className="card-text">{description}</p>
                         <p className="card-text">{views} views - {uploadtime}</p>
                     </div>
-                    </Link>
-                </div>
-            </li>
-
-
-
-);
-
+                </Link>
+            </div>
+        </li>
+    );
 }
 
 export default Singlevideo;

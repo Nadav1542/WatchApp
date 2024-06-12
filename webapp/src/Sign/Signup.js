@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import './Sign.css'; 
 
-
 function Signup({ darkMode, usersData, setusersData }) {
   // Function to handle dark mode toggle
   const handleDarkModeToggle = () => {
@@ -90,6 +89,7 @@ function Signup({ darkMode, usersData, setusersData }) {
   };
 
   return (
+    // Text display
     <>
       <div className="container">
         <div className="row justify-content-center">
