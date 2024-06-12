@@ -1,5 +1,6 @@
 # web
-To run the code, go to the "webapp" folder and run the command "npm start".  \n
+To run the code, go to the "webapp" folder and run the command "npm start".   
+
 Work process: First, we created html templates for the pages as a "skeleton" for the future page structure. That is, the templates were the prototypes of the screens.
 After that we moved each code of a page to React environment and divided everything into components. 
 The application ran from 'app' and according to the user's clicks it displays the required pages with the help of 'routes' for each page.
