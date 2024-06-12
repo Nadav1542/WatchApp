@@ -133,7 +133,7 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
               )
             ) : (
               <>
-                <strong><p>{comment.user}</p></strong>
+                <strong><p>{comment.user}:</p></strong>
                 <i>{comment.text}</i>
                 {userConnect && (
                   <div>

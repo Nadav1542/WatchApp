@@ -54,6 +54,15 @@ function Signup({ darkMode, usersData, setusersData }) {
       setErrorMessage("Username is already taken. Please choose another one.");
       return;
     }
+     // Check if username is empty
+     if (!formData.username.trim()) {
+       setErrorMessage("Username is required.");
+      return;
+    }
+    // Set display name to username if not provided
+     if (!formData.displayname.trim()) {
+       setFormData((prevFormData) => ({ ...prevFormData, displayname: prevFormData.username }));
+      }
 
     // Password validation
     if (formData.password.length < 8) {
@@ -81,6 +90,7 @@ function Signup({ darkMode, usersData, setusersData }) {
       alert("Please select an image.");
       return;
     }
+    
 
     // Add new user data to usersData
     setusersData([...usersData, formData]);
@@ -136,6 +146,7 @@ function Signup({ darkMode, usersData, setusersData }) {
               </div>
 
               {errorMessage && <div className="alert alert-danger" style={{ color: 'red'}}>{errorMessage}</div>}
+              {/* successfully sign up */}
               {signedUp && <div className="alert alert-danger m-2" style={{ color: 'red' ,textAlign: 'center'}}><strong>You signed up successfully!</strong> to connect, click the Sign In button.</div>}
               <div className="d-flex justify-content-between">
                 {!signedUp && <button className="btn btn-sign" type="submit" id="register-button">Sign Up</button>}
