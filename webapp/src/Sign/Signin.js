@@ -3,36 +3,38 @@ import './Sign.css';
 import React, { useState } from 'react';
 
 function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUser, setconnectedUser }) {
-
+  // State variables for username, password, and error message
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  console.log(userConnect);
-  console.log(usersData);
+  console.log(userConnect); // Log user connection status
+  console.log(usersData); // Log users data
 
   // Function to handle form submission
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent default form submission
 
+    // Find the user with matching username and password
     const user = usersData.find(
       (user) => user.username === username && user.password === password
     );
 
     if (user) {
-      setError('');
+      setError(''); // Clear error message
       if (!userConnect) {
-        setuserConnect(true);
-        setconnectedUser(user);
+        setuserConnect(true); // Set user connection status to true
+        setconnectedUser(user); // Set the connected user
       }
       // Perform further actions on successful sign-in
     } else {
-      setError('Invalid username or password');
+      setError('Invalid username or password'); // Set error message
     }
   };
 
+  // Function to handle dark mode toggle
   const handleDarkModeToggle = () => {
-    const event = new Event('toggleDarkMode');
-    window.dispatchEvent(event);
+    const event = new Event('toggleDarkMode'); // Create a new event for dark mode toggle
+    window.dispatchEvent(event); // Dispatch the event
   };
 
   return (
@@ -50,12 +52,11 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
             >
               <div className="d-flex justify-content-end">
                 <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>
-                <i className={darkMode ? 'bi bi-sun' : 'bi bi-moon-stars-fill'}></i>
-                  {darkMode ? '   Light Mode' : '   Dark Mode'}
+                  <i className={darkMode ? 'bi bi-sun' : 'bi bi-moon-stars-fill'}></i>
+                  {darkMode ? ' Light Mode' : ' Dark Mode'}
                 </button>
               </div>
 
-              
               <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
                 <h2 className="mb-3">Sign In</h2>
                 <div className="sign-in-message">Sign in to like videos, comment, and subscribe.</div>
@@ -96,7 +97,6 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
                 <Link to='/'><button className="btn btn-sign">Home</button></Link>
                 {!userConnect && <Link to='/signup'><button className="btn btn-sign" type="button" id="register-button">Sign Up</button></Link>}
               </div>
-
             </form>
           </div>
         </div>
@@ -104,5 +104,6 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
     </>
   );
 }
+
 
 export default Signin;
