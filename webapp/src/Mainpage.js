@@ -1,5 +1,4 @@
 import React from 'react';
-import VideoItem from './videoItem/VideoItem';
 import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
 import Quicksearch from './Topbar/Quicksearch';
@@ -10,8 +9,9 @@ import Usericon from './Topbar/Usericon';
 // Deep copy of buttons data from JSON
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Mainpage({ darkMode, userConnect, videoList, setuserConnect, connectedUser }) {
-  console.log(videoList); // Logging the videoList prop for debugging
+function Mainpage({ darkMode, userConnect, videoList, doSearch, setuserConnect, connectedUser }) {
+  console.log(videoList);
+
   
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
@@ -26,7 +26,7 @@ function Mainpage({ darkMode, userConnect, videoList, setuserConnect, connectedU
         </div>
         <div className="col">
           {/* SearchBar component with darkMode prop */}
-          <SearchBar darkMode={darkMode} />
+          <SearchBar darkMode={darkMode} doSearch={doSearch} />
         </div>
       </div>
 

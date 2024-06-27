@@ -1,10 +1,6 @@
 import movies from './data/videos.json';
-import LeftMenu from './LeftMenu/LeftMenu';
 import React, { useState } from 'react';
-import VideoItem from './videoItem/VideoItem';
-import SearchBar from './Topbar/SearchBar';
-import Videolist from './videoItem/Videolist';
-import buttons from './data/buttons.json';
+import videos from './data/videos.json';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { DarkModeProvider, useDarkMode } from './DarkModeContext';
 import Signup from './Sign/Signup';
@@ -15,6 +11,7 @@ import Addingvideo from './UserVideos/Addingvideo';
 import { useNavigate } from 'react-router-dom'; 
 
 function App() {
+
   return (
     <DarkModeProvider> {/* Providing DarkModeProvider */}
       <BrowserRouter> {/* Using BrowserRouter for routing */}
@@ -25,11 +22,12 @@ function App() {
 }
 
 function AppContent() {
+  
   const navigate = useNavigate(); // Getting navigate function from useNavigate hook
   const { darkMode } = useDarkMode(); // Getting darkMode value from useDarkMode hook
   const [usersData, setusersData] = useState([]); // State for users data
   const [userConnect, setuserConnect] = useState(false); // State for user connection status
-  const [connectedUser, setconnectedUser] = useState(); // State for connected user
+  const [connectedUser, setconnectedUser] = useState(); // State for connected user  const [videoList, setVideoList] = useState(videos); // Corrected state declaration
   const [videoList, setVideolist] = useState(
     // State for video list with initial values including comments, likes, and dislikes
     JSON.parse(JSON.stringify(movies)).map(video => ({
@@ -39,14 +37,15 @@ function AppContent() {
       dislikes: 0
     }))
   );
-
+    const doSearch = function(q) {
+      setVideolist(videos.filter((video) => video.title.includes(q)));
+  };
   // Function to add a comment to a video
   const addComment = (videoIndex, comment) => {
     setVideolist(videoList =>
       videoList.map((video, index) =>
         index === videoIndex
-          ? { ...video, comments: [...video.comments, comment] }
-          : video
+          ? { ...video, comments: [...video.comments, comment] } : video
       )
     );
   };
@@ -125,7 +124,7 @@ function AppContent() {
 
   return (
     <Routes> {/* Defining routes */}
-      <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} />} /> {/* Route for the main page */}
+      <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect} videoList={videoList} setVideolist={setVideolist} doSearch={doSearch} setuserConnect={setuserConnect} connectedUser={connectedUser} />} /> {/* Route for the main page */}
       <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData} />} /> {/* Route for the signup page */}
       <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData} userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser} />} /> {/* Route for the signin page */}
       <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist} userconnect={userConnect} />} /> {/* Route for adding a video */}
