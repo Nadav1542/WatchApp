@@ -3,6 +3,7 @@
 # dependencies
 /server/node_modules
 /webapp/node_modules
+/server/build
 /webapp/.pnp
 .pnp.js
 

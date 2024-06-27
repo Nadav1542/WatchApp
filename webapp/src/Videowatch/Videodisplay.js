@@ -13,6 +13,8 @@ function Videodisplay({ id, userConnect, updatevideoList, deleteVideo, videoList
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
 
+    console.log(videoList[numeriId].source)
+
     useEffect(() => {
         if (videoList && videoList[numeriId]) {
             setTitle(decodeURIComponent(videoList[numeriId].title));
