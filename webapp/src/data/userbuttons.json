@@ -26,6 +26,11 @@
         "description": "Profile",
         "link": "/",
         "icon": "bi bi-person"
+    },
+    {
+        "description": "Myvideos",
+        "link": "/Myvideos",
+        "icon": "bi bi-person-lines-fill"
     }
     
    
