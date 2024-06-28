@@ -31,15 +31,27 @@ function AppContent() {
   const [usersData, setusersData] = useState([]); // State for users data
   const [userConnect, setuserConnect] = useState(false); // State for user connection status
   const [connectedUser, setconnectedUser] = useState(); // State for connected user
-  const [videoList, setVideolist] = useState(
-    // State for video list with initial values including comments, likes, and dislikes
-    JSON.parse(JSON.stringify(movies)).map(video => ({
-      ...video,
-      comments: [],
-      likes: 0,
-      dislikes: 0
-    }))
-  );
+  
+  const [videoList, setVideolist] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/videos`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        });
+        const data = await response.json();
+        console.log(data)
+        setVideolist(data);
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+      }
+    };
+
+    fetchData();
+  }, []); 
+
 
   // Function to add a comment to a video
   const addComment = (videoIndex, comment) => {
