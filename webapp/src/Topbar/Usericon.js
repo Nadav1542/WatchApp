@@ -16,7 +16,7 @@ function Usericon({ userConnect, connectedUser, setuserConnect }) {
     };
    
     return (
-        <Link to={userConnect ? "" : "/signin"}>
+        <Link to={userConnect ? "/Myvideos" : "/signin"}>
             {userConnect && connectedUser ? (
                 <>
                     {/* Display user's profile picture */}
