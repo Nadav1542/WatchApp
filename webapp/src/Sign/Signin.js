@@ -3,38 +3,36 @@ import './Sign.css';
 import React, { useState } from 'react';
 
 function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUser, setconnectedUser }) {
-  // State variables for username, password, and error message
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  console.log(userConnect); // Log user connection status
-  console.log(usersData); // Log users data
+  console.log(userConnect);
+  console.log(usersData);
 
-  // Function to handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    // Find the user with matching username and password
-    const user = usersData.find(
-      (user) => user.username === username && user.password === password
-    );
+    try {
+      const response = await fetch(`http://localhost:8000/api/users/${username}/${password}`, {
+        method: 'GET',
+      });
 
-    if (user) {
-      setError(''); // Clear error message
-      if (!userConnect) {
-        setuserConnect(true); // Set user connection status to true
-        setconnectedUser(user); // Set the connected user
+      if (response.ok) {
+        const user = await response.json();
+        setError('');
+        setuserConnect(true);
+        setconnectedUser(user);
+      } else {
+        setError('Invalid username or password');
       }
-      // Perform further actions on successful sign-in
-    } else {
-      setError('Invalid username or password'); // Set error message
+    } catch (error) {
+      setError('An error occurred. Please try again.');
     }
   };
 
-  // Function to handle dark mode toggle
   const handleDarkModeToggle = () => {
-    const event = new Event('toggleDarkMode'); // Create a new event for dark mode toggle
-    window.dispatchEvent(event); // Dispatch the event
+    const event = new Event('toggleDarkMode');
+    window.dispatchEvent(event);
   };
 
   return (
@@ -45,9 +43,7 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
             <form
               id="registration-form"
               className="cardreg p-4 shadow-lg"
-              onSubmit={(event) => {
-                handleSubmit(event); // Calling the function with event argument
-              }}
+              onSubmit={handleSubmit}
               noValidate
             >
               <div className="d-flex justify-content-end">
@@ -91,7 +87,7 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
               </div>
 
               {error && <div className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>{error}</div>}
-              {userConnect && <div className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}><strong>You signed in successfully.</strong> Click the Home button</div>}
+              {userConnect && <div className="alert alert-success" style={{ color: 'green', textAlign: 'center', marginTop: '1rem' }}><strong>You signed in successfully.</strong> Click the Home button</div>}
               <div className="d-flex justify-content-between">
                 {!userConnect && <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>}
                 <Link to='/'><button className="btn btn-sign">Home</button></Link>
@@ -104,6 +100,5 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
     </>
   );
 }
-
 
 export default Signin;
