@@ -7,6 +7,9 @@ import multer from 'multer';
 import videoRoutes from './routes/videoRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import { getAllVideos } from './controllers/videoController.js';
+import connectDB from './db.js'; // Import the database connection module
+
+
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/data', {
@@ -21,10 +24,11 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
   console.error(`Error connecting to MongoDB: ${err}`);
 });
-import connectDB from './db.js'; // Import the database connection module
+
 // Create an Express server
 const server = express();
 server.use(bodyParser.json());
+//connectDB();
 // Middleware
 server.use(cors());
 server.use(express.json());

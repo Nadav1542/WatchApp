@@ -4,13 +4,12 @@ import { Link } from 'react-router-dom';
 
 function Singlevideo({ video }) {
     
-    console.log(video)
+  
     const videoRef = useRef(null);
 
     const handleMouseEnter = () => {
         if (videoRef.current) {
-            console.log(videoRef)
-            console.log(video.source)
+           
             videoRef.current.play().catch((error) => {
                 console.error('Error playing video:', error);
             });
