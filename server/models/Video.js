@@ -37,5 +37,4 @@ const getVideo = async (id) => {
 
 export {getVideos,getVideo}
 
-export { getVideos };
 

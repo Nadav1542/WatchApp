@@ -25,7 +25,6 @@ import connectDB from './db.js'; // Import the database connection module
 // Create an Express server
 const server = express();
 server.use(bodyParser.json());
-connectDB();
 // Middleware
 server.use(cors());
 server.use(express.json());
