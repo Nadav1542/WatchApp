@@ -64,19 +64,33 @@ function Myvideos({ darkMode, userConnect, videoList, setuserConnect, connectedU
       {userConnect && connectedUser ? (
         <>
           {/* Display user's profile picture */}
-          <img 
-            src={connectedUser.img} 
-            alt="Profile" 
-            style={{
-              width: '12rem', 
-              borderRadius: '10%', 
-              margin: 30
-            }} 
-          />
-          {/* Display user's display name */}
-          <i style={{fontSize: '2em', fontWeight: 'bold', marginLeft: "30px" }}>{connectedUser.displayname} </i>
-          <i style={{fontSize: '0.9em', marginLeft: "30px" }}> {connectedUser.username}</i>
-        </>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <img 
+      src={connectedUser.img} 
+      alt="Profile" 
+      style={{
+        width: '10rem',
+        height: '10rem',
+        borderRadius: '50%',
+        objectFit: 'cover',
+        marginLeft: '30px',
+        marginRight: '30px'
+      }} 
+    />
+
+          
+          {/* Display user's display name and username */}
+          <div>
+            <div>
+              <span style={{ fontSize: '2em', fontWeight: 'bold' }}>{connectedUser.displayname}</span>
+            </div>
+            <div>
+              <span style={{ fontSize: '0.9em' }}>{connectedUser.username}</span>
+            </div>
+          </div>
+        </div>
+      </>
+      
       ) : (
         <>
           {/* Display default user icon and welcome message */}
