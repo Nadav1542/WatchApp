@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllVideos} from '../controllers/videoController.js';
+import {getAllVideos,getVideobyId} from '../controllers/videoController.js';
 
 
 const router = express.Router();
@@ -13,4 +13,18 @@ router.get('/videos', async (req, res) => {
   }
 });
 
+// Get a specific video by user ID and video ID
+router.get('/users/:id/videos/:pid', async (req, res) => {
+  const { id, pid } = req.params;
+  
+  try {
+    const video = await getVideobyId(pid);
+    if (!video) {
+      return res.status(404).json({ message: 'Video not found' });
+    }
+    res.json(video);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching video' });
+  }
+});
 export default router

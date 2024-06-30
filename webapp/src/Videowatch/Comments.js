@@ -2,18 +2,21 @@ import React, { useState, useEffect } from 'react';
 import '../Topbar/Searchbar.css';
 
 function Comments({ id, videoList, addComment, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
-  const [comments, setComments] = useState(videoList[id].comments); // State to store comments of the video
+  
+  
+  const video = videoList.find((v) => v._id === decodeURIComponent(id));
+  const [comments, setComments] = useState(video.comments); // State to store comments of the video
   const [newComment, setNewComment] = useState(''); // State to store new comment input
   const [editIndex, setEditIndex] = useState(null); // State to track which comment is being edited
   const [editedComment, setEditedComment] = useState(''); // State to store edited comment input
-  const [videoLikes, setVideoLikes] = useState(videoList[id].likes); // State to store likes of the video
-  const [videoDislikes, setVideoDislikes] = useState(videoList[id].dislikes); // State to store dislikes of the video
+  const [videoLikes, setVideoLikes] = useState(video.likes); // State to store likes of the video
+  const [videoDislikes, setVideoDislikes] = useState(video.dislikes); // State to store dislikes of the video
 
   useEffect(() => {
     // Update comments, likes, and dislikes when videoList or id changes
-    setComments(videoList[id].comments);
-    setVideoLikes(videoList[id].likes);
-    setVideoDislikes(videoList[id].dislikes);
+    setComments(video.comments);
+    setVideoLikes(video.likes);
+    setVideoDislikes(video.dislikes);
   }, [id, videoList]);
 
   const handleCommentSubmit = (event) => {

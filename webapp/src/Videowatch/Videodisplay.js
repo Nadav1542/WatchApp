@@ -3,27 +3,25 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Comments from './Comments';
 
-function Videodisplay({ id, userConnect, updatevideoList, deleteVideo, videoList, addComment, editComment, deleteComment, addLike, addDislike, connectedUser }) {
-    const numeriId = parseInt(id, 10);
-    const [title, setTitle] = useState(decodeURIComponent(videoList[numeriId].title));
-    const [description, setDescription] = useState(decodeURIComponent(videoList[numeriId].description));
-    const [source, setSource] = useState(videoList[numeriId].source);
-    const [views, setViews] = useState(decodeURIComponent(videoList[numeriId].views));
-    const [uploadtime, setuploadTime] = useState(decodeURIComponent(videoList[numeriId].uploadtime));
+function Videodisplay({ video, userConnect, updatevideoList, deleteVideo, videoList, addComment, editComment, deleteComment, addLike, addDislike, connectedUser }) {
+    //const numeriId = parseInt(id, 10);
+    const [title, setTitle] = useState(decodeURIComponent(video.title));
+    const [description, setDescription] = useState(decodeURIComponent(video.description));
+    const [source, setSource] = useState(video.source);
+    const [views, setViews] = useState(decodeURIComponent(video.views));
+    const [uploadtime, setuploadTime] = useState(decodeURIComponent(video.uploadtime));
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
 
-    console.log(videoList[numeriId].source)
-
     useEffect(() => {
-        if (videoList && videoList[numeriId]) {
-            setTitle(decodeURIComponent(videoList[numeriId].title));
-            setDescription(decodeURIComponent(videoList[numeriId].description));
-            setSource(videoList[numeriId].source);
-            setViews(decodeURIComponent(videoList[numeriId].views));
-            setuploadTime(decodeURIComponent(videoList[numeriId].uploadtime));
+        if (videoList && video) {
+            setTitle(decodeURIComponent(video.title));
+            setDescription(decodeURIComponent(video.description));
+            setSource(video.source);
+            setViews(decodeURIComponent(video.views));
+            setuploadTime(decodeURIComponent(video.uploadtime));
         }
-    }, [videoList, numeriId]);
+    }, [videoList, video]);
 
     const handleTitleChange = (event) => setTitle(event.target.value);
     const handleDescriptionChange = (event) => setDescription(event.target.value);
@@ -32,16 +30,16 @@ function Videodisplay({ id, userConnect, updatevideoList, deleteVideo, videoList
 
     const handleSaveTitle = () => {
         setIsEditingTitle(false);
-        updatevideoList(numeriId, title, description); // Persist the change
+        updatevideoList(video._id, title, description); // Persist the change
     };
     
     const handleSaveDescription = () => {
         setIsEditingDescription(false);
-        updatevideoList(numeriId, title, description); // Persist the change
+        updatevideoList(video._id, title, description); // Persist the change
     };
 
     const handleDelete = () => {
-        deleteVideo(numeriId);
+        deleteVideo(video._id);
     };
 
     return (
@@ -120,7 +118,7 @@ function Videodisplay({ id, userConnect, updatevideoList, deleteVideo, videoList
                 </div>
             </div>
             <Comments
-                id={numeriId}
+                id={video._id}
                 videoList={videoList}
                 addComment={addComment}
                 editComment={editComment}

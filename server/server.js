@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import videoRoutes from './routes/videoRoutes.js';
 import { getAllVideos } from './controllers/videoController.js';
-
+import connectDB from './db.js'; // Import the database connection module
 // Create an Express server
 const server = express();
 server.use(bodyParser.json());
@@ -12,18 +12,15 @@ server.use(bodyParser.json());
 // Middleware
 server.use(cors());
 server.use(express.json());
+// Connect to MongoDB
+connectDB(); // Call the connection function once
 
 
-// Route to get all videos
-server.get('/api/videos', async (req, res) => {
-  try {
-    const videos = await getAllVideos();
-    
-    res.json(videos);
-  } catch (err) {
-    res.status(500).send('Server Error');
-  }
-});
+
+
+server.use('/api/users',videoRoutes);
+
+
 
 // Routes
 server.use('/api', videoRoutes);

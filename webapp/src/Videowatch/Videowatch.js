@@ -11,13 +11,14 @@ import buttons from '../data/buttons.json';
 import { useParams } from 'react-router-dom';
 import Usericon from '../Topbar/Usericon';
 
-const videos = JSON.parse(JSON.stringify(movies));
+
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 function Videowatch({ darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, videoList, addComment, editComment, deleteComment,
   addLike, addDislike }) {
   
-  const { id } = useParams();
+     const {id} = useParams();
+     const video = videoList.find((v) => v._id === decodeURIComponent(id));
 
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
@@ -40,7 +41,7 @@ function Videowatch({ darkMode, userConnect, setuserConnect, updatevideoList, co
               </div>
             </div>
             <Videodisplay
-              id={id}
+              video = {video}
               userConnect={userConnect}
               updatevideoList={updatevideoList}
               deleteVideo={deleteVideo}

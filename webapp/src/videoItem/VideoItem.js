@@ -2,12 +2,14 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 // VideoItem component to display individual video items
-function VideoItem({ title, description, source, views, uploadtime, id }) {
+function VideoItem({ video }) {
   const videoRef = useRef(null); // Reference to the video element
-  
+  //const video = videoList.find((v) => v._id === decodeURIComponent(id));
   // Function to handle mouse enter event on the video
   const handleMouseEnter = () => {
     if (videoRef.current) {
+      console.log(videoRef)
+      console.log(video.source)
       videoRef.current.play().catch((error) => {
         console.error('Error playing video:', error); // Log any errors encountered while playing the video
       });
@@ -24,9 +26,9 @@ function VideoItem({ title, description, source, views, uploadtime, id }) {
 
   return (
     <div className="card col-md-4 col-lg-3 col-sm-6 border-0 p-2">
-      <Link to={`/videowatch/${encodeURIComponent(id)}`}>
+      <Link to={`/videowatch/${encodeURIComponent(video._id)}`}>
         <video
-          src={source} // Video source
+          src={video.source} // Video source
           className="card-img-top" // CSS class for styling
           ref={videoRef} // Reference to the video element
           onMouseEnter={handleMouseEnter} // Play video on mouse enter
@@ -35,9 +37,9 @@ function VideoItem({ title, description, source, views, uploadtime, id }) {
           loop // Loop the video
         />
         <div className="card-body">
-          <p className="card-text">{title}</p> {/* Video title */}
-          <p className="card-text">{description}</p> {/* Video description */}
-          <p className="card-text">{views} views - {uploadtime}</p> {/* Video views and upload time */}
+          <p className="card-text">{video.title}</p> {/* Video title */}
+          <p className="card-text">{video.description}</p> {/* Video description */}
+          <p className="card-text">{video.views} views - {video.uploadtime}</p> {/* Video views and upload time */}
         </div>
       </Link>
     </div>
