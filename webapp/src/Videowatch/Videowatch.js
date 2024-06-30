@@ -1,5 +1,5 @@
 import movies from '../data/videos.json';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import LeftVideos from './LeftVideos';
 import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
@@ -11,12 +11,38 @@ import Usericon from '../Topbar/Usericon';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Videowatch({ darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, videoList, addComment, editComment, deleteComment,
+function Videowatch({ videoList ,darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, addComment, editComment, deleteComment,
   addLike, addDislike }) {
-  
-     const {id} = useParams();
-     const video = videoList.find((v) => v._id === decodeURIComponent(id));
+    console.log('Videowatch component mounted'); // Debug log
+   // const [videoList, setVideoList] = useState([]);
+    const { id } = useParams();
+/*
+  useEffect(() => {
+    console.log('useEffect triggered'); // Debug log
 
+    const fetchVideos = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/videos', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Fetched data:', data); // Debug log for fetched data
+        setVideoList(data);
+      } catch (error) {
+        console.error('Failed to fetch videos', error);
+      }
+    };
+
+    fetchVideos();
+  }, []);
+*/
+  console.log('videoList:', videoList); // Debug log for videoList state
+  const video = videoList.find((v) => v._id === decodeURIComponent(id));
+  console.log('Selected video:', video); // Debug log for selected video
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="container-fluid">

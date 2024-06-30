@@ -8,8 +8,7 @@ function VideoItem({ video }) {
   // Function to handle mouse enter event on the video
   const handleMouseEnter = () => {
     if (videoRef.current) {
-      console.log(videoRef)
-      console.log(video.source)
+      
       videoRef.current.play().catch((error) => {
         console.error('Error playing video:', error); // Log any errors encountered while playing the video
       });

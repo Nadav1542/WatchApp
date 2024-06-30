@@ -13,10 +13,12 @@ const videoSchema = new mongoose.Schema({
   comments: Array,
   likes: Number,
   dislikes: Number,
-  creator: ObjectId,
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
 export const Video = mongoose.model('Video', videoSchema);
+
+
 
 function getVideos() {
   return Video.find();
@@ -37,5 +39,5 @@ const getVideo = async (id) => {
 
 export {getVideos,getVideo}
 
-export { getVideos };
+
 
