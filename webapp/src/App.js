@@ -1,6 +1,6 @@
 import movies from './data/videos.json';
 import LeftMenu from './LeftMenu/LeftMenu';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import VideoItem from './videoItem/VideoItem';
 import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
@@ -12,7 +12,10 @@ import Mainpage from './Mainpage';
 import Signin from './Sign/Signin';
 import Videowatch from './Videowatch/Videowatch';
 import Addingvideo from './UserVideos/Addingvideo';
+import Myvideos from './Myvideos'
 import { useNavigate } from 'react-router-dom'; 
+import { useEffect } from 'react';
+
 function App() {
   return (
     <DarkModeProvider> {/* Providing DarkModeProvider */}
@@ -29,6 +32,7 @@ function AppContent() {
   const [usersData, setusersData] = useState([]); // State for users data
   const [userConnect, setuserConnect] = useState(false); // State for user connection status
   const [connectedUser, setconnectedUser] = useState(); // State for connected user
+  
   const [videoList, setVideolist] = useState([]);
 
   useEffect(() => {
@@ -48,6 +52,7 @@ function AppContent() {
 
     fetchData();
   }, []); 
+
 
   // Function to add a comment to a video
   const addComment = (videoIndex, comment) => {
@@ -139,6 +144,7 @@ function AppContent() {
       <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData} userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser} />} /> {/* Route for the signin page */}
       <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist} userconnect={userConnect} />} /> {/* Route for adding a video */}
       <Route path="/videowatch/:id" element={<Videowatch darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList} connectedUser={connectedUser} deleteVideo={deleteVideo} videoList={videoList} addComment={addComment} editComment={editComment} deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} />} /> {/* Route for watching a video */}
+      <Route path='/Myvideos' element={<Myvideos darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} />} />
     </Routes>
   );
 }

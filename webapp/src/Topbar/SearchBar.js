@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './Searchbar.css';
 
 // SearchBar component for displaying a search input and dark mode toggle button
-function SearchBar({ darkMode }) {
+function SearchBar({ darkMode, doSearch }) { // Fix props destructuring here
   // Function to handle dark mode toggle
   const handleDarkModeToggle = () => {
     const event = new Event('toggleDarkMode'); // Create a new event for dark mode toggle
     window.dispatchEvent(event); // Dispatch the event
+  };
+
+  const searchBox = useRef(null);
+
+  const search = function() {
+    doSearch(searchBox.current.value); // Call doSearch with the search input value
   };
 
   return (
@@ -14,9 +20,10 @@ function SearchBar({ darkMode }) {
       {/* SearchBar */}
       <form className="d-flex p-4">
         {/* Search input field */}
-        <input className="form-control me-2" type="search" placeholder="Search" />
+        <input
+         ref={searchBox} onKeyUp={search} className="form-control me-2" type="search" placeholder="Search" />
         {/* Search button */}
-        <button className="btn btn-outline-red" type="submit" style={{ whiteSpace: 'nowrap' }}>
+        <button className="btn btn-outline-red" type="button" style={{ whiteSpace: 'nowrap' }} onClick={search}>
           <i className="bi bi-search"></i> Search
         </button>
         {/* Dark mode toggle button */}

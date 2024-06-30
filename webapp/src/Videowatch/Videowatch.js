@@ -1,8 +1,5 @@
 import movies from '../data/videos.json';
 import React, { useState } from 'react';
-import Videolist from '../videoItem/Videolist';
-import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
-import { DarkModeProvider, useDarkMode } from '../DarkModeContext';
 import LeftVideos from './LeftVideos';
 import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
