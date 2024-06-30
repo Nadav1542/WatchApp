@@ -3,9 +3,34 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Comments from './Comments';
 
-function Videodisplay({ video, userConnect, updatevideoList, deleteVideo, videoList, addComment, editComment, deleteComment, addLike, addDislike, connectedUser }) {
+function Videodisplay({  videoList,userConnect, updatevideoList, deleteVideo, addComment, editComment, deleteComment, addLike, addDislike, connectedUser }) {
    
-
+    const [videoList1, setVideoList] = useState(videoList);
+    const { id } = useParams();
+  
+    useEffect(() => {
+      const fetchVideos = async () => {
+        try {
+          const response = await fetch('http://localhost:8000/api/videos', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          console.log(data)
+          setVideoList(data);
+        } catch (error) {
+          console.error('Failed to fetch videos', error);
+        }
+      };
+  
+      fetchVideos();
+    }, [videoList]);
+  const video = videoList1.find((v) => v._id === decodeURIComponent(id));
+  //console.log(video.source)
+  console.log('Selected video:', video); // Debug log for selected video
 
 
 
@@ -50,12 +75,12 @@ function Videodisplay({ video, userConnect, updatevideoList, deleteVideo, videoL
         <>
             <div className="row m-4">
                 <div>
-                    <video src={decodeURIComponent(source)} className="card-img-top rounded" controls autoPlay />
+                    <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay />
                     <div className="card-body singlevideo">
                         <div className="card-text">
                             {isEditingTitle ? (
                                 <>
-                                    <input
+                                <input
                                         type="text"
                                         value={title}
                                         onChange={handleTitleChange}
