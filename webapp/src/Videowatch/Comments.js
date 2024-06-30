@@ -24,7 +24,8 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
     if (newComment.trim()) {
       const newCommentObj = {
         text: newComment,
-        user: connectedUser.displayname // Add the connected user's name to the comment object
+        user: connectedUser.displayname, // Add the connected user's name to the comment object
+        img: connectedUser.img // Add the connected user's image to the comment object
       };
       setComments([...comments, newCommentObj]); // Update comments state
       addComment(id, newCommentObj); // Call addComment function passed as a prop
@@ -111,7 +112,7 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
 
       <ul className="list-group mt-3">
         {comments.map((comment, index) => (
-          <li key={index} className="list-group-items">
+          <div key={index} className="list-group-items">
             {editIndex === index ? (
               userConnect && (
                 <form onSubmit={(e) => handleEditCommentSubmit(e, index)}>
@@ -136,7 +137,21 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
               )
             ) : (
               <>
-                <strong><p>{comment.user}:</p></strong>
+                <strong>
+                  <p>
+                    <img
+                      src={comment.img}
+                      alt="Profile"
+                      style={{
+                        width: '1.5rem',
+                        height: '1.5rem',
+                        borderRadius: '50%',
+                        marginRight: '0.5rem'
+                      }}
+                    />
+                    {comment.user}:
+                  </p>
+                </strong>
                 <i>{comment.text}</i>
                 {userConnect && (
                   <div>
@@ -159,7 +174,7 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
                 )}
               </>
             )}
-          </li>
+          </div>
         ))}
       </ul>
     </div>

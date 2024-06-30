@@ -15,10 +15,11 @@ const videoSchema = new mongoose.Schema({
   dislikes: Number,
   creator: ObjectId,
 });
+
 export const Video = mongoose.model('Video', videoSchema);
 
-function getVideos(){
-    return Video.find()
+function getVideos() {
+  return Video.find();
 }
 
 const getVideo = async (id) => {
@@ -36,8 +37,5 @@ const getVideo = async (id) => {
 
 export {getVideos,getVideo}
 
-
-
-
-
+export { getVideos };
 
