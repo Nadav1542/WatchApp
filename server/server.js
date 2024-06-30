@@ -13,6 +13,7 @@ server.use(bodyParser.json());
 server.use(cors());
 server.use(express.json());
 
+new MongoClient('mongodb://localhost:27017', { enableUtf8Validation: false });
 
 // Route to get all videos
 server.get('/api/videos', async (req, res) => {
