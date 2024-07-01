@@ -28,7 +28,7 @@ function Singlevideo({ video }) {
             <div className="leftvideos border-0">
                 <Link to={`/videowatch/${encodeURIComponent(video._id)}`}>
                     <video
-                        src={video.source}
+                        src={`http://localhost:8000/videowatch/${video.source}`}
                         className="card-img-top rounded"
                         alt={video.title}
                         ref={videoRef}

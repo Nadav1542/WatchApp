@@ -4,11 +4,11 @@ import {getAllVideos,getVideobyId} from '../controllers/videoController.js';
 
 const router = express.Router();
 
-router.get('/videos', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const videos = await getAllVideos();
     res.status(200).json(videos); // Ensure you return JSON
-    console.log(req.path)
+    
   } catch (error) {
     res.status(500).json({ error: 'Server Error' }); // Return JSON error response
   }
@@ -28,4 +28,7 @@ router.get('/users/:id/videos/:pid', async (req, res) => {
     res.status(500).json({ message: 'Error fetching video' });
   }
 });
+
+
+
 export default router
