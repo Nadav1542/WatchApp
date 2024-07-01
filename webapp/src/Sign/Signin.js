@@ -19,6 +19,7 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
 
       if (response.ok) {
         const user = await response.json();
+        console.log('message from signin' ,user)
         setError('');
         setuserConnect(true);
         setconnectedUser(user);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../Topbar/Searchbar.css';
 
-function Comments({ id, videoList, addComment, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
+function Comments({ id, videoList, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
   
   
   const video = videoList.find((v) => v._id === decodeURIComponent(id));
@@ -11,7 +11,7 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
   const [editedComment, setEditedComment] = useState(''); // State to store edited comment input
   const [videoLikes, setVideoLikes] = useState(video.likes); // State to store likes of the video
   const [videoDislikes, setVideoDislikes] = useState(video.dislikes); // State to store dislikes of the video
-
+  
   useEffect(() => {
     // Update comments, likes, and dislikes when videoList or id changes
     setComments(video.comments);
@@ -19,17 +19,35 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
     setVideoDislikes(video.dislikes);
   }, [id, videoList]);
 
-  const handleCommentSubmit = (event) => {
+  const handleCommentSubmit = async (event) => {
     event.preventDefault();
     if (newComment.trim()) {
       const newCommentObj = {
         text: newComment,
-        user: connectedUser.displayname, // Add the connected user's name to the comment object
-        img: connectedUser.img // Add the connected user's image to the comment object
+        user: connectedUser.name, // Add the connected user's name to the comment object
+        img: connectedUser.profilePic // Add the connected user's image to the comment object
       };
-      setComments([...comments, newCommentObj]); // Update comments state
-      addComment(id, newCommentObj); // Call addComment function passed as a prop
-      setNewComment(''); // Reset new comment input
+      console.log(newCommentObj)
+      console.log(connectedUser)
+      try {
+        const response = await fetch(`http://localhost:8000/api/videos/${video._id}/comments`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newCommentObj)
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const newCommentResponse = await response.json();
+        console.log(newCommentResponse)
+        setComments([...comments, newCommentResponse]); // Update comments state with the new comment
+        
+        setNewComment(''); // Reset new comment input
+      } catch (error) {
+        console.error('Error adding comment:', error);
+      }
     }
   };
 

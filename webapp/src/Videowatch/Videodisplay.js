@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Comments from './Comments';
 
-function Videodisplay({  videoList,userConnect, updatevideoList, deleteVideo, addComment, editComment, deleteComment, addLike, addDislike, connectedUser }) {
+function Videodisplay({ videoList, userConnect, updatevideoList, deleteVideo, editComment, deleteComment, addLike, addDislike, connectedUser }) {
    
     const [videoList1, setVideoList] = useState(videoList);
     const { id } = useParams();
@@ -66,6 +66,7 @@ function Videodisplay({  videoList,userConnect, updatevideoList, deleteVideo, ad
         setIsEditingDescription(false);
         updatevideoList(video._id, title, description); // Persist the change
     };
+
 
     const handleDelete = () => {
         deleteVideo(video._id);
@@ -149,7 +150,6 @@ function Videodisplay({  videoList,userConnect, updatevideoList, deleteVideo, ad
             <Comments
                 id={video._id}
                 videoList={videoList}
-                addComment={addComment}
                 editComment={editComment}
                 deleteComment={deleteComment}
                 addLike={addLike}

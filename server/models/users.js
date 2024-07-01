@@ -30,9 +30,8 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.index({ username: 1 }, { unique: true });
+export const User = mongoose.model('User', userSchema);
 
-const User = mongoose.model('User', userSchema);
-module.exports = User;
 
 
 async function getUserByUsername(username, password) {

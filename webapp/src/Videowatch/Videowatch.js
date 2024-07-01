@@ -11,7 +11,7 @@ import Usericon from '../Topbar/Usericon';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Videowatch({ videoList ,darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, addComment, editComment, deleteComment,
+function Videowatch({ videoList ,darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, editComment, deleteComment,
   addLike, addDislike }) {
    
   return (
@@ -40,7 +40,6 @@ function Videowatch({ videoList ,darkMode, userConnect, setuserConnect, updatevi
               updatevideoList={updatevideoList}
               deleteVideo={deleteVideo}
               
-              addComment={addComment}
               editComment={editComment}
               deleteComment={deleteComment}
               addLike={addLike}
