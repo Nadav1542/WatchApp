@@ -138,19 +138,22 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
             ) : (
               <>
                 <strong>
-                  <p>
-                    <img
-                      src={comment.img}
-                      alt="Profile"
-                      style={{
-                        width: '1.5rem',
-                        height: '1.5rem',
-                        borderRadius: '50%',
-                        marginRight: '0.5rem'
-                      }}
-                    />
-                    {comment.user}:
-                  </p>
+                {/* <Link to={`/Myvideos/${encodeURIComponent(comment.user)}`}> */}
+                    <p>
+                      <img
+                        src={comment.img}
+                        alt="Profile"
+                        
+                        style={{
+                          width: '1.5rem',
+                          height: '1.5rem',
+                          borderRadius: '50%',
+                          marginRight: '0.5rem'
+                        }}
+                      />
+                      {comment.user}:
+                    </p>
+                    {/* </Link> */}
                 </strong>
                 <i>{comment.text}</i>
                 {userConnect && (
