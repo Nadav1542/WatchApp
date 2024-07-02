@@ -17,7 +17,16 @@ router.get('/users/:username/:password', async (req, res) => {
     res.status(401).json({ error: 'Incorrect username or password' });
   }
 });
-
+const imageToBase64 = (imagePath) => {
+  try {
+      const fullPath = path.join(__dirname, '..', 'data', imagePath);
+      const imageBuffer = fs.readFileSync(fullPath);
+      return `data:image/jpeg;base64,${imageBuffer.toString('base64')}`;
+  } catch (error) {
+      console.error(`Error converting image to Base64 for ${imagePath}:`, error);
+      return null;
+  }
+};
 // Signup route
 router.post('/users', upload.single('img'), async (req, res) => {
   try {
