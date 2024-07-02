@@ -1,3 +1,4 @@
+import { profile } from 'console';
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -24,7 +25,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Name is required']
   },
   profilePic: {
-    type: Buffer,
+    type: String,
     required: [true, 'Profile picture is required']
   }
 });

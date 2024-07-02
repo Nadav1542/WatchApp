@@ -55,8 +55,6 @@ function Comments({ id, videoList, editComment, deleteComment, addLike, addDisli
       }
     }
   };
-
-  
   
   const handleEditCommentSubmit = (event, index) => {
     event.preventDefault();
@@ -167,8 +165,6 @@ function Comments({ id, videoList, editComment, deleteComment, addLike, addDisli
                     <p>
                       <img
                         src={comment.img}
-                        alt="Profile"
-                        
                         style={{
                           width: '1.5rem',
                           height: '1.5rem',
@@ -206,6 +202,7 @@ function Comments({ id, videoList, editComment, deleteComment, addLike, addDisli
         ))}
       </ul>
     </div>
+    
   );
 }
 

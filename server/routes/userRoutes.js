@@ -2,8 +2,10 @@ import express from 'express';
 import { getUserByUsername, uploadUser } from '../models/users.js';
 import multer from 'multer';
 
+
 const router = express.Router();
 const upload = multer();
+
 
 // Login route
 router.get('/users/:username/:password', async (req, res) => {
@@ -18,12 +20,12 @@ router.get('/users/:username/:password', async (req, res) => {
   }
 });
 
-// Signup route
+//  Signup route
 router.post('/users', upload.single('img'), async (req, res) => {
   try {
     const userData = {
       ...req.body,
-      profilePic: req.file.buffer
+      // profilePic: req.file.buffer
     };
     console.log('message 1 from signup route' , req.body);
     console.log('message 2 from signup route' , userData);
