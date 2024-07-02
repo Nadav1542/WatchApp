@@ -12,7 +12,6 @@ router.get('/users/:username/:password', async (req, res) => {
   try {
     const user = await getUserByUsername(username, password);
     const token = generateToken(user);
-    console.log('message from login route', user)
     res.status(200).json({ user, token });
   } catch (error) {
     res.status(401).json({ error: 'Incorrect username or password' });
@@ -26,8 +25,6 @@ router.post('/users', upload.single('img'), async (req, res) => {
       ...req.body,
       profilePic: req.file.buffer
     };
-    console.log('message 1 from signup route', req.body);
-    console.log('message 2 from signup route', userData);
     await uploadUser(userData);
     const user = await getUserByUsername(req.body.username, req.body.password);
     const token = generateToken(user);
@@ -44,7 +41,7 @@ router.post('/tokens', async (req, res) => {
   try {
     const user = await getUserByUsername(username, password);
     const token = generateToken(user);
-    res.status(200).json({ token });
+    res.status(200).json({ user, token });
   } catch (error) {
     res.status(401).json({ error: 'Invalid credentials' });
   }

@@ -1,7 +1,7 @@
 import { getUserByUsername } from '../models/users.js';
 import { uploadUser } from '../models/users.js';
 import { generateToken } from '../auth.js';
-
+/*
 async function login(req, res) {
   const { username, password } = req.body;
   try {
@@ -12,6 +12,7 @@ async function login(req, res) {
     res.status(401).json({ message: error.message });
   }
 }
+  */
 
 async function signup(req, res) {
   const userData = req.body;

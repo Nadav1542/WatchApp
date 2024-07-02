@@ -11,7 +11,7 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8000/api/tokens`, {
+      const response = await fetch('http://localhost:8000/api/tokens', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
