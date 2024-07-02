@@ -6,25 +6,32 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  console.log(userConnect);
-  console.log(usersData);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8000/api/users/${username}/${password}`, {
-        method: 'GET',
+      const response = await fetch(`http://localhost:8000/api/tokens`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
       });
 
       if (response.ok) {
-        const user = await response.json();
-        console.log('message from signin' ,user)
+        const data = await response.json();
+        const { user, token } = data;
+
+        // Store the token in local storage
+        localStorage.setItem('jwtToken', token);
+
         setError('');
         setuserConnect(true);
         setconnectedUser(user);
       } else {
-        setError('Invalid username or password');
+        const errorData = await response.json();
+        setError(errorData.error || 'Invalid username or password');
       }
     } catch (error) {
       setError('An error occurred. Please try again.');

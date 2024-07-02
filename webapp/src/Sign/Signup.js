@@ -81,10 +81,7 @@ function Signup({ darkMode }) {
     data.append('displayname', formData.displayname);
     data.append('password', formData.password);
     data.append('img', document.getElementById('profile-picture').files[0]);
-    console.log('FormData Contents:');
-      for (let [key, value] of data.entries()) {
-        console.log(`${key}: ${value}`);
-      }
+
     try {
       const response = await fetch('http://localhost:8000/api/users', {
         method: 'POST',
@@ -92,9 +89,14 @@ function Signup({ darkMode }) {
       });
 
       if (response.ok) {
+        const result = await response.json();
+        const { token } = result;
+
+        // Store the token in local storage
+        localStorage.setItem('jwtToken', token);
+
         setsignedUp(true);
         setErrorMessage("");
-
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.error);
