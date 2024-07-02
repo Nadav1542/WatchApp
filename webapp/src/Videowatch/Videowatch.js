@@ -11,9 +11,15 @@ import Usericon from '../Topbar/Usericon';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Videowatch({ videoList ,darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, editComment, deleteComment,
+function Videowatch({  videoList ,darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, addComment, editComment, deleteComment,
   addLike, addDislike }) {
    
+    
+  
+    
+  
+  
+  
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="container-fluid">
@@ -35,11 +41,12 @@ function Videowatch({ videoList ,darkMode, userConnect, setuserConnect, updatevi
               </div>
             </div>
             <Videodisplay
+              
               videoList={videoList}
               userConnect={userConnect}
               updatevideoList={updatevideoList}
               deleteVideo={deleteVideo}
-              
+              addComment={addComment}
               editComment={editComment}
               deleteComment={deleteComment}
               addLike={addLike}

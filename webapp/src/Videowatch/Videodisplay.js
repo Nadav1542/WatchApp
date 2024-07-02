@@ -3,13 +3,20 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Comments from './Comments';
 
-function Videodisplay({ videoList, userConnect, updatevideoList, deleteVideo, editComment, deleteComment, addLike, addDislike, connectedUser }) {
+function Videodisplay({  videoList, userConnect, updatevideoList, deleteVideo, editComment, deleteComment, addLike, addDislike, connectedUser }) {
    
+  
+  
     const [videoList1, setVideoList] = useState(videoList);
     const { id } = useParams();
   
+
+
+
+    
     useEffect(() => {
-      const fetchVideos = async () => {
+     console.log('useEffect in Videodisplay is trrigered')
+        const fetchVideos = async () => {
         try {
           const response = await fetch('http://localhost:8000/api/videos', {
             method: 'GET',
@@ -19,7 +26,6 @@ function Videodisplay({ videoList, userConnect, updatevideoList, deleteVideo, ed
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const data = await response.json();
-          console.log(data)
           setVideoList(data);
         } catch (error) {
           console.error('Failed to fetch videos', error);
@@ -28,12 +34,26 @@ function Videodisplay({ videoList, userConnect, updatevideoList, deleteVideo, ed
   
       fetchVideos();
     }, [videoList]);
-  const video = videoList1.find((v) => v._id === decodeURIComponent(id));
-  //console.log(video.source)
-  console.log('Selected video:', video); // Debug log for selected video
+ 
+
+    const video = videoList1.find((v) => v._id === decodeURIComponent(id));
 
 
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
     const [title, setTitle] = useState(decodeURIComponent(video.title));
     const [description, setDescription] = useState(decodeURIComponent(video.description));
     const [source, setSource] = useState(video.source);
@@ -76,7 +96,7 @@ function Videodisplay({ videoList, userConnect, updatevideoList, deleteVideo, ed
         <>
             <div className="row m-4">
                 <div>
-                    <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay />
+                    <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay muted />
                     <div className="card-body singlevideo">
                         <div className="card-text">
                             {isEditingTitle ? (
@@ -148,8 +168,8 @@ function Videodisplay({ videoList, userConnect, updatevideoList, deleteVideo, ed
                 </div>
             </div>
             <Comments
-                id={video._id}
-                videoList={videoList}
+                id={id}
+                videoList={videoList1}
                 editComment={editComment}
                 deleteComment={deleteComment}
                 addLike={addLike}

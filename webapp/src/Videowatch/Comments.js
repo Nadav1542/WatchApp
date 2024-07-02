@@ -5,27 +5,31 @@ function Comments({ id, videoList, editComment, deleteComment, addLike, addDisli
   
   
   const video = videoList.find((v) => v._id === decodeURIComponent(id));
-  const [comments, setComments] = useState(video.comments); // State to store comments of the video
-  const [newComment, setNewComment] = useState(''); // State to store new comment input
-  const [editIndex, setEditIndex] = useState(null); // State to track which comment is being edited
-  const [editedComment, setEditedComment] = useState(''); // State to store edited comment input
-  const [videoLikes, setVideoLikes] = useState(video.likes); // State to store likes of the video
-  const [videoDislikes, setVideoDislikes] = useState(video.dislikes); // State to store dislikes of the video
-  
+  console.log(video.comments)
+  console.log(video.title)
+  const [comments, setComments] = useState(video.comments || []); // Ensure comments are initialized properly
+  const [newComment, setNewComment] = useState('');
+  const [editIndex, setEditIndex] = useState(null);
+  const [editedComment, setEditedComment] = useState('');
+  const [videoLikes, setVideoLikes] = useState(video.likes);
+  const [videoDislikes, setVideoDislikes] = useState(video.dislikes);
+
   useEffect(() => {
-    // Update comments, likes, and dislikes when videoList or id changes
-    setComments(video.comments);
+   console.log('useEffect in comments is trrigered')
+    setComments(video.comments || []); // Update comments state when videoList or id changes
     setVideoLikes(video.likes);
     setVideoDislikes(video.dislikes);
   }, [id, videoList]);
 
+
+  
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
     if (newComment.trim()) {
       const newCommentObj = {
         text: newComment,
         user: connectedUser.name, // Add the connected user's name to the comment object
-        img: connectedUser.profilePic // Add the connected user's image to the comment object
+        img: connectedUser.img // Add the connected user's image to the comment object
       };
       console.log(newCommentObj)
       console.log(connectedUser)
@@ -44,6 +48,7 @@ function Comments({ id, videoList, editComment, deleteComment, addLike, addDisli
         console.log(newCommentResponse)
         setComments([...comments, newCommentResponse]); // Update comments state with the new comment
         
+        
         setNewComment(''); // Reset new comment input
       } catch (error) {
         console.error('Error adding comment:', error);
@@ -51,6 +56,8 @@ function Comments({ id, videoList, editComment, deleteComment, addLike, addDisli
     }
   };
 
+  
+  
   const handleEditCommentSubmit = (event, index) => {
     event.preventDefault();
     if (editedComment.trim()) {

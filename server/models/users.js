@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
       message: 'Password must contain both letters and numbers'
     }
   },
-  name: {
+  displayname: {
     type: String,
     required: [true, 'Name is required']
   },
@@ -45,7 +45,7 @@ async function getUserByUsername(username, password) {
 async function uploadUser(userData) {
   try {
     const { displayname, ...rest } = userData;
-    const user = new User({ ...rest, name: displayname });
+    const user = new User({ ...rest, displayname: displayname });
     await user.save();
   } catch (error) {
     if (error.code === 11000) {

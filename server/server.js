@@ -36,6 +36,7 @@ server.use(express.static(path.join(__dirname, 'build')));
 // Increase the request body size limit
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 //connectDB();
 // Middleware
 server.use(cors());
@@ -47,7 +48,7 @@ const upload = multer();
 // Route to serve video files
 server.get('/videowatch/:fileName', (req, res) => {
   const videoPath = path.join(__dirname, 'build', req.params.fileName);
-  console.log(videoPath)
+  
   res.sendFile(videoPath);
 });
 
@@ -55,7 +56,7 @@ server.get('/videowatch/:fileName', (req, res) => {
 server.post('/api/videos/:videoId/comments', async (req, res) => {
   const { videoId } = req.params;
   const { text, user, img } = req.body;
-  console.log(videoId,text,user,img)
+ 
   try {
     const newComment = await addCommentToVideo(videoId, { text, user, img });
     res.json(newComment); // Return only the new comment object
