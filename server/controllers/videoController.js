@@ -1,9 +1,16 @@
-import {getVideos,getVideo,Video} from '../models/Video.js'
+import {Video} from '../models/Video.js'
 
 
 
-function getAllVideos(req,res){
-    return getVideos();
+
+ const  getAllVideos = async (req,res) => {
+  try {
+    const videos = await Video.find();
+    res.status(200).json(videos); // Ensure you return JSON
+    
+  } catch (error) {
+    res.status(500).json({ error: 'Server Error' }); // Return JSON error response
+  }
 }
 
 const getVideobyId = async (pid) => {
@@ -16,8 +23,38 @@ const getVideobyId = async (pid) => {
     }
   };
 
-// Function to add a comment to a video
-export const addCommentToVideo = async (videoId, comment) => {
+
+
+  const getVideobyUser = async (req,res) => {
+
+
+  const { id, pid } = req.params;
+  
+  try {
+    const video = await Video.findById(pid);
+    if (!video) {
+      return res.status(404).json({ message: 'Video not found' });
+    }
+    res.json(video);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching video' });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Function to add a comment to a video
+ const addCommentToVideo = async (videoId, comment) => {
   try {
     const video = await Video.findById(videoId);
 
@@ -36,6 +73,4 @@ export const addCommentToVideo = async (videoId, comment) => {
   }
 };
 
-export {
-    getAllVideos,getVideobyId
-}
+export {getAllVideos, addCommentToVideo, getVideobyId,getVideobyUser};

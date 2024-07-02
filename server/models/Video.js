@@ -20,9 +20,7 @@ export const Video = mongoose.model('Video', videoSchema);
 
 
 
-function getVideos() {
-  return Video.find();
-}
+
 
 const getVideo = async (id) => {
   try {
@@ -37,7 +35,7 @@ const getVideo = async (id) => {
   }
 };
 
-export {getVideos,getVideo}
+ export default {getVideo};
 
 
 

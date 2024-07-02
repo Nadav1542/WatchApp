@@ -6,8 +6,7 @@ import cors from 'cors';
 import multer from 'multer';
 import videoRoutes from './routes/videoRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import { getAllVideos, addCommentToVideo } from './controllers/videoController.js';
-import connectDB from './db.js'; // Import the database connection module
+import {addCommentToVideo} from './controllers/videoController.js';
 import path from 'path'
 import { fileURLToPath } from 'url';
 
