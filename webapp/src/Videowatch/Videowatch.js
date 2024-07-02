@@ -1,5 +1,5 @@
 import movies from '../data/videos.json';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import LeftVideos from './LeftVideos';
 import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
@@ -8,14 +8,18 @@ import buttons from '../data/buttons.json';
 import { useParams } from 'react-router-dom';
 import Usericon from '../Topbar/Usericon';
 
-const videos = JSON.parse(JSON.stringify(movies));
+
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Videowatch({ darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, videoList, addComment, editComment, deleteComment,
+function Videowatch({  videoList ,darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, addComment, editComment, deleteComment,
   addLike, addDislike }) {
+   
+    
   
-  const { id } = useParams();
-
+    
+  
+  
+  
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="container-fluid">
@@ -37,11 +41,11 @@ function Videowatch({ darkMode, userConnect, setuserConnect, updatevideoList, co
               </div>
             </div>
             <Videodisplay
-              id={id}
+              
+              videoList={videoList}
               userConnect={userConnect}
               updatevideoList={updatevideoList}
               deleteVideo={deleteVideo}
-              videoList={videoList}
               addComment={addComment}
               editComment={editComment}
               deleteComment={deleteComment}

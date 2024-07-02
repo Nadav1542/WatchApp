@@ -1,8 +1,8 @@
 import React from 'react';
-import Videolist from './videoItem/Videolist';
-import Menu from './Topbar/Menu';
-import buttons from './data/buttons.json';
-import SearchBar from './Topbar/SearchBar';
+import Videolist from '../videoItem/Videolist';
+import Menu from '../Topbar/Menu';
+import buttons from '../data/buttons.json';
+import SearchBar from '../Topbar/SearchBar';
 
 // Deep copy of buttons data from JSON
 const menubuttons = JSON.parse(JSON.stringify(buttons));
@@ -27,7 +27,12 @@ function Myvideos({ darkMode, userConnect, videoList, setuserConnect, connectedU
   };
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
-      <div className="row align-items-center mb-3">
+      
+  
+        
+      {userConnect && connectedUser ? (
+        <>
+        <div className="row align-items-center mb-3">
         <div className="col-auto">
           {/* Menu component with darkMode, buttons, userConnect, and setuserConnect props */}
           <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
@@ -60,9 +65,7 @@ function Myvideos({ darkMode, userConnect, videoList, setuserConnect, connectedU
           {/* SearchBar component with darkMode prop */}
           <SearchBar darkMode={darkMode} />
         </div>
-      </div>
-      {userConnect && connectedUser ? (
-        <>
+      
           {/* Display user's profile picture */}
   <div style={{ display: 'flex', alignItems: 'center' }}>
     <img 
@@ -89,11 +92,23 @@ function Myvideos({ darkMode, userConnect, videoList, setuserConnect, connectedU
             </div>
           </div>
         </div>
+        </div>
+
       </>
       
       ) : (
         <>
+        <div className="row align-items-center mb-3">
+        <div className="col-auto">
+          {/* Menu component with darkMode, buttons, userConnect, and setuserConnect props */}
+          <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
+        </div>
+        <div className="col">
+          {/* SearchBar component with darkMode prop */}
+          <SearchBar darkMode={darkMode} />
+        </div>
           {/* Display default user icon and welcome message */}
+          </div>
           <i className="bi bi-person-circle" style={{ fontSize: '1.5rem' }}></i>
           <i style={{ marginLeft: '2rem' }}>Welcome!</i>
         </>            

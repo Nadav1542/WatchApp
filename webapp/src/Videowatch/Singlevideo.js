@@ -2,11 +2,14 @@ import './Singlevideo.css';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-function Singlevideo({ id, title, description, source, views, uploadtime }) {
+function Singlevideo({ video }) {
+    
+  
     const videoRef = useRef(null);
 
     const handleMouseEnter = () => {
         if (videoRef.current) {
+           
             videoRef.current.play().catch((error) => {
                 console.error('Error playing video:', error);
             });
@@ -23,11 +26,11 @@ function Singlevideo({ id, title, description, source, views, uploadtime }) {
     return (
         <li className="list-group-items m-3 d-flex align-items-center border-0">
             <div className="leftvideos border-0">
-                <Link to={`/videowatch/${encodeURIComponent(id)}`}>
+                <Link to={`/videowatch/${encodeURIComponent(video._id)}`}>
                     <video
-                        src={source}
+                        src={`http://localhost:8000/videowatch/${video.source}`}
                         className="card-img-top rounded"
-                        alt={title}
+                        alt={video.title}
                         ref={videoRef}
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
@@ -35,9 +38,9 @@ function Singlevideo({ id, title, description, source, views, uploadtime }) {
                         loop
                     />
                     <div className="card-body singlevideo">
-                        <p className="card-text">{title}</p>
-                        <p className="card-text">{description}</p>
-                        <p className="card-text">{views} views - {uploadtime}</p>
+                        <p className="card-text">{video.title}</p>
+                        <p className="card-text">{video.description}</p>
+                        <p className="card-text">{video.views} views - {video.uploadtime}</p>
                     </div>
                 </Link>
             </div>
