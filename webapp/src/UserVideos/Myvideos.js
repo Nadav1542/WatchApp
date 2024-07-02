@@ -1,8 +1,8 @@
 import React from 'react';
-import Videolist from './videoItem/Videolist';
-import Menu from './Topbar/Menu';
-import buttons from './data/buttons.json';
-import SearchBar from './Topbar/SearchBar';
+import Videolist from '../videoItem/Videolist';
+import Menu from '../Topbar/Menu';
+import buttons from '../data/buttons.json';
+import SearchBar from '../Topbar/SearchBar';
 
 // Deep copy of buttons data from JSON
 const menubuttons = JSON.parse(JSON.stringify(buttons));

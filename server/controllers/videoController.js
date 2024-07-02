@@ -30,7 +30,6 @@ export const addCommentToVideo = async (videoId, comment) => {
 
     // Find the newly added comment
     const newComment = video.comments[video.comments.length - 1];
-    
     return newComment; // Return only the new comment object
   } catch (error) {
     throw new Error('Failed to add comment');

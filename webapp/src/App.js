@@ -1,10 +1,4 @@
-import movies from './data/videos.json';
-import LeftMenu from './LeftMenu/LeftMenu';
 import React, { useState } from 'react';
-import VideoItem from './videoItem/VideoItem';
-import SearchBar from './Topbar/SearchBar';
-import Videolist from './videoItem/Videolist';
-import buttons from './data/buttons.json';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { DarkModeProvider, useDarkMode } from './DarkModeContext';
 import Signup from './Sign/Signup';
@@ -12,7 +6,7 @@ import Mainpage from './Mainpage';
 import Signin from './Sign/Signin';
 import Videowatch from './Videowatch/Videowatch';
 import Addingvideo from './UserVideos/Addingvideo';
-import Myvideos from './Myvideos'
+import Myvideos from './UserVideos/Myvideos'
 import { useNavigate } from 'react-router-dom'; 
 import { useEffect } from 'react';
 
@@ -47,11 +41,9 @@ function AppContent() {
         console.error('Error fetching videos:', error);
       }
     };
-
     fetchData();
   }, []); 
   
-
   // Function to edit a comment of a video
   const editComment = (videoIndex, commentIndex, updatedContent) => {
     setVideolist(videoList =>

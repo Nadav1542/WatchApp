@@ -33,7 +33,9 @@ const server = express();
 // Middleware to serve static files
 server.use(express.static(path.join(__dirname, 'build')));
 
-server.use(bodyParser.json());
+// Increase the request body size limit
+server.use(bodyParser.json({ limit: '50mb' }));
+server.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 //connectDB();
 // Middleware
 server.use(cors());
