@@ -1,21 +1,26 @@
 import { getUserByUsername } from '../models/users.js';
 import { uploadUser } from '../models/users.js';
-
+import { generateToken } from '../auth.js';
+/*
 async function login(req, res) {
   const { username, password } = req.body;
   try {
     const user = await getUserByUsername(username, password);
-    res.status(200).json({ message: 'Login successful', user });
+    const token = generateToken(user);
+    res.status(200).json({ message: 'Login successful', user, token });
   } catch (error) {
     res.status(401).json({ message: error.message });
   }
 }
+  */
 
 async function signup(req, res) {
   const userData = req.body;
   try {
     await uploadUser(userData);
-    res.status(201).json({ message: 'User created successfully' });
+    const user = await getUserByUsername(userData.username, userData.password);
+    const token = generateToken(user);
+    res.status(201).json({ message: 'User created successfully', token });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -25,3 +30,4 @@ export {
   login,
   signup
 };
+

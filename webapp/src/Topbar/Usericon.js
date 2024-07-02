@@ -14,7 +14,6 @@ function Usericon({ userConnect, connectedUser, setuserConnect }) {
         navigate("/"); // Navigate to the home page
         console.log('User logged out'); // Log the logout action
     };
-   
     return (
         <Link to={userConnect ? "/Myvideos" : "/signin"}>
             {userConnect && connectedUser ? (

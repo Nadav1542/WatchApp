@@ -1,32 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import '../Topbar/Searchbar.css';
 
-function Comments({ id, videoList, addComment, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
-  const [comments, setComments] = useState(videoList[id].comments); // State to store comments of the video
+function Comments({ id, videoList, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
+  
+  
+  const video = videoList.find((v) => v._id === decodeURIComponent(id));
+  const [comments, setComments] = useState(video.comments); // State to store comments of the video
   const [newComment, setNewComment] = useState(''); // State to store new comment input
   const [editIndex, setEditIndex] = useState(null); // State to track which comment is being edited
   const [editedComment, setEditedComment] = useState(''); // State to store edited comment input
-  const [videoLikes, setVideoLikes] = useState(videoList[id].likes); // State to store likes of the video
-  const [videoDislikes, setVideoDislikes] = useState(videoList[id].dislikes); // State to store dislikes of the video
-
+  const [videoLikes, setVideoLikes] = useState(video.likes); // State to store likes of the video
+  const [videoDislikes, setVideoDislikes] = useState(video.dislikes); // State to store dislikes of the video
+  
   useEffect(() => {
     // Update comments, likes, and dislikes when videoList or id changes
-    setComments(videoList[id].comments);
-    setVideoLikes(videoList[id].likes);
-    setVideoDislikes(videoList[id].dislikes);
+    setComments(video.comments);
+    setVideoLikes(video.likes);
+    setVideoDislikes(video.dislikes);
   }, [id, videoList]);
 
-  const handleCommentSubmit = (event) => {
+  const handleCommentSubmit = async (event) => {
     event.preventDefault();
     if (newComment.trim()) {
       const newCommentObj = {
         text: newComment,
-        user: connectedUser.displayname, // Add the connected user's name to the comment object
-        img: connectedUser.img // Add the connected user's image to the comment object
+        user: connectedUser.name, // Add the connected user's name to the comment object
+        img: connectedUser.profilePic // Add the connected user's image to the comment object
       };
-      setComments([...comments, newCommentObj]); // Update comments state
-      addComment(id, newCommentObj); // Call addComment function passed as a prop
-      setNewComment(''); // Reset new comment input
+      console.log(newCommentObj)
+      console.log(connectedUser)
+      try {
+        const response = await fetch(`http://localhost:8000/api/videos/${video._id}/comments`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newCommentObj)
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const newCommentResponse = await response.json();
+        console.log(newCommentResponse)
+        setComments([...comments, newCommentResponse]); // Update comments state with the new comment
+        
+        setNewComment(''); // Reset new comment input
+      } catch (error) {
+        console.error('Error adding comment:', error);
+      }
     }
   };
 
@@ -135,19 +156,22 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
             ) : (
               <>
                 <strong>
-                  <p>
-                    <img
-                      src={comment.img}
-                      alt="Profile"
-                      style={{
-                        width: '1.5rem',
-                        height: '1.5rem',
-                        borderRadius: '50%',
-                        marginRight: '0.5rem'
-                      }}
-                    />
-                    {comment.user}:
-                  </p>
+                {/* <Link to={`/Myvideos/${encodeURIComponent(comment.user)}`}> */}
+                    <p>
+                      <img
+                        src={comment.img}
+                        alt="Profile"
+                        
+                        style={{
+                          width: '1.5rem',
+                          height: '1.5rem',
+                          borderRadius: '50%',
+                          marginRight: '0.5rem'
+                        }}
+                      />
+                      {comment.user}:
+                    </p>
+                    {/* </Link> */}
                 </strong>
                 <i>{comment.text}</i>
                 {userConnect && (
