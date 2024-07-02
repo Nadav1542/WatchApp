@@ -1,4 +1,3 @@
-import { profile } from 'console';
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -7,6 +6,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: [true, 'Username is required'],
     minlength: [1, 'Username must be at least 1 character long']
+  },
+  displayname: {
+    type: String,
+    required: [true, 'Name is required']
   },
   password: {
     type: String,
@@ -20,11 +23,7 @@ const userSchema = new mongoose.Schema({
       message: 'Password must contain both letters and numbers'
     }
   },
-  displayname: {
-    type: String,
-    required: [true, 'Name is required']
-  },
-  profilePic: {
+  img: {
     type: String,
     required: [true, 'Profile picture is required']
   }
@@ -43,17 +42,33 @@ async function getUserByUsername(username, password) {
   return user;
 }
 
-async function uploadUser(userData) {
-  try {
-    const { displayname, ...rest } = userData;
-    const user = new User({ ...rest, displayname: displayname });
-    await user.save();
-  } catch (error) {
-    if (error.code === 11000) {
-      throw new Error('Username is already taken');
-    }
-    throw error;
+
+const createUser = async (username, displayname, password, img) => {
+  // If the image havn't a prefix, add it
+  if (img && !img.startsWith("data")) {
+      img = `data:image/png;base64,${img}`
   }
+  // Check if the username is already taken
+  const existingUser = await User.findOne({ username });
+  if (existingUser) {
+      throw new Error('Username already taken');
+  }
+  // Create a new user
+  const user = new User({username, displayname, password, img })
+  return await user.save();
 }
 
-export { getUserByUsername, uploadUser };
+// async function uploadUser(userData) {
+//   try {
+//     const { displayname, ...rest } = userData;
+//     const user = new User({ ...rest, name: displayname });
+//     await user.save();
+//   } catch (error) {
+//     if (error.code === 11000) {
+//       throw new Error('Username is already taken');
+//     }
+//     throw error;
+//   }
+// }
+
+export { getUserByUsername, createUser };
