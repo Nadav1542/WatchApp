@@ -1,4 +1,4 @@
-import {Video} from '../models/Video.js'
+import {Video,addCommentToVideo} from '../models/Video.js'
 
 
 
@@ -25,11 +25,25 @@ const getVideobyId = async (pid) => {
 
 
 
+const createComment = async (req,res) => {
+  const { videoId } = req.params;
+  const { text, user, img } = req.body;
+ 
+  try {
+    const newComment = await addCommentToVideo(videoId, { text, user, img });
+    res.json(newComment); // Return only the new comment object
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    res.status(500).json({ error: 'Failed to add comment' });
+  }
+};
+
+
+
+
+
   const getVideobyUser = async (req,res) => {
-
-
-  const { id, pid } = req.params;
-  
+    const { id, pid } = req.params;
   try {
     const video = await Video.findById(pid);
     if (!video) {
@@ -50,7 +64,7 @@ const getVideobyId = async (pid) => {
 
 
 
-
+/*
 
 
   // Function to add a comment to a video
@@ -76,5 +90,5 @@ const getVideobyId = async (pid) => {
     throw new Error('Failed to add comment');
   }
 };
-
-export {getAllVideos, addCommentToVideo, getVideobyId,getVideobyUser};
+*/
+export {getAllVideos, getVideobyId,getVideobyUser,createComment};
