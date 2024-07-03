@@ -1,6 +1,8 @@
 import { createUser } from '../models/users.js';
+import { getUserByUsername } from '../models/users.js';
 
-async function logIn(req,res) {
+
+const logIn = async (req,res) => {
 
   const { username, password } = req.params;
   try {
@@ -17,7 +19,7 @@ async function logIn(req,res) {
 const signup = async (req, res) => {
   try {
     // Create the user with the provided username, displayname, password, and img
-    const createdUser = await createUser(req.body.username, req.body.displayname, req.body.password, req.file.buffer);
+    const createdUser = await createUser(req.body.username, req.body.displayname, req.body.password, req.body.img);
     res.json(createdUser);
   } catch (error) {
     if (error.message === 'Username already taken') {

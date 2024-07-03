@@ -44,6 +44,7 @@ async function getUserByUsername(username, password) {
 
 
 const createUser = async (username, displayname, password, img) => {
+  console.log(img)
   // If the image havn't a prefix, add it
   if (img && !img.startsWith("data")) {
       img = `data:image/png;base64,${img}`
