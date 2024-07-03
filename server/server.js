@@ -14,10 +14,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/data', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect('mongodb://localhost:27017/data');
 
 mongoose.connection.on('connected', () => {
   console.log('Connected to MongoDB');
