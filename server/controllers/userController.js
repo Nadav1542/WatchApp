@@ -1,5 +1,19 @@
 import { createUser } from '../models/users.js';
 
+async function logIn(req,res) {
+
+  const { username, password } = req.params;
+  try {
+    const user = await getUserByUsername(username, password);
+    console.log('message from login route', user)
+    res.status(200).json( user );
+    
+  } catch (error) { 
+    res.status(401).json({ error: 'Incorrect username or password' });
+  }
+}
+
+
 const signup = async (req, res) => {
   try {
     // Create the user with the provided username, displayname, password, and img
@@ -16,4 +30,4 @@ const signup = async (req, res) => {
   }
 }
 
-export { signup };
+export { signup, logIn };
