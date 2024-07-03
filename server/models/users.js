@@ -59,17 +59,6 @@ const createUser = async (username, displayname, password, img) => {
   return await user.save();
 }
 
-// async function uploadUser(userData) {
-//   try {
-//     const { displayname, ...rest } = userData;
-//     const user = new User({ ...rest, name: displayname });
-//     await user.save();
-//   } catch (error) {
-//     if (error.code === 11000) {
-//       throw new Error('Username is already taken');
-//     }
-//     throw error;
-//   }
-// }
+
 
 export { getUserByUsername, createUser };

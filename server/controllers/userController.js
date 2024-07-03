@@ -1,12 +1,13 @@
-import { createUser } from '../models/users.js';
-import { getUserByUsername } from '../models/users.js';
+import { createUser,getUserByUsername  } from '../models/users.js';
 
+import { generateToken } from '../auth.js';
 
 const logIn = async (req,res) => {
 
   const { username, password } = req.params;
   try {
     const user = await getUserByUsername(username, password);
+    const token = generateToken(user);
     console.log('message from login route', user)
     res.status(200).json( user );
     
@@ -18,8 +19,10 @@ const logIn = async (req,res) => {
 
 const signup = async (req, res) => {
   try {
+    
     // Create the user with the provided username, displayname, password, and img
     const createdUser = await createUser(req.body.username, req.body.displayname, req.body.password, req.body.img);
+    const token = generateToken(user);
     res.json(createdUser);
   } catch (error) {
     if (error.message === 'Username already taken') {
@@ -32,4 +35,15 @@ const signup = async (req, res) => {
   }
 }
 
-export { signup, logIn };
+ const generateTokenForUser = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await getUserByUsername(username, password);
+    const token = generateToken(user);
+    res.status(200).json({ user, token });
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
+};
+
+export { signup, logIn,  generateTokenForUser };

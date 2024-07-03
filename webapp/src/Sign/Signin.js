@@ -18,8 +18,12 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
       });
 
       if (response.ok) {
-        const user = await response.json();
+        const data = await response.json();
         console.log('message from signin' ,user)
+        const { user, token } = data;
+
+        // Store the token in local storage
+        localStorage.setItem('jwtToken', token);
         setError('');
         setuserConnect(true);
         setconnectedUser(user);

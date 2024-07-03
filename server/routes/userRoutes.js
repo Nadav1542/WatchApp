@@ -1,5 +1,6 @@
 import express from 'express';
-import {logIn, signup} from '../controllers/userController.js'
+import { logIn, signup, generateTokenForUser } from '../controllers/userController.js';
+
 import multer from 'multer';
 
 
@@ -9,6 +10,6 @@ const upload = multer();
 
 router.route('/:username/:password').get(logIn);
 router.route('/').post(signup)
-
+router.post('/tokens', generateTokenForUser);
 
 export default router;

@@ -116,6 +116,12 @@ function Signup({ darkMode }) {
       });
 
       if (response.ok) {
+        const result = await response.json();
+        const { token } = result;
+
+        // Store the token in local storage
+        localStorage.setItem('jwtToken', token);
+        
         setsignedUp(true);
         setErrorMessage("");
 
