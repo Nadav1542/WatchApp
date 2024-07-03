@@ -124,7 +124,6 @@ function Signup({ darkMode }) {
         
         setsignedUp(true);
         setErrorMessage("");
-
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.error);

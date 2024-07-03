@@ -1,8 +1,10 @@
+// Usericon.js
+
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-// Usericon component for displaying user icon and logout button
 function Usericon({ userConnect, connectedUser, setuserConnect }) {
     const navigate = useNavigate();
 
@@ -15,6 +17,7 @@ function Usericon({ userConnect, connectedUser, setuserConnect }) {
         navigate("/"); // Navigate to the home page
         console.log('User logged out'); // Log the logout action
     };
+
 
     return (
         <Link to={userConnect ? "/Myvideos" : "/signin"}>
@@ -47,13 +50,13 @@ function Usericon({ userConnect, connectedUser, setuserConnect }) {
                     </button>
 
                     {/* Display greeting with user's display name */}
-                    <i style={{ float: "right", marginLeft: "50px" }}>Hello {connectedUser.displayname}!</i>
+                    <span style={{ float: "right", marginLeft: "10px" }}>Hello {connectedUser.displayname}!</span>
                 </>
             ) : (
                 <>
                     {/* Display default user icon and welcome message */}
                     <i className="bi bi-person-circle" style={{ fontSize: '1.5rem' }}></i>
-                    <i style={{ marginLeft: '2rem' }}>Welcome!</i>
+                    <span style={{ marginLeft: '2rem' }}>Welcome!</span>
                 </>            
             )}
         </Link>
