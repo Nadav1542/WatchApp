@@ -1,7 +1,8 @@
-import { getUserByUsername,uploadUser } from '../models/users.js';
+import { createUser } from '../models/users.js';
+import { getUserByUsername } from '../models/users.js';
 
 
-async function logIn(req,res) {
+const logIn = async (req,res) => {
 
   const { username, password } = req.params;
   try {
@@ -15,21 +16,20 @@ async function logIn(req,res) {
 }
 
 
-async function signup(req, res) {
+const signup = async (req, res) => {
   try {
-    const userData = {
-      ...req.body,
-      // profilePic: req.file.buffer
-    };
-    console.log('message 1 from signup route' , req.body);
-    console.log('message 2 from signup route' , userData);
-    await uploadUser(userData);
-    
-    res.status(201).json({ message: 'User created successfully' });
+    // Create the user with the provided username, displayname, password, and img
+    const createdUser = await createUser(req.body.username, req.body.displayname, req.body.password, req.body.img);
+    res.json(createdUser);
   } catch (error) {
-    console.error('Error:', error);
-    res.status(400).json({ error: error.message });
+    if (error.message === 'Username already taken') {
+      // If the error is specifically about the username being taken, send a 409 Conflict status
+      res.status(409).json({ message: error.message });
+    } else {
+      // For other errors, continue sending a 404 status or consider using a more appropriate status code
+      res.status(500).json({ message: error.message });
+    }
   }
 }
 
-export {signup,logIn};
+export { signup, logIn };

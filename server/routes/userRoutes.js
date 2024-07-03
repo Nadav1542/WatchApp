@@ -8,7 +8,7 @@ const upload = multer();
 
 
 router.route('/:username/:password').get(logIn);
-router.route('/', upload.single('img'), signup)
+router.route('/').post(signup)
 
 
 export default router;

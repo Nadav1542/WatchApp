@@ -38,10 +38,27 @@ function Signup({ darkMode }) {
       });
     }
   };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    // Function to read the file as base64
+    const readFileAsBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    };
+    // Convert the selected image to base64
+    let base64Image = "";
+    if (document.getElementById('profile-picture').files[0]) {
+      base64Image = await readFileAsBase64(document.getElementById('profile-picture').files[0]);
+    } else {
+      alert("Please select an image.");
+      return;
+    }
     if (!formData.username.trim()) {
       setErrorMessage("Username is required.");
       return;
@@ -76,19 +93,26 @@ function Signup({ darkMode }) {
       return;
     }
 
-    const data = new FormData();
-    data.append('username', formData.username);
-    data.append('displayname', formData.displayname);
-    data.append('password', formData.password);
-    data.append('img', document.getElementById('profile-picture').files[0]);
-    console.log('FormData Contents:');
-      for (let [key, value] of data.entries()) {
-        console.log(`${key}: ${value}`);
-      }
+    // const data = new FormData();
+    // data.append('username', formData.username);
+    // data.append('displayname', formData.displayname);
+    // data.append('password', formData.password);
+    // data.append('img', base64Image);
+    // Create user data object
+    const userData = {
+      username: formData.username,
+      password: formData.password,
+      displayname: formData.displayname,
+      img: base64Image
+    };
     try {
-      const response = await fetch('http://localhost:8000/api/users', {
+      {console.log(userData)}
+      let response;
+
+      response = await fetch('http://localhost:8000/api/users', {
         method: 'POST',
-        body: data,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
       });
 
       if (response.ok) {
