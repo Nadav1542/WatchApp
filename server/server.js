@@ -67,7 +67,7 @@ server.post('/api/videos/:videoId/comments', async (req, res) => {
 
 // Use routes
 server.use('/api/videos', videoRoutes);
-server.use('/api', userRoutes);
+server.use('/api/users', userRoutes);
 
 // Start the server
 server.listen(8000, () => {

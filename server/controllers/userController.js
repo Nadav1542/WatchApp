@@ -1,9 +1,8 @@
-import { getUserByUsername } from '../models/users.js';
-import { uploadUser } from '../models/users.js';
+import { getUserByUsername, uploadUser } from '../models/users.js';
 import { generateToken } from '../auth.js';
-/*
-async function login(req, res) {
-  const { username, password } = req.body;
+
+export const login = async (req, res) => {
+  const { username, password } = req.query;  // Extract from query parameters
   try {
     const user = await getUserByUsername(username, password);
     const token = generateToken(user);
@@ -11,23 +10,29 @@ async function login(req, res) {
   } catch (error) {
     res.status(401).json({ message: error.message });
   }
-}
-  */
+};
 
-async function signup(req, res) {
-  const userData = req.body;
+export const signup = async (req, res) => {
   try {
+    const userData = {
+      ...req.body
+    };
     await uploadUser(userData);
-    const user = await getUserByUsername(userData.username, userData.password);
+    const user = await getUserByUsername(req.body.username, req.body.password);
     const token = generateToken(user);
     res.status(201).json({ message: 'User created successfully', token });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
-
-export {
-  login,
-  signup
 };
 
+export const generateTokenForUser = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await getUserByUsername(username, password);
+    const token = generateToken(user);
+    res.status(200).json({ user, token });
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
+};

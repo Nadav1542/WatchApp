@@ -24,8 +24,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Name is required']
   },
   profilePic: {
-    type: Buffer,
-    required: [true, 'Profile picture is required']
+    type: String,
   }
 });
 

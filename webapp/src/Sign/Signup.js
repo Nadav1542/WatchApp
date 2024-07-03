@@ -83,7 +83,7 @@ function Signup({ darkMode }) {
     data.append('img', document.getElementById('profile-picture').files[0]);
 
     try {
-      const response = await fetch('http://localhost:8000/api/users', {
+      const response = await fetch('http://localhost:8000/api/users/signup', {
         method: 'POST',
         body: data,
       });
