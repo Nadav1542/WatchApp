@@ -92,13 +92,6 @@ function Signup({ darkMode }) {
       alert("Please select an image.");
       return;
     }
-
-    // const data = new FormData();
-    // data.append('username', formData.username);
-    // data.append('displayname', formData.displayname);
-    // data.append('password', formData.password);
-    // data.append('img', base64Image);
-    // Create user data object
     const userData = {
       username: formData.username,
       password: formData.password,
@@ -116,9 +109,6 @@ function Signup({ darkMode }) {
       });
 
       if (response.ok) {
-        const result = await response.json();
-       
-        
         setsignedUp(true);
         setErrorMessage("");
       } else {
