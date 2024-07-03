@@ -7,10 +7,8 @@ const logIn = async (req,res) => {
   const { username, password } = req.params;
   try {
     const user = await getUserByUsername(username, password);
-    console.log('message from login route', user)
-    res.status(200).json( user );
-    
-  } catch (error) { 
+        res.status(200).json( user );
+      } catch (error) { 
     res.status(401).json({ error: 'Incorrect username or password' });
   }
 }

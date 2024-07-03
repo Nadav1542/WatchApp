@@ -44,7 +44,6 @@ async function getUserByUsername(username, password) {
 
 
 const createUser = async (username, displayname, password, img) => {
-  console.log(img)
   // If the image havn't a prefix, add it
   if (img && !img.startsWith("data")) {
       img = `data:image/png;base64,${img}`
@@ -59,17 +58,5 @@ const createUser = async (username, displayname, password, img) => {
   return await user.save();
 }
 
-// async function uploadUser(userData) {
-//   try {
-//     const { displayname, ...rest } = userData;
-//     const user = new User({ ...rest, name: displayname });
-//     await user.save();
-//   } catch (error) {
-//     if (error.code === 11000) {
-//       throw new Error('Username is already taken');
-//     }
-//     throw error;
-//   }
-// }
 
 export { getUserByUsername, createUser };
