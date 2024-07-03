@@ -52,8 +52,8 @@ server.get('/videowatch/:fileName', (req, res) => {
 
 // Use routes
 server.use('/api/videos', videoRoutes);
-server.use('/api/users', userRoutes);
 
+server.use('/api/users', userRoutes);
 
 
 

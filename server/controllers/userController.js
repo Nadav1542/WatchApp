@@ -2,6 +2,8 @@ import { createUser,getUserByUsername  } from '../models/users.js';
 
 import { generateToken } from '../auth.js';
 
+
+/*
 const logIn = async (req,res) => {
 
   const { username, password } = req.params;
@@ -15,14 +17,12 @@ const logIn = async (req,res) => {
     res.status(401).json({ error: 'Incorrect username or password' });
   }
 }
-
+*/
 
 const signup = async (req, res) => {
   try {
-    
     // Create the user with the provided username, displayname, password, and img
     const createdUser = await createUser(req.body.username, req.body.displayname, req.body.password, req.body.img);
-    const token = generateToken(user);
     res.json(createdUser);
   } catch (error) {
     if (error.message === 'Username already taken') {
@@ -37,6 +37,7 @@ const signup = async (req, res) => {
 
  const generateTokenForUser = async (req, res) => {
   const { username, password } = req.body;
+  console.log(req.body)
   try {
     const user = await getUserByUsername(username, password);
     const token = generateToken(user);
@@ -46,4 +47,4 @@ const signup = async (req, res) => {
   }
 };
 
-export { signup, logIn,  generateTokenForUser };
+export { signup,   generateTokenForUser };

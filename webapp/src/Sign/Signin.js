@@ -11,18 +11,19 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/api/tokens', {
+      const response = await fetch('http://localhost:8000/api/users/tokens', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ username, password })
       });
-
+     
       if (response.ok) {
         const data = await response.json();
-        console.log('message from signin' ,user)
         const { user, token } = data;
+        console.log('message from signin' ,user)
+        
 
         // Store the token in local storage
         localStorage.setItem('jwtToken', token);
