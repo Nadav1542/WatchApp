@@ -1,6 +1,6 @@
 import { createUser } from '../models/users.js';
 import { getUserByUsername } from '../models/users.js';
-
+import { User } from '../models/users.js';
 
 const logIn = async (req,res) => {
 

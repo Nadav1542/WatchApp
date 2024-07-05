@@ -3,17 +3,10 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Comments from './Comments';
 
-function Videodisplay({  videoList, userConnect, updatevideoList, deleteVideo, editComment, deleteComment, addLike, addDislike, connectedUser }) {
+function Videodisplay({ videoList, userConnect, updatevideoList, deleteVideo, editComment, deleteComment, addLike, addDislike, connectedUser }) {
    
-  
-  
     const [videoList1, setVideoList] = useState(videoList);
     const { id } = useParams();
-  
-
-
-
-    
     useEffect(() => {
      console.log('useEffect in Videodisplay is trrigered')
         const fetchVideos = async () => {
@@ -35,25 +28,7 @@ function Videodisplay({  videoList, userConnect, updatevideoList, deleteVideo, e
       fetchVideos();
     }, [videoList]);
  
-
     const video = videoList1.find((v) => v._id === decodeURIComponent(id));
-
-
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
     const [title, setTitle] = useState(decodeURIComponent(video.title));
     const [description, setDescription] = useState(decodeURIComponent(video.description));
     const [source, setSource] = useState(video.source);

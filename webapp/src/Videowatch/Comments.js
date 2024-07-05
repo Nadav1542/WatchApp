@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import '../Topbar/Searchbar.css';
+import Myvideos from '../UserVideos/Myvideos';
+import setuserConnect from '../App'
+
 
 function Comments({ id, videoList, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
   
@@ -28,11 +32,10 @@ function Comments({ id, videoList, editComment, deleteComment, addLike, addDisli
     if (newComment.trim()) {
       const newCommentObj = {
         text: newComment,
-        user: connectedUser.name, // Add the connected user's name to the comment object
+        user: connectedUser.displayname, // Add the connected user's name to the comment object
         img: connectedUser.img // Add the connected user's image to the comment object
       };
       console.log(newCommentObj)
-      console.log(connectedUser)
       try {
         const response = await fetch(`http://localhost:8000/api/videos/${video._id}/comments`, {
           method: 'POST',
@@ -132,8 +135,9 @@ function Comments({ id, videoList, editComment, deleteComment, addLike, addDisli
           <button type="submit" className="btn btn-primary mt-2">Submit</button>
         </form>
       )}
-
+    
       <ul className="list-group mt-3">
+        
         {comments.map((comment, index) => (
           <div key={index} className="list-group-items">
             {editIndex === index ? (
@@ -160,22 +164,23 @@ function Comments({ id, videoList, editComment, deleteComment, addLike, addDisli
               )
             ) : (
               <>
+               <Link to={`/Myvideos/users/${comment.user}`}>
                 <strong>
-                {/* <Link to={`/Myvideos/${encodeURIComponent(comment.user)}`}> */}
                     <p>
                       <img
                         src={comment.img}
                         style={{
-                          width: '1.5rem',
-                          height: '1.5rem',
+                          width: '2.5rem',
+                          height: '2.5rem',
                           borderRadius: '50%',
                           marginRight: '0.5rem'
                         }}
                       />
+                      {console.log(comment.user)}
                       {comment.user}:
                     </p>
-                    {/* </Link> */}
-                </strong>
+                  </strong>
+                </Link>
                 <i>{comment.text}</i>
                 {userConnect && (
                   <div>
