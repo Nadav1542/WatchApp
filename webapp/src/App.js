@@ -23,7 +23,7 @@ function AppContent() {
   const { darkMode } = useDarkMode();
   const [usersData, setusersData] = useState([]);
   const [userConnect, setuserConnect] = useState(false);
-  const [connectedUser, setConnectedUser] = useState(null);
+  const [connectedUser, setconnectedUser] = useState(null);
   const [videoList, setVideolist] = useState([]);
   
   useEffect(() => {
@@ -108,7 +108,7 @@ function AppContent() {
 
   return (
     <Routes> {/* Defining routes */}
-      <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} />} /> {/* Route for the main page */}
+      <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser} />} /> {/* Route for the main page */}
       <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData} />} /> {/* Route for the signup page */}
       <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData} userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser} />} /> {/* Route for the signin page */}
       <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist} userconnect={userConnect} />} /> {/* Route for adding a video */}

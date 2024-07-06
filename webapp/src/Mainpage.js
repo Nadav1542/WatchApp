@@ -10,10 +10,11 @@ import Usericon from './Topbar/Usericon';
 // Deep copy of buttons data from JSON
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Mainpage({ darkMode, userConnect, videoList, doSearch, setuserConnect, connectedUser, setConnectedUser }) {
+function Mainpage({ darkMode, userConnect, videoList, doSearch, setuserConnect, connectedUser, setconnectedUser }) {
   // Function to check JWT in local storage and connect the user
   const checkJWT = async () => {
     const token = localStorage.getItem('jwtToken');
+    console.log(token)
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
@@ -31,7 +32,7 @@ function Mainpage({ darkMode, userConnect, videoList, doSearch, setuserConnect, 
           if (response.ok) {
             const userDetails = await response.json();
             setuserConnect(true);
-            setConnectedUser(userDetails); // Set the connected user state with the fetched user details
+            setconnectedUser(userDetails); // Set the connected user state with the fetched user details
           } else {
             console.log('Failed to fetch user details');
           }
