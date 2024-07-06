@@ -1,4 +1,4 @@
-import { createUser,getUserByUsername  } from '../models/users.js';
+import { createUser,getUserByUsername,getUserById  } from '../models/users.js';
 
 import { generateToken } from '../auth.js';
 
@@ -45,6 +45,13 @@ const signup = async (req, res) => {
   } catch (error) {
     res.status(401).json({ error: 'Invalid credentials' });
   }
+};const getUserByHandler = async (req, res) => {
+  try {
+    const user = await getUserById(req.params.id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ error: 'User not found' });
+  }
 };
 
-export { signup,   generateTokenForUser };
+export { signup, generateTokenForUser, getUserByHandler };
