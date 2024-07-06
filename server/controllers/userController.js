@@ -29,5 +29,8 @@ const signup = async (req, res) => {
     }
   }
 }
+const getUserInfo = async (req, res) => {
 
-export { signup, logIn };
+}
+
+export { signup, logIn, getUserInfo };
