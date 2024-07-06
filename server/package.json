@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "module": "^1.2.5",
     "mongo": "^0.1.0",
     "mongodb": "^6.7.0",

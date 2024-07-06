@@ -1,3 +1,6 @@
+// Usericon.js
+
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
@@ -12,6 +15,7 @@ function Usericon({ userConnect, connectedUser, setuserConnect }) {
         navigate("/"); // Navigate to the home page
         console.log('User logged out'); // Log the logout action
     };
+
 
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>

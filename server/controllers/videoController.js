@@ -1,4 +1,4 @@
-import {Video} from '../models/Video.js'
+import {Video,addCommentToVideo} from '../models/Video.js'
 
 
 
@@ -12,7 +12,7 @@ import {Video} from '../models/Video.js'
     res.status(500).json({ error: 'Server Error' }); // Return JSON error response
   }
 }
-
+/*
 const getVideobyId = async (pid) => {
     try {
       const video = await Video.findById(pid);
@@ -22,16 +22,44 @@ const getVideobyId = async (pid) => {
       throw error;
     }
   };
+*/
+  const deleteVideo = async (req, res) => {
+    try {
+        const { id, creator } = req.params;
+        
+        const video = await Video.findOneAndDelete({ _id: id, creator });
+        
+        if (!video) {
+            return res.status(404).json({ message: 'Video not found' });
+        }
+
+        res.status(200).json({ message: 'Video deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to delete video', error: error.message });
+    }
+};
+
+const createComment = async (req,res) => {
+  const { videoId } = req.params;
+  const { text, user, img } = req.body;
+ 
+  try {
+    const newComment = await addCommentToVideo(videoId, { text, user, img });
+    res.json(newComment); // Return only the new comment object
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    res.status(500).json({ error: 'Failed to add comment' });
+  }
+};
+
+
 
 
 
   const getVideobyUser = async (req,res) => {
-
-
-  const { id, pid } = req.params;
-  
+    const { creator ,id } = req.params;
   try {
-    const video = await Video.findById(pid);
+    const video = await Video.findById(id);
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
     }
@@ -50,7 +78,7 @@ const getVideobyId = async (pid) => {
 
 
 
-
+/*
 
 
   // Function to add a comment to a video
@@ -76,5 +104,5 @@ const getVideobyId = async (pid) => {
     throw new Error('Failed to add comment');
   }
 };
-
-export {getAllVideos, addCommentToVideo, getVideobyId,getVideobyUser};
+*/
+export {getAllVideos, getVideobyUser,createComment,deleteVideo};

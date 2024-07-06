@@ -1,18 +1,21 @@
-import { createUser } from '../models/users.js';
-import { getUserByUsername } from '../models/users.js';
+import { createUser,getUserByUsername  } from '../models/users.js';
+
+import { generateToken } from '../auth.js';
 import { User } from '../models/users.js';
 
+/*
 const logIn = async (req,res) => {
 
   const { username, password } = req.params;
   try {
     const user = await getUserByUsername(username, password);
+    const token = generateToken(user);
         res.status(200).json( user );
       } catch (error) { 
     res.status(401).json({ error: 'Incorrect username or password' });
   }
 }
-
+*/
 
 const signup = async (req, res) => {
   try {
@@ -33,4 +36,16 @@ const getUserInfo = async (req, res) => {
 
 }
 
-export { signup, logIn, getUserInfo };
+ const generateTokenForUser = async (req, res) => {
+  const { username, password } = req.body;
+  console.log(req.body)
+  try {
+    const user = await getUserByUsername(username, password);
+    const token = generateToken(user);
+    res.status(200).json({ user, token });
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
+};
+
+export { signup,   generateTokenForUser, getUserInfo };
