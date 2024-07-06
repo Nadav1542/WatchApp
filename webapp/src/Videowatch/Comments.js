@@ -155,6 +155,7 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
                             )
                         ) : (
                             <>
+                                <Link to={`/Myvideos/users/${comment.user}`}>
                                 <strong>
                                     <p>
                                         <img
@@ -169,6 +170,7 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
                                         {comment.user}:
                                     </p>
                                 </strong>
+                              </Link>
                                 <i>{comment.text}</i>
                                 {userConnect && (
                                     <div>
