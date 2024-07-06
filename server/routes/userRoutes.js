@@ -1,5 +1,5 @@
 import express from 'express';
-import {  signup, generateTokenForUser } from '../controllers/userController.js';
+import {  getUserByHandler,signup, generateTokenForUser } from '../controllers/userController.js';
 import {getVideobyUser,deleteVideo} from '../controllers/videoController.js'
 import multer from 'multer';
 
@@ -14,5 +14,6 @@ router.delete('/:creator/videos/:id', deleteVideo);
 router.post('/tokens', generateTokenForUser);
 router.route('/').post(signup)
 
+router.get('/:id', getUserByHandler);
 export default router;
 
