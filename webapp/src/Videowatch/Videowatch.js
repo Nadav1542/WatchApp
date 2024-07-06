@@ -1,5 +1,4 @@
-import movies from '../data/videos.json';
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import LeftVideos from './LeftVideos';
 import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
@@ -8,18 +7,38 @@ import buttons from '../data/buttons.json';
 import { useParams } from 'react-router-dom';
 import Usericon from '../Topbar/Usericon';
 
-
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Videowatch({  videoList ,darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, addComment, editComment, deleteComment,
-  addLike, addDislike }) {
-   
-    
-  
-    
-  
-  
-  
+function Videowatch({ videoList, darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, addComment, editComment, deleteComment, addLike, addDislike }) {
+  const { id } = useParams();
+  const [video, setVideo] = useState(null);
+
+  useEffect(() => {
+    const fetchVideoFromLocalStorage = () => {
+      const savedVideo = localStorage.getItem('currentVideo');
+      if (savedVideo) {
+        const parsedVideo = JSON.parse(savedVideo);
+        if (parsedVideo._id === id) {
+          setVideo(parsedVideo);
+          console.log('Video loaded from localStorage:', parsedVideo);
+        }
+      }
+    };
+
+    const fetchVideo = async () => {
+      const fetchedVideo = videoList.find((v) => v._id === id);
+      if (fetchedVideo) {
+        setVideo(fetchedVideo);
+        localStorage.setItem('currentVideo', JSON.stringify(fetchedVideo));
+        console.log('Video saved to localStorage:', fetchedVideo);
+      } else {
+        fetchVideoFromLocalStorage();
+      }
+    };
+
+    fetchVideo();
+  }, [id, videoList]);
+
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="container-fluid">
@@ -27,7 +46,6 @@ function Videowatch({  videoList ,darkMode, userConnect, setuserConnect, updatev
           <div className="col-3">
             <LeftVideos videos={videoList} />
           </div>
-
           <div className="col-9">
             <div className="row align-items-center mb-3">
               <div className="col-auto">
@@ -40,19 +58,22 @@ function Videowatch({  videoList ,darkMode, userConnect, setuserConnect, updatev
                 <SearchBar darkMode={darkMode} />
               </div>
             </div>
-            <Videodisplay
-              
-              videoList={videoList}
-              userConnect={userConnect}
-              updatevideoList={updatevideoList}
-              deleteVideo={deleteVideo}
-              addComment={addComment}
-              editComment={editComment}
-              deleteComment={deleteComment}
-              addLike={addLike}
-              addDislike={addDislike}
-              connectedUser={connectedUser}
-            />
+            {video ? (
+              <Videodisplay
+                video={video}
+                userConnect={userConnect}
+                updatevideoList={updatevideoList}
+                deleteVideo={deleteVideo}
+                addComment={addComment}
+                editComment={editComment}
+                deleteComment={deleteComment}
+                addLike={addLike}
+                addDislike={addDislike}
+                connectedUser={connectedUser}
+              />
+            ) : (
+              <div>Loading...</div>
+            )}
           </div>
         </div>
       </div>
