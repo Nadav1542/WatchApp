@@ -12,7 +12,7 @@ import {Video,addCommentToVideo} from '../models/Video.js'
     res.status(500).json({ error: 'Server Error' }); // Return JSON error response
   }
 }
-
+/*
 const getVideobyId = async (pid) => {
     try {
       const video = await Video.findById(pid);
@@ -22,8 +22,22 @@ const getVideobyId = async (pid) => {
       throw error;
     }
   };
+*/
+  const deleteVideo = async (req, res) => {
+    try {
+        const { id, creator } = req.params;
+        
+        const video = await Video.findOneAndDelete({ _id: id, creator });
+        
+        if (!video) {
+            return res.status(404).json({ message: 'Video not found' });
+        }
 
-
+        res.status(200).json({ message: 'Video deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to delete video', error: error.message });
+    }
+};
 
 const createComment = async (req,res) => {
   const { videoId } = req.params;
@@ -43,9 +57,9 @@ const createComment = async (req,res) => {
 
 
   const getVideobyUser = async (req,res) => {
-    const { id, pid } = req.params;
+    const { creator ,id } = req.params;
   try {
-    const video = await Video.findById(pid);
+    const video = await Video.findById(id);
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
     }
@@ -91,4 +105,4 @@ const createComment = async (req,res) => {
   }
 };
 */
-export {getAllVideos, getVideobyId,getVideobyUser,createComment};
+export {getAllVideos, getVideobyUser,createComment,deleteVideo};

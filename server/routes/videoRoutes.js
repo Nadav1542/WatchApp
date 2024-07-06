@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.route('/').get(getAllVideos);
-router.route('/users/:id/videos/:pid').get(getVideobyUser)
+router.route('/:pid').get(getVideobyUser)
 router.route('/:videoId/comments').post(createComment)
 
 
