@@ -6,12 +6,67 @@ import Menu from '../Topbar/Menu';
 import buttons from '../data/buttons.json';
 import { useParams } from 'react-router-dom';
 import Usericon from '../Topbar/Usericon';
+import {jwtDecode} from 'jwt-decode';
 
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Videowatch({ videoList, darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, deleteVideo, addComment, editComment, deleteComment, addLike, addDislike }) {
+function Videowatch({ videoList, darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, setConnectedUser, deleteVideo, addComment, editComment, deleteComment, addLike, addDislike }) {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
+
+  // Function to check JWT in local storage and connect the user
+  const checkJWT = async () => {
+    let token = localStorage.getItem('jwtToken');
+    if (!token) {
+      token = localStorage.getItem('jwtTokenBackup');
+    }
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        console.log('Decoded Token:', decodedToken); // This will log the decoded token, including user id and username
+
+        // Check if the token is expired
+        const currentTime = Date.now() / 1000; // Current time in seconds
+        if (decodedToken.exp > currentTime) {
+          // Token is valid, fetch user details
+          const response = await fetch(`http://localhost:8000/api/users/${decodedToken.id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          if (response.ok) {
+            const userDetails = await response.json();
+            console.log('Fetched User Details:', userDetails);
+            setuserConnect(true);
+            setConnectedUser(userDetails); // Set the connected user state with the fetched user details
+            if (!localStorage.getItem('jwtToken')) {
+              localStorage.setItem('jwtToken', token);
+            }
+          } else {
+            console.log('Failed to fetch user details');
+          }
+        } else {
+          console.log('Token is expired');
+        }
+      } catch (error) {
+        console.log('Invalid token:', error);
+      }
+    } else {
+      console.log('No token found in localStorage');
+    }
+  };
+
+  useEffect(() => {
+    if (!connectedUser) {
+      checkJWT();
+    }
+  }, [connectedUser]);
+
+  useEffect(() => {
+    console.log('userConnect:', userConnect);
+    console.log('connectedUser:', connectedUser);
+  });
 
   useEffect(() => {
     const fetchVideoFromLocalStorage = () => {

@@ -25,7 +25,7 @@ function AppContent() {
   const [userConnect, setuserConnect] = useState(false);
   const [connectedUser, setConnectedUser] = useState(null);
   const [videoList, setVideolist] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -109,12 +109,13 @@ function AppContent() {
     <Routes>
       <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} setConnectedUser={setConnectedUser} />} />
       <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData} />} />
-      <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData} userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setConnectedUser} />} />
+      <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData} userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setConnectedUser={setConnectedUser} />} />
       <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist} userconnect={userConnect} />} />
-      <Route path="/videowatch/:id" element={<Videowatch videoList={videoList} darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList} connectedUser={connectedUser} deleteVideo={deleteVideo} editComment={editComment} deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} key="uniquevalue" />} />
+      <Route path="/videowatch/:id" element={<Videowatch videoList={videoList} darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList} connectedUser={connectedUser} setConnectedUser={setConnectedUser} deleteVideo={deleteVideo} editComment={editComment} deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} key="uniquevalue" />} />
       <Route path='/Myvideos' element={<Myvideos darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} />} />
     </Routes>
   );
 }
 
 export default App;
+
