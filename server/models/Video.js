@@ -20,6 +20,7 @@ export const Video = mongoose.model('Video', videoSchema);
 
  // Function to add a comment to a video
  const addCommentToVideo = async (videoId, comment) => {
+  console.log(videoId)
   try {
     const video = await Video.findById(videoId);
     console.log('line 23', video)

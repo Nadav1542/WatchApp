@@ -2,75 +2,46 @@ import './Singlevideo.css';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Comments from './Comments';
-
-function Videodisplay({  videoList, userConnect, updatevideoList, deleteVideo, editComment, deleteComment, addLike, addDislike, connectedUser }) {
-   
-  
-  
-    const [videoList1, setVideoList] = useState(videoList);
-    const { id } = useParams();
-  
-
-
-
+import { useNavigate } from 'react-router-dom'; 
+function Videodisplay({ userConnect, updatevideoList, deleteVideo, editComment, deleteComment, addLike, addDislike, connectedUser }) {
     
-    useEffect(() => {
-     console.log('useEffect in Videodisplay is trrigered')
-        const fetchVideos = async () => {
-        try {
-          const response = await fetch('http://localhost:8000/api/videos', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-          });
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const data = await response.json();
-          setVideoList(data);
-        } catch (error) {
-          console.error('Failed to fetch videos', error);
-        }
-      };
-  
-      fetchVideos();
-    }, [videoList]);
- 
-
-    const video = videoList1.find((v) => v._id === decodeURIComponent(id));
-
-
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    const [title, setTitle] = useState(decodeURIComponent(video.title));
-    const [description, setDescription] = useState(decodeURIComponent(video.description));
-    const [source, setSource] = useState(video.source);
-    const [views, setViews] = useState(decodeURIComponent(video.views));
-    const [uploadtime, setuploadTime] = useState(decodeURIComponent(video.uploadtime));
+    console.log(connectedUser)
+    const navigate = useNavigate();
+    const { id , creator } = useParams();
+    const [video, setVideo] = useState(null);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [source, setSource] = useState('');
+    const [views, setViews] = useState('');
+    const [uploadTime, setUploadTime] = useState('');
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
 
     useEffect(() => {
-        if (videoList && video) {
-            setTitle(decodeURIComponent(video.title));
-            setDescription(decodeURIComponent(video.description));
-            setSource(video.source);
-            setViews(decodeURIComponent(video.views));
-            setuploadTime(decodeURIComponent(video.uploadtime));
-        }
-    }, [videoList, video]);
+        const fetchVideo = async () => {
+            console.log('useEffect in Videodisplay is trrigered')
+            try {
+                const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setVideo(data);
+                setTitle(decodeURIComponent(data.title));
+                setDescription(decodeURIComponent(data.description));
+                setSource(data.source);
+                setViews(decodeURIComponent(data.views));
+                setUploadTime(decodeURIComponent(data.uploadTime));
+            } catch (error) {
+                console.error('Failed to fetch video', error);
+            }
+        };
+
+        fetchVideo();
+    }, [id]);
 
     const handleTitleChange = (event) => setTitle(event.target.value);
     const handleDescriptionChange = (event) => setDescription(event.target.value);
@@ -87,10 +58,26 @@ function Videodisplay({  videoList, userConnect, updatevideoList, deleteVideo, e
         updatevideoList(video._id, title, description); // Persist the change
     };
 
-
-    const handleDelete = () => {
-        deleteVideo(video._id);
+    const handleDelete = async () => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            // Call the deleteVideo function to update the video list in the parent component
+            //deleteVideo(video._id);
+            navigate('/'); // Navigate to the homepage after deleting the video
+        } catch (error) {
+            console.error('Failed to delete video', error);
+        }
     };
+
+    if (!video) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
@@ -101,7 +88,7 @@ function Videodisplay({  videoList, userConnect, updatevideoList, deleteVideo, e
                         <div className="card-text">
                             {isEditingTitle ? (
                                 <>
-                                <input
+                                    <input
                                         type="text"
                                         value={title}
                                         onChange={handleTitleChange}
@@ -122,7 +109,7 @@ function Videodisplay({  videoList, userConnect, updatevideoList, deleteVideo, e
                                             onClick={handleEditTitle}
                                             className="btn btn-sm btn-outline-primary ms-2 edit-button"
                                         >
-                                            <i className="bi bi-pencil"></i>   Edit
+                                            <i className="bi bi-pencil"></i> Edit
                                         </button>
                                     )}
                                 </>
@@ -147,29 +134,29 @@ function Videodisplay({  videoList, userConnect, updatevideoList, deleteVideo, e
                             ) : (
                                 <>
                                     {description}
-                                    {userConnect && (
+                                    {(userConnect) && (
                                         <button
                                             onClick={handleEditDescription}
                                             className="btn btn-sm btn-outline-primary ms-2 edit-button"
                                         >
-                                            <i className="bi bi-pencil"></i>   Edit
+                                            <i className="bi bi-pencil"></i> Edit
                                         </button>
                                     )}
                                 </>
                             )}
                         </div>
-                        <div className="card-text">{views} views - {decodeURIComponent(uploadtime)}</div>
-                        {userConnect && (
+                        <div className="card-text">{views} views - {uploadTime}</div>
+                            {connectedUser && connectedUser._id === video.creator && (
                             <button onClick={handleDelete} className="btn btn-sm btn-outline-danger ms-2">
-                                <i className="bi bi-trash"></i>   Delete
+                            <i className="bi bi-trash"></i> Delete
                             </button>
-                        )}
+                            )}
                     </div>
                 </div>
             </div>
             <Comments
                 id={id}
-                videoList={videoList1}
+                video={video}
                 editComment={editComment}
                 deleteComment={deleteComment}
                 addLike={addLike}
@@ -182,3 +169,31 @@ function Videodisplay({  videoList, userConnect, updatevideoList, deleteVideo, e
 }
 
 export default Videodisplay;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

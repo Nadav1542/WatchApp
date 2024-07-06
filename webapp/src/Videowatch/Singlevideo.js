@@ -26,7 +26,7 @@ function Singlevideo({ video }) {
     return (
         <li className="list-group-items m-3 d-flex align-items-center border-0">
             <div className="leftvideos border-0">
-                <Link to={`/videowatch/${encodeURIComponent(video._id)}`}>
+                <Link to={`/videowatch/${encodeURIComponent(video._id)}/${encodeURIComponent(video.creator)}`}>
                     <video
                         src={`http://localhost:8000/videowatch/${video.source}`}
                         className="card-img-top rounded"
