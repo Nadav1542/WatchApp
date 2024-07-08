@@ -36,7 +36,6 @@ function AppContent() {
           headers: { "Content-Type": "application/json" }
         });
         const data = await response.json();
-        console.log(data)
         setVideolist(data);
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -124,7 +123,7 @@ function AppContent() {
       <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData} userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser} />} /> {/* Route for the signin page */}
       <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist} userconnect={userConnect} />} /> {/* Route for adding a video */}
       <Route path="/videowatch/:id/:creator" element={<Videowatch videoList={videoList} darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList} connectedUser={connectedUser} deleteVideo={deleteVideo} editComment={editComment} deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} key="uniquevalue" />} /> {/* Route for watching a video */}
-      <Route path='/Myvideos' element={<Myvideos darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} />} />
+      <Route path='/Myvideos/:id' element={<Myvideos darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} />} />
     </Routes>
   );
 }

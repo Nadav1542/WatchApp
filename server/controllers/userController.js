@@ -1,21 +1,7 @@
 import { createUser,getUserByUsername  } from '../models/users.js';
-
 import { generateToken } from '../auth.js';
 import { User } from '../models/users.js';
-
-/*
-const logIn = async (req,res) => {
-
-  const { username, password } = req.params;
-  try {
-    const user = await getUserByUsername(username, password);
-    const token = generateToken(user);
-        res.status(200).json( user );
-      } catch (error) { 
-    res.status(401).json({ error: 'Incorrect username or password' });
-  }
-}
-*/
+import { Video } from '../models/Video.js';
 
 const signup = async (req, res) => {
   try {
@@ -32,9 +18,33 @@ const signup = async (req, res) => {
     }
   }
 }
-const getUserInfo = async (req, res) => {
 
-}
+const getUserInfo = async (req, res) => {
+  const { id } = req.params;
+  try { 
+    console.log('im here')
+    console.log('wwww', req)
+    const user = await User.findById(id);
+    console.log('herew', user)
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user details' });
+  }
+};
+
+const getUserVideos = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const videos = await Video.find({ _id: id });
+    res.json(videos);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user videos' });
+  }
+};
+
 
  const generateTokenForUser = async (req, res) => {
   const { username, password } = req.body;
@@ -48,4 +58,4 @@ const getUserInfo = async (req, res) => {
   }
 };
 
-export { signup,   generateTokenForUser, getUserInfo };
+export { signup,   generateTokenForUser, getUserInfo, getUserVideos };

@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
+  _id:{
+    type: String,
+},
   username: {
     type: String,
     unique: true,
@@ -48,13 +51,14 @@ const createUser = async (username, displayname, password, img) => {
   if (img && !img.startsWith("data")) {
       img = `data:image/png;base64,${img}`
   }
+  const randomId = new mongoose.Types.ObjectId();
   // Check if the username is already taken
   const existingUser = await User.findOne({ username });
   if (existingUser) {
       throw new Error('Username already taken');
   }
   // Create a new user
-  const user = new User({username, displayname, password, img })
+  const user = new User({_id: randomId, username, displayname, password, img })
   return await user.save();
 }
 

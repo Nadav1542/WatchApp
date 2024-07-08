@@ -41,10 +41,10 @@ const getVideobyId = async (pid) => {
 
 const createComment = async (req,res) => {
   const { videoId } = req.params;
-  const { text, user, img } = req.body;
+  const { text, user, img, userId } = req.body;
  
   try {
-    const newComment = await addCommentToVideo(videoId, { text, user, img });
+    const newComment = await addCommentToVideo(videoId, { text, user, img, userId });
     res.json(newComment); // Return only the new comment object
   } catch (error) {
     console.error('Error adding comment:', error);

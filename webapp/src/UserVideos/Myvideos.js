@@ -1,17 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Menu from '../Topbar/Menu';
+import Videolist from '../videoItem/Videolist';
+import buttons from '../data/buttons.json';
+import SearchBar from '../Topbar/SearchBar';
 
-function Myvideos({ darkMode, userConnect, setuserConnect }) {
-  const { id } = useParams();
+function Myvideos({ darkMode, userConnect, videoList, setuserConnect, connectedUser }) {
+  const { userid } = useParams();
   const [user, setUser] = useState(null);
   const [videos, setVideos] = useState([]);
+  console.log(userid)
+// Deep copy of buttons data from JSON
+const menubuttons = JSON.parse(JSON.stringify(buttons));
+
+
+    // Function to handle user deletion
+  const handleDeleteUser = () => {
+    // Add your user deletion logic here
+    alert("User deleted!");
+  };
+
+  // Function to handle user details editing
+  const handleEditUserDetails = () => {
+    // Add your user details editing logic here
+    alert("Edit user details!");
+  };
 
   useEffect(() => {
     // Fetch user data
     const fetchUser = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/users/${id}`,
-          {method:'GET'});
+        console.log('fff',userid)
+
+        const response = await fetch(`http://localhost:8000/api/users/${userid}`,
+          {method:'GET',
+            headers: { 'Content-Type': 'application/json' }
+          });
         const data = await response.json();
         setUser(data);
       } catch (error) {
@@ -22,8 +46,12 @@ function Myvideos({ darkMode, userConnect, setuserConnect }) {
     // Fetch user videos
     const fetchVideos = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/users/${id}/videos`,
-          {method:'GET'});
+        console.log('ddd',userid)
+
+        const response = await fetch(`http://localhost:8000/api/users/${userid}/videos`,
+          {method:'GET',
+            headers: { 'Content-Type': 'application/json' }
+          });
         const data = await response.json();
         setVideos(data);
       } catch (error) {
@@ -33,28 +61,104 @@ function Myvideos({ darkMode, userConnect, setuserConnect }) {
 
     fetchUser();
     fetchVideos();
-  }, [id]);
+  }, [userid]);
 
-  return (
+   return (
     <div className={darkMode ? 'dark-mode' : ''}>
-      {user && (
+      
+  
+        
+      {userConnect && connectedUser ? (
         <>
+        <div className="row align-items-center mb-3">
+        <div className="col-auto">
+          {/* Menu component with darkMode, buttons, userConnect, and setuserConnect props */}
+          <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
+        </div>
+        <div className="col-auto">
+        <button 
+          style={{ marginLeft: "10px" }} 
+          className="btn btn-danger" 
+          type="button" 
+          onClick={handleDeleteUser}
+        ><i className="bi bi-trash"></i> Delete User
+        </button>
+        <button 
+          style={{ marginLeft: "10px" }} 
+          className="btn btn-warning" 
+          type="button" 
+          onClick={handleEditUserDetails}
+        ><i className="bi bi-pencil"></i> Edit Details
+        </button>
+        
+        <button 
+          style={{ marginLeft: "50px" }} 
+          className="btn btn-sign" 
+          type="button" 
+          id="register-button"
+        ><i className="bi bi-box-arrow-left"></i> Log out
+        </button>
+        </div>
+        <div className="col">
+          {/* SearchBar component with darkMode prop */}
+          <SearchBar darkMode={darkMode} />
+        </div>
+      
+          {/* Display user's profile picture */}
+          {console.log(user)}
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <img 
+      src={user.img} 
+      alt="Profile" 
+      style={{
+        width: '10rem',
+        height: '10rem',
+        borderRadius: '50%',
+        objectFit: 'cover',
+        marginLeft: '30px',
+        marginRight: '30px'
+      }} 
+    />
+
+          
+          {/* Display user's display name and username */}
           <div>
-            <img src={user.img} alt={user.displayName} />
-            <h1>{user.displayName}</h1>
-            <p>{user.username}</p>
+            <div>
+              <span style={{ fontSize: '2em', fontWeight: 'bold' }}>{user.displayname}</span>
+            </div>
+            <div>
+              <span style={{ fontSize: '0.9em' }}>{user.username}</span>
+            </div>
           </div>
-          <div>
-            <h2>Videos</h2>
-            {videos.map(video => (
-              <div key={video.id}>
-                <h3>{video.title}</h3>
-                <p>{video.description}</p>
-              </div>
-            ))}
+        </div>
+        </div>
+
+      </>
+      
+      ) : (
+        <>
+        <div className="row align-items-center mb-3">
+        <div className="col-auto">
+          {/* Menu component with darkMode, buttons, userConnect, and setuserConnect props */}
+          <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
+        </div>
+        <div className="col">
+          {/* SearchBar component with darkMode prop */}
+          <SearchBar darkMode={darkMode} />
+        </div>
+          {/* Display default user icon and welcome message */}
           </div>
-        </>
+          <i className="bi bi-person-circle" style={{ fontSize: '1.5rem' }}></i>
+          <i style={{ marginLeft: '2rem' }}>Welcome!</i>
+        </>            
       )}
+
+      
+
+      <div className="row m-4">
+        {/* Videolist component with videoList prop */}
+        <Videolist videoList={videoList} />
+      </div>
     </div>
   );
 }

@@ -16,10 +16,8 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
     const [videoDislikes, setVideoDislikes] = useState(0);
 
     useEffect(() => {
-      console.log("useEffect is triggered in comments") 
       if (video) {
             setComments(video.comments || []);
-            console.log(comments)
             setVideoLikes(video.likes);
             setVideoDislikes(video.dislikes);
         }
@@ -31,8 +29,10 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
             const newCommentObj = {
                 text: newComment,
                 user: connectedUser.displayname,
-                img: connectedUser.img
+                img: connectedUser.img,
+                userId: connectedUser._id
             };
+            console.log(newCommentObj)
             try {
                 const response = await fetch(`http://localhost:8000/api/videos/${id}/comments`, {
                     method: 'POST',
@@ -155,7 +155,8 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
                             )
                         ) : (
                             <>
-                                <Link to={`/Myvideos/users/${comment.user}`}>
+                            {console.log(comment.userId, comment)}
+                            <Link to={`/Myvideos/${encodeURIComponent(comment.userId)}`}>
                                 <strong>
                                     <p>
                                         <img
@@ -170,7 +171,7 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
                                         {comment.user}:
                                     </p>
                                 </strong>
-                              </Link>
+                                </Link>
                                 <i>{comment.text}</i>
                                 {userConnect && (
                                     <div>

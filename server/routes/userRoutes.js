@@ -1,5 +1,5 @@
 import express from 'express';
-import {getUserInfo, getUserVideos,   signup, generateTokenForUser } from '../controllers/userController.js';
+import {getUserInfo, getUserVideos, signup, generateTokenForUser } from '../controllers/userController.js';
 import {getVideobyUser,deleteVideo} from '../controllers/videoController.js'
 
 

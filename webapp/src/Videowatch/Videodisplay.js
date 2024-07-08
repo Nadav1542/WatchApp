@@ -5,7 +5,6 @@ import Comments from './Comments';
 import { useNavigate } from 'react-router-dom'; 
 function Videodisplay({ userConnect, updatevideoList, deleteVideo, editComment, deleteComment, addLike, addDislike, connectedUser }) {
     
-    console.log(connectedUser)
     const navigate = useNavigate();
     const { id , creator } = useParams();
     const [video, setVideo] = useState(null);
