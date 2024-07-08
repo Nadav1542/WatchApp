@@ -2,6 +2,8 @@ import { createUser,getUserByUsername  } from '../models/users.js';
 import { generateToken } from '../auth.js';
 import { User } from '../models/users.js';
 import { Video } from '../models/Video.js';
+import mongoose from 'mongoose';
+
 
 const signup = async (req, res) => {
   try {
@@ -21,20 +23,26 @@ const signup = async (req, res) => {
 
 const getUserInfo = async (req, res) => {
   const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Invalid user ID' });
+  }
+
   try { 
-    console.log('im here')
-    console.log('wwww', req)
-    const user = await User.findById(id);
-    console.log('herew', user)
+    console.log('Fetching user info for ID:', id);
+
+    const user = await User.find({_id:id});
+    console.log('User found:', user);
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
     res.json(user);
   } catch (error) {
+    console.error('Error fetching user details:', error);
     res.status(500).json({ message: 'Error fetching user details' });
   }
 };
-
 const getUserVideos = async (req, res) => {
   const { id } = req.params;
   try {
