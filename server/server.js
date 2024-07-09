@@ -41,6 +41,7 @@ const upload = multer();
 // Route to serve video files
 server.get('/videowatch/:fileName', (req, res) => {
   const videoPath = path.join(__dirname, 'build', req.params.fileName);
+  
   res.sendFile(videoPath);
 });
 

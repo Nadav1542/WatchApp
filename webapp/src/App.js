@@ -34,6 +34,7 @@ function AppContent() {
           headers: { "Content-Type": "application/json" }
         });
         const data = await response.json();
+        
         setVideolist(data);
       } catch (error) {
         console.error('Error fetching videos:', error);

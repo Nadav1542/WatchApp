@@ -16,6 +16,8 @@ const videoSchema = new mongoose.Schema({
   creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
+videoSchema.index({ views: -1 });
+
 export const Video = mongoose.model('Video', videoSchema);
 
  // Function to add a comment to a video
@@ -43,6 +45,32 @@ export const Video = mongoose.model('Video', videoSchema);
   }
 };
 
+const getTopAndRandomVideos = async () => {
+  try {
+    // Get the 10 most viewed videos
+    const topVideos = await Video.find().sort({ views: -1 }).limit(10);
+    console.log('Top Videos:', topVideos);
+
+    // Extract the IDs of the top 10 most viewed videos
+    const topVideoIds = topVideos.map(video => video._id);
+
+    // Get 10 random videos excluding the top 10 most viewed videos
+    const randomVideos = await Video.aggregate([
+      { $match: { _id: { $nin: topVideoIds } } },
+      { $sample: { size: 10 } }
+    ]);
+    console.log('Random Videos:', randomVideos);
+
+    // Combine the two arrays
+    const combinedVideos = topVideos.concat(randomVideos);
+
+    return combinedVideos;
+  } catch (error) {
+    console.error('Failed to retrieve videos:', error);
+    throw new Error('Failed to retrieve videos');
+  }
+};
+
 
 
 const getVideo = async (id) => {
@@ -58,7 +86,7 @@ const getVideo = async (id) => {
   }
 };
 
- export  {getVideo,addCommentToVideo};
+ export  {getVideo,addCommentToVideo,getTopAndRandomVideos};
 
 
 

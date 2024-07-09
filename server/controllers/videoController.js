@@ -1,4 +1,4 @@
-import {Video,addCommentToVideo} from '../models/Video.js'
+import {Video,addCommentToVideo,getTopAndRandomVideos} from '../models/Video.js'
 
 
 
@@ -12,17 +12,17 @@ import {Video,addCommentToVideo} from '../models/Video.js'
     res.status(500).json({ error: 'Server Error' }); // Return JSON error response
   }
 }
-/*
-const getVideobyId = async (pid) => {
-    try {
-      const video = await Video.findById(pid);
-      return video;
-    } catch (error) {
-      console.error('Error in getVideobyId:', error);
-      throw error;
-    }
-  };
-*/
+
+const  getVideosForHomePage = async (req,res) => {
+  try {
+    const videos = await getTopAndRandomVideos();
+    res.status(200).json(videos); // Ensure you return JSON
+    
+  } catch (error) {
+    res.status(500).json({ error: 'Server Error' }); // Return JSON error response
+  }
+}
+
   const deleteVideo = async (req, res) => {
     try {
         const { id, creator } = req.params;
@@ -106,4 +106,4 @@ const createComment = async (req,res) => {
   }
 };
 */
-export {getAllVideos, getVideobyUser,createComment,deleteVideo};
+export {getAllVideos, getVideobyUser,createComment,deleteVideo,getVideosForHomePage};

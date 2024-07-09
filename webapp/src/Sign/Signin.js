@@ -34,6 +34,7 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
         setError(errorData.error || 'Invalid username or password');
       }
     } catch (error) {
+      console.log(error)
       setError('An error occurred. Please try again.');
     }
   };
