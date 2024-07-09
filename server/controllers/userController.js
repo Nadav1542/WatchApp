@@ -60,6 +60,13 @@ const generateTokenForUser = async (req, res) => {
   } catch (error) {
     res.status(401).json({ error: 'Invalid credentials' });
   }
+};const getUserByHandler = async (req, res) => {
+  try {
+    const user = await getUserById(req.params.id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ error: 'User not found' });
+  }
 };
 
 export { signup, generateTokenForUser, getUserInfo, getUserVideos };

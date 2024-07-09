@@ -5,13 +5,25 @@ import React from 'react';
 function Usericon({ userConnect, connectedUser, setuserConnect }) {
     const navigate = useNavigate();
 
-    // Function to handle user sign-out
-    const handleSignedout = (e) => {
-        e.preventDefault();
-        setuserConnect(false); // Update state to indicate user is signed out
-        navigate("/"); // Navigate to the home page
-        console.log('User logged out'); // Log the logout action
-    };
+    
+
+   // Function to handle user sign-out
+const handleSignedout = (e) => {
+    e.preventDefault();
+  
+    // Check if there is a JWT token in local storage
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      // Remove the JWT token from local storage
+      localStorage.removeItem('jwtToken');
+      console.log('JWT token removed from local storage');
+    }
+  
+    setuserConnect(false); // Update state to indicate user is signed out
+    navigate("/"); // Navigate to the home page
+    console.log('User logged out'); // Log the logout action
+  };
+  
 
 
     return (

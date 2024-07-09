@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import './Sign.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUser, setconnectedUser }) {
+function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUser, setConnectedUser }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -22,14 +22,13 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
       if (response.ok) {
         const data = await response.json();
         const { user, token } = data;
-        console.log('message from signin' ,user)
-        
+        console.log('message from signin' ,user);
 
         // Store the token in local storage
         localStorage.setItem('jwtToken', token);
         setError('');
         setuserConnect(true);
-        setconnectedUser(user);
+        setConnectedUser(user);
       } else {
         const errorData = await response.json();
         setError(errorData.error || 'Invalid username or password');
@@ -43,6 +42,11 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
     const event = new Event('toggleDarkMode');
     window.dispatchEvent(event);
   };
+
+  useEffect(() => {
+    console.log('userConnect:', userConnect);
+    console.log('connectedUser:', connectedUser);
+  }, [userConnect, connectedUser]);
 
   return (
     <>
