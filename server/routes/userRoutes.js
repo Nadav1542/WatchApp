@@ -18,4 +18,3 @@ router.route('/:id/videos').get(getUserVideos)
 
 router.get('/:id', getUserByHandler);
 export default router;
-

@@ -13,7 +13,7 @@ const signup = async (req, res) => {
       res.status(409).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
-     }
+    }
   }
 };
 
