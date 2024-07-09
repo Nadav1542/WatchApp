@@ -30,24 +30,27 @@ const getUserInfo = async (req, res) => {
   try { 
     console.log('Fetching user info for ID:', id);
 
-    const user = await User.find({_id:id});
-    console.log('User found:', user);
+    const user = await User.findById(id);
+    
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found:' });
     }
-
+    console.log('User found:', user);
     res.json(user);
   } catch (error) {
     console.error('Error fetching user details:', error);
     res.status(500).json({ message: 'Error fetching user details' });
   }
 };
+
+
+
 const getUserVideos = async (req, res) => {
   const { id } = req.params;
   try {
-    const videos = await Video.find({ _id: id });
-    res.json(videos);
+    const user = await User.findById(id);
+    res.json(user.videos);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching user videos' });
   }

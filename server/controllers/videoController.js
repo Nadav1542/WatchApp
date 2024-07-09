@@ -60,6 +60,7 @@ const createComment = async (req,res) => {
     const { creator ,id } = req.params;
   try {
     const video = await Video.findById(id);
+
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
     }
