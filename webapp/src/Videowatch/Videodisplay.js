@@ -128,7 +128,7 @@ function Videodisplay({ userConnect, updatevideoList, deleteVideo, editComment, 
                             ) : (
                                 <>
                                     {title}
-                                    {userConnect && (
+                                    {connectedUser && connectedUser._id === video.creator && (
                                         <button
                                             onClick={handleEditTitle}
                                             className="btn btn-sm btn-outline-primary ms-2 edit-button"
@@ -158,7 +158,7 @@ function Videodisplay({ userConnect, updatevideoList, deleteVideo, editComment, 
                             ) : (
                                 <>
                                     {description}
-                                    {userConnect && (
+                                    {connectedUser && connectedUser._id === video.creator && (
                                         <button
                                             onClick={handleEditDescription}
                                             className="btn btn-sm btn-outline-primary ms-2 edit-button"
