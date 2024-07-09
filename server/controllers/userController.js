@@ -60,7 +60,9 @@ const generateTokenForUser = async (req, res) => {
   } catch (error) {
     res.status(401).json({ error: 'Invalid credentials' });
   }
-};const getUserByHandler = async (req, res) => {
+};
+
+const getUserByHandler = async (req, res) => {
   try {
     const user = await getUserById(req.params.id);
     res.status(200).json(user);
