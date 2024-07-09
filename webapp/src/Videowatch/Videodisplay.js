@@ -2,7 +2,7 @@
 import './Singlevideo.css';
 import { useState, useEffect } from 'react';
 import Comments from './Comments';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate,useParams } from 'react-router-dom'; 
 
 function Videodisplay({ userConnect, updatevideoList, deleteVideo, editComment, deleteComment, addLike, addDislike, connectedUser }) {
     

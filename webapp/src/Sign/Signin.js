@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './Sign.css';
 import React, { useState, useEffect } from 'react';
 
-function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUser, setConnectedUser }) {
+function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUser, setconnectedUser }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -28,12 +28,13 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
         localStorage.setItem('jwtToken', token);
         setError('');
         setuserConnect(true);
-        setConnectedUser(user);
+        setconnectedUser(user);
       } else {
         const errorData = await response.json();
         setError(errorData.error || 'Invalid username or password');
       }
     } catch (error) {
+      console.log(error)
       setError('An error occurred. Please try again.');
     }
   };
