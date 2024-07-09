@@ -29,7 +29,7 @@
     },
     {
         "description": "Myvideos",
-        "link": "/Myvideos",
+        "link": "/Myvideos/:id",
         "icon": "bi bi-person-lines-fill"
     }
     

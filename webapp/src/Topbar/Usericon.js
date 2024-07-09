@@ -31,7 +31,7 @@ const handleSignedout = (e) => {
             {userConnect && connectedUser ? (
                 <>
                     {/* Link to user's videos page */}
-                    <Link to={'/Myvideos'} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+                    <Link to={`/Myvideos/${encodeURIComponent(connectedUser._id)}`} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
                         {/* Display user's profile picture */}
                         <img
                             data-bs-toggle="popover"

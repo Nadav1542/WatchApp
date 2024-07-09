@@ -1,6 +1,6 @@
 import VideoItem from './VideoItem';
 import './Card.css';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 
 
@@ -11,7 +11,7 @@ function Videolist({ videoList }) {
       {/* Iterate over the videoList array and render a VideoItem for each video */}
       {videoList.map((video, index) => (
         <VideoItem 
-         video={video}
+        key={video._id} video={video}
         />
       ))}
     </>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../Topbar/Searchbar.css';
-import Myvideos from '../UserVideos/Myvideos';
-import setuserConnect from '../App'
+
 
 
 function Comments({ id, video, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {

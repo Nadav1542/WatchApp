@@ -13,11 +13,6 @@
         "description": "Signin",
         "link": "/signin",
         "icon": "bi bi-box-arrow-in-right"
-    },
-    {
-        "description": "Myvideos",
-        "link": "/Myvideos",
-        "icon": "bi bi-person-lines-fill"
     }
    
     

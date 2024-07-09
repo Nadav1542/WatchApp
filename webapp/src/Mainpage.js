@@ -14,11 +14,9 @@ function Mainpage({ darkMode, userConnect, videoList, doSearch, setuserConnect, 
   // Function to check JWT in local storage and connect the user
   const checkJWT = async () => {
     const token = localStorage.getItem('jwtToken');
-    console.log(token)
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log(decodedToken); // This will log the decoded token, including user id and username
 
         // Check if the token is expired
         const currentTime = Date.now() / 1000; // Current time in seconds
