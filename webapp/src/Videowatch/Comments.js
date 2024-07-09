@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../Topbar/Searchbar.css';
+import { UserContext } from '../contexts/UserContext';
 
 
-
-function Comments({ id, video, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
+function Comments({ id, video,setVideo, editComment, deleteComment }) {
    
-  
+    const {  userConnect,connectedUser } = useContext(UserContext);
     const [comments, setComments] = useState(video.comments || []);
     const [newComment, setNewComment] = useState('');
     const [editIndex, setEditIndex] = useState(null);
@@ -70,14 +70,38 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
         setComments(updatedComments);
     };
 
-    const handleLikeVideo = () => {
-        setVideoLikes(videoLikes + 1);
-        addLike(id);
+    const handleLikeVideo = async () => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/videos/${id}/like`, {
+                method: 'POST'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            setVideo(prevVideo => ({ ...prevVideo, likes: data.likes }));
+        } catch (error) {
+            console.error('Error liking video:', error);
+        }
     };
 
-    const handleDislikeVideo = () => {
-        setVideoDislikes(videoDislikes + 1);
-        addDislike(id);
+    const handleDislikeVideo = async () => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/videos/${id}/dislike`, {
+                method: 'POST'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            setVideo(prevVideo => ({ ...prevVideo, dislikes: data.dislikes }));
+        } catch (error) {
+            console.error('Error disliking video:', error);
+        }
     };
 
     const handleShareVideo = () => {

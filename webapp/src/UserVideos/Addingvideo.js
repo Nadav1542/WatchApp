@@ -1,16 +1,20 @@
 import './Addingvideo.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { VideoContext } from '../contexts/VideoContext';
+import { UserContext } from '../contexts/UserContext';
 // Addingvideo component for uploading a new video
-function Addingvideo({ darkMode, videoList, setVideolist, connectedUser }) {
+function Addingvideo({ darkMode }) {
     // State variables for video details and error handling
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [source, setSource] = useState(null);
     const navigate = useNavigate();
     const [error, setError] = useState('');
-
+    const {  setVideolist,videoList } = useContext(VideoContext);
+    
+    const {  connectedUser } = useContext(UserContext);
+    
     // Check if user is connected, if not navigate to sign-in page
     useEffect(() => {
         if (!connectedUser) {

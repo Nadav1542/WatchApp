@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 import './Sign.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 
-function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUser, setconnectedUser }) {
+function Signin({ darkMode }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const {userConnect, setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
+  
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 

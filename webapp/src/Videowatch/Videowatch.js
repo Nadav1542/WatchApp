@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import LeftVideos from './LeftVideos';
 import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
@@ -7,12 +7,15 @@ import buttons from '../data/buttons.json';
 import { useParams } from 'react-router-dom';
 import Usericon from '../Topbar/Usericon';
 import {jwtDecode} from 'jwt-decode';
-
+import { VideoContext } from '../contexts/VideoContext';
+import { UserContext } from '../contexts/UserContext';
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Videowatch({ videoList, darkMode, userConnect, setuserConnect, updatevideoList, connectedUser, setConnectedUser, deleteVideo, addComment, editComment, deleteComment, addLike, addDislike }) {
+function Videowatch({  darkMode,  addComment, editComment, deleteComment }) {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
+  const {  videoList } = useContext(VideoContext);
+  const {userConnect, setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
 
   // Function to check JWT in local storage and connect the user
   const checkJWT = async () => {
@@ -39,7 +42,7 @@ function Videowatch({ videoList, darkMode, userConnect, setuserConnect, updatevi
             const userDetails = await response.json();
             console.log('Fetched User Details:', userDetails);
             setuserConnect(true);
-            setConnectedUser(userDetails); // Set the connected user state with the fetched user details
+            setconnectedUser(userDetails); // Set the connected user state with the fetched user details
             if (!localStorage.getItem('jwtToken')) {
               localStorage.setItem('jwtToken', token);
             }
@@ -116,15 +119,14 @@ function Videowatch({ videoList, darkMode, userConnect, setuserConnect, updatevi
             {video ? (
               <Videodisplay
                 video={video}
-                userConnect={userConnect}
-                updatevideoList={updatevideoList}
-                deleteVideo={deleteVideo}
+                
+                
+            
                 addComment={addComment}
                 editComment={editComment}
                 deleteComment={deleteComment}
-                addLike={addLike}
-                addDislike={addDislike}
-                connectedUser={connectedUser}
+               
+                
               />
             ) : (
               <div>Loading...</div>

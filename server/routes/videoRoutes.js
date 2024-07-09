@@ -1,5 +1,5 @@
 import express from 'express'
-import  {getAllVideos, getVideobyUser,createComment,getVideosForHomePage,deleteVideo,updateVideo} from  '../controllers/videoController.js';
+import  {createComment,getVideosForHomePage,addLike,addDislike} from  '../controllers/videoController.js';
 
 const router = express.Router();
 
@@ -8,6 +8,8 @@ const router = express.Router();
 
 
 router.route('/').get(getVideosForHomePage);
+router.post('/:id/like', addLike);
+router.post('/:id/dislike', addDislike);
 
 router.route('/:videoId/comments').post(createComment)
 
