@@ -59,12 +59,6 @@ export const User = mongoose.model('User', userSchema);
   return await user.save();
 }
 
- async function getUserById(id) {
-  const user = await User.findById(id);
-  if (!user) {
-    throw new Error('User not found');
-  }
-  return user;
-}
+
 
 export { getUserByUsername, createUser,getUserById };
