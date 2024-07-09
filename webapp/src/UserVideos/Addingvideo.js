@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Addingvideo component for uploading a new video
-function Addingvideo({ darkMode, videoList, setVideolist, userconnect }) {
+function Addingvideo({ darkMode, videoList, setVideolist, connectedUser }) {
     // State variables for video details and error handling
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -13,10 +13,10 @@ function Addingvideo({ darkMode, videoList, setVideolist, userconnect }) {
 
     // Check if user is connected, if not navigate to sign-in page
     useEffect(() => {
-        if (!userconnect) {
+        if (!connectedUser) {
             navigate('/Signin');
         }
-    }, [userconnect, navigate]);
+    }, [connectedUser, navigate]);
 
     // Handle file input change
     const handleFileChange = (event) => {

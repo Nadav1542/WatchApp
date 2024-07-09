@@ -121,7 +121,7 @@ function AppContent() {
       <Route path='/' element={<Mainpage darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} />} /> {/* Route for the main page */}
       <Route path='/signup' element={<Signup darkMode={darkMode} usersData={usersData} setusersData={setusersData} />} /> {/* Route for the signup page */}
       <Route path='/signin' element={<Signin darkMode={darkMode} usersData={usersData} userConnect={userConnect} setuserConnect={setuserConnect} connectedUser={connectedUser} setconnectedUser={setconnectedUser} />} /> {/* Route for the signin page */}
-      <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist} userconnect={userConnect} />} /> {/* Route for adding a video */}
+      <Route path='/Addingvideo' element={<Addingvideo darkMode={darkMode} videoList={videoList} setVideolist={setVideolist} connectedUser={connectedUser} />} /> {/* Route for adding a video */}
       <Route path="/videowatch/:id/:creator" element={<Videowatch videoList={videoList} darkMode={darkMode} userConnect={userConnect} setuserConnect={setuserConnect} updatevideoList={updatevideoList} connectedUser={connectedUser} deleteVideo={deleteVideo} editComment={editComment} deleteComment={deleteComment} addLike={addLike} addDislike={addDislike} key="uniquevalue" />} /> {/* Route for watching a video */}
       <Route path='/Myvideos/:id' element={<Myvideos darkMode={darkMode} userConnect={userConnect} videoList={videoList} setuserConnect={setuserConnect} connectedUser={connectedUser} />} />
     </Routes>
