@@ -1,6 +1,5 @@
 
 import './Singlevideo.css';
-import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Comments from './Comments';
 import { useNavigate } from 'react-router-dom'; 
@@ -246,10 +245,10 @@ function Videodisplay({ userConnect, updatevideoList, deleteVideo, editComment, 
         fetchVideo();
     }, [id]);
 
-    const handleTitleChange = (event) => setTitle(event.target.value);
-    const handleDescriptionChange = (event) => setDescription(event.target.value);
-    const handleEditTitle = () => setIsEditingTitle(!isEditingTitle);
-    const handleEditDescription = () => setIsEditingDescription(!isEditingDescription);
+  const handleTitleChange = (event) => setTitle(event.target.value);
+  const handleDescriptionChange = (event) => setDescription(event.target.value);
+  const handleEditTitle = () => setIsEditingTitle(!isEditingTitle);
+  const handleEditDescription = () => setIsEditingDescription(!isEditingDescription);
 
     const handleSaveTitle = () => {
         setIsEditingTitle(false);
