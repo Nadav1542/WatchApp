@@ -63,7 +63,7 @@ function Videodisplay({ userConnect, updatevideoList, deleteVideo, editComment, 
     const handleEdit = async () => {
         const updatedVideo = { title, description };
         try {
-            const response = await fetch(`/api/videos/${video._id}`, {
+            const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
                 method: 'PATCH', // or 'PUT'
                 headers: {
                     'Content-Type': 'application/json',
