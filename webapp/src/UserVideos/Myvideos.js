@@ -1,14 +1,18 @@
 import React, { useEffect, useState,useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams } from 'react-router-dom';
 import Menu from '../Topbar/Menu';
 import Videolist from '../videoItem/Videolist';
 import buttons from '../data/buttons.json';
 import SearchBar from '../Topbar/SearchBar';
 import { VideoContext } from '../contexts/VideoContext';
-function Myvideos({ darkMode, userConnect,  setuserConnect, connectedUser }) {
+import { UserContext } from '../contexts/UserContext';
+function Myvideos({ darkMode, userConnect,  setuserConnect }) {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [videos, setVideos] = useState([]);
+  const {  deleteUser } = useContext(UserContext);
+
+  const navigate = useNavigate();
   const {  videoList } = useContext(VideoContext);
   
   
@@ -17,9 +21,23 @@ function Myvideos({ darkMode, userConnect,  setuserConnect, connectedUser }) {
 
   const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-  const handleDeleteUser = () => {
-    alert("User deleted!");
+  const handleDeleteUser = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/users/${id}`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      deleteUser(id)
+            navigate('/'); // Navigate to the homepage after deleting the user
+        } catch (error) {
+            console.error('Failed to delete user', error);
+        }
   };
+  
 
   const handleEditUserDetails = () => {
     alert("Edit user details!");

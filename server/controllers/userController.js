@@ -18,6 +18,7 @@ const signup = async (req, res) => {
 
 const getUserInfo = async (req, res) => {
   const { id } = req.params;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: 'Invalid user ID' });
   }
@@ -34,6 +35,7 @@ const getUserInfo = async (req, res) => {
 };
 
 const getUserVideos = async (req, res) => {
+
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: 'Invalid user ID' });
@@ -61,6 +63,21 @@ const generateTokenForUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  const { userId } = req.params;
+  console.log('here', userId)
+  try {
+    const user = await User.findOneAndDelete(userId);
+    
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ message: 'User deleted successfully' });
+} catch (error) {
+    res.status(500).json({ message: 'Failed to delete User', error: error.message });
+}
+}
+
 const getUserByHandler = async (req, res) => {
   try {
     const user = await getUserById(req.params.id);
@@ -70,4 +87,4 @@ const getUserByHandler = async (req, res) => {
   }
 };
 
-export { signup, generateTokenForUser, getUserInfo, getUserVideos };
+export { signup, generateTokenForUser, getUserInfo, getUserVideos, deleteUser };

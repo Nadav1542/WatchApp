@@ -1,5 +1,5 @@
 import express from 'express';
-import {getUserInfo, getUserVideos, signup, generateTokenForUser } from '../controllers/userController.js';
+import {getUserInfo, getUserVideos, signup, generateTokenForUser, deleteUser } from '../controllers/userController.js';
 import {getVideobyUser,deleteVideo,updateVideo} from '../controllers/videoController.js'
 
 
@@ -15,6 +15,7 @@ router.post('/tokens', generateTokenForUser);
 router.route('/').post(signup)
 router.route('/:id').get(getUserInfo)
 router.route('/:id/videos').get(getUserVideos)
+router.route('/:id').delete(deleteUser)
 
 
 // router.route('/:id/videos').post(addingVideo)
