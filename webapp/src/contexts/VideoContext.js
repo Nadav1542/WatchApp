@@ -4,27 +4,31 @@ import { useNavigate } from 'react-router-dom';
 
 export const VideoContext = createContext();
 
-export const VideoProvider = ({ children }) => {
-    
-    const [videoList, setVideolist] = useState([]);
-    const navigate = useNavigate();
-    
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await fetch(`http://localhost:8000/api/videos`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
-          });
-          const data = await response.json();
-          
-          setVideolist(data);
-        } catch (error) {
-          console.error('Error fetching videos:', error);
-        }
-      };
-      fetchData();
-    }, [navigate]);
+export const VideoProvider = ({ children, userId = null }) => {
+  const [videoList, setVideolist] = useState([]);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = userId
+          ? `http://localhost:8000/api/users/${userId}/videos`
+          : 'http://localhost:8000/api/videos';
+
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await response.json();
+        console.log(data)
+        setVideolist(data);
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+      }
+    };
+    fetchData();
+  }, [userId, navigate]);
+  
     
     
     
