@@ -16,5 +16,5 @@ router.route('/:id').get(getUserInfo)
 router.route('/:id/videos').get(getUserVideos)
 // router.route('/:id/videos').post(addingVideo)
 
-router.get('/:id', getUserByHandler);
+// router.get('/:id', getUserByHandler);
 export default router;

@@ -61,4 +61,4 @@ export const User = mongoose.model('User', userSchema);
 
 
 
-export { getUserByUsername, createUser,getUserById };
+export { getUserByUsername, createUser };

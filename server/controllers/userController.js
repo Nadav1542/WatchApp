@@ -1,7 +1,6 @@
 import { createUser, getUserByUsername } from '../models/users.js';
 import { generateToken } from '../auth.js';
 import { User } from '../models/users.js';
-import { Video } from '../models/Video.js';
 import mongoose from 'mongoose';
 
 const signup = async (req, res) => {
@@ -61,5 +60,14 @@ const generateTokenForUser = async (req, res) => {
     res.status(401).json({ error: 'Invalid credentials' });
   }
 
+};
+//const getUserByHandler = async (req, res) => {
+//   try {
+//     const user = await getUserById(req.params.id);
+//     res.status(200).json(user);
+//   } catch (error) {
+//     res.status(404).json({ error: 'User not found' });
+//   }
+// };
 
 export { signup, generateTokenForUser, getUserInfo, getUserVideos };
