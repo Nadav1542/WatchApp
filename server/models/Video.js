@@ -1,7 +1,12 @@
 import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose';
 
-
+// const CommentSchema =  new mongoose.Schema({
+//   text: { type: String, required: true },
+//   user: { type: String, required: true },
+//   img: { type: String, required: true },
+//   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+// });
 
 const videoSchema = new mongoose.Schema({
   
@@ -49,7 +54,7 @@ const getTopAndRandomVideos = async () => {
   try {
     // Get the 10 most viewed videos
     const topVideos = await Video.find().sort({ views: -1 }).limit(10);
-    console.log('Top Videos:', topVideos);
+    //console.log('Top Videos:', topVideos);
 
     // Extract the IDs of the top 10 most viewed videos
     const topVideoIds = topVideos.map(video => video._id);
@@ -59,7 +64,7 @@ const getTopAndRandomVideos = async () => {
       { $match: { _id: { $nin: topVideoIds } } },
       { $sample: { size: 10 } }
     ]);
-    console.log('Random Videos:', randomVideos);
+   // console.log('Random Videos:', randomVideos);
 
     // Combine the two arrays
     const combinedVideos = topVideos.concat(randomVideos);

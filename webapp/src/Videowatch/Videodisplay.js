@@ -6,10 +6,10 @@ import { useNavigate,useParams } from 'react-router-dom';
 import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
 
-function Videodisplay({   editComment, deleteComment }) {
+function Videodisplay() {
     
     const {  deleteVideo } = useContext(VideoContext);
-    const {  userConnect,connectedUser } = useContext(UserContext);
+    const { connectedUser } = useContext(UserContext);
     const navigate = useNavigate();
     const { id , creator } = useParams();
     const [video, setVideo] = useState(null);
@@ -186,11 +186,7 @@ function Videodisplay({   editComment, deleteComment }) {
                 id={id}
                 video={video}
                 setVideo={setVideo}
-                editComment={editComment}
-                deleteComment={deleteComment}
                
-                connectedUser={connectedUser}
-                userConnect={userConnect}
             />
         </>
     );

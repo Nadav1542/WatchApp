@@ -11,7 +11,7 @@ import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Videowatch({  darkMode,  addComment, editComment, deleteComment }) {
+function Videowatch({  darkMode }) {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
   const {  videoList } = useContext(VideoContext);
@@ -102,7 +102,7 @@ function Videowatch({  darkMode,  addComment, editComment, deleteComment }) {
       <div className="container-fluid">
         <div className="row">
           <div className="col-3">
-            <LeftVideos videos={videoList} />
+            <LeftVideos/>
           </div>
           <div className="col-9">
             <div className="row align-items-center mb-3">
@@ -117,17 +117,7 @@ function Videowatch({  darkMode,  addComment, editComment, deleteComment }) {
               </div>
             </div>
             {video ? (
-              <Videodisplay
-                video={video}
-                
-                
-            
-                addComment={addComment}
-                editComment={editComment}
-                deleteComment={deleteComment}
-               
-                
-              />
+              <Videodisplay/>
             ) : (
               <div>Loading...</div>
             )}

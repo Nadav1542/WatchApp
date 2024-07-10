@@ -1,11 +1,12 @@
 import Singlevideo from './Singlevideo';
 import './videostyle.css';
-
-function LeftVideos({ videos }) {
-  
+import { VideoContext } from '../contexts/VideoContext';
+import { useContext } from 'react';
+function LeftVideos() {
+  const {  videoList } = useContext(VideoContext);
   return (
     <>
-      {videos.map((video, index) => (
+      {videoList.map((video, index) => (
         <Singlevideo
           video={video}
         />
