@@ -6,6 +6,8 @@ import buttons from '../data/buttons.json';
 import SearchBar from '../Topbar/SearchBar';
 import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
+import { VideoProvider } from '../contexts/VideoContext';
+
 function Myvideos({ darkMode, userConnect,  setuserConnect }) {
   const { id } = useParams();
   const [user, setUser] = useState(null);
@@ -142,7 +144,9 @@ function Myvideos({ darkMode, userConnect,  setuserConnect }) {
         </div>
       )}
       <div className="row m-4">
-        <Videolist videoList={videos} />
+      <VideoProvider userId={id}>  
+        <Videolist/>
+        </VideoProvider>
       </div>
     </div>
   );

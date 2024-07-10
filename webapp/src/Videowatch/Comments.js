@@ -7,7 +7,6 @@ import { UserContext } from '../contexts/UserContext';
 function Comments({ id, video,setVideo}) {
    
     const { userConnect, connectedUser } = useContext(UserContext);
-    
     const [newComment, setNewComment] = useState('');
     const [editIndex, setEditIndex] = useState(null);
     const [editedComment, setEditedComment] = useState('');
