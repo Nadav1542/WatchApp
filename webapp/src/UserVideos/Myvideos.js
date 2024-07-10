@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Menu from '../Topbar/Menu';
 import Videolist from '../videoItem/Videolist';
 import buttons from '../data/buttons.json';
 import SearchBar from '../Topbar/SearchBar';
-
-function Myvideos({ darkMode, userConnect, videoList, setuserConnect, connectedUser }) {
+import { VideoContext } from '../contexts/VideoContext';
+function Myvideos({ darkMode, userConnect,  setuserConnect, connectedUser }) {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [videos, setVideos] = useState([]);
+  const {  videoList } = useContext(VideoContext);
+  
+  
   console.log('User ID:', id);
   console.log('User State:', user);
 

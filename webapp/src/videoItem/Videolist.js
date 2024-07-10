@@ -1,11 +1,14 @@
 import VideoItem from './VideoItem';
 import './Card.css';
 import React from 'react';
-
-
+import { useState, useEffect,useContext } from 'react';
+import { VideoContext } from '../contexts/VideoContext';
 
 // Component to render a list of videos
-function Videolist({ videoList }) {
+function Videolist({  }) {
+ 
+  const {  videoList } = useContext(VideoContext);
+  
   return (
     <>
       {/* Iterate over the videoList array and render a VideoItem for each video */}

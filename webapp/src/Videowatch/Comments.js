@@ -1,27 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../Topbar/Searchbar.css';
+import { UserContext } from '../contexts/UserContext';
 
 
-
-function Comments({ id, video, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
+function Comments({ id, video,setVideo}) {
    
-  
-    const [comments, setComments] = useState(video.comments || []);
+    const { userConnect, connectedUser } = useContext(UserContext);
+    
     const [newComment, setNewComment] = useState('');
     const [editIndex, setEditIndex] = useState(null);
     const [editedComment, setEditedComment] = useState('');
-    const [videoLikes, setVideoLikes] = useState(0);
-    const [videoDislikes, setVideoDislikes] = useState(0);
 
     useEffect(() => {
-      if (video) {
-            setComments(video.comments || []);
-            setVideoLikes(video.likes);
-            setVideoDislikes(video.dislikes);
+        if (video) {
+            setVideo(video);
         }
-    }, [video]);
-
+    }, [video, setVideo]);
+  
     const handleCommentSubmit = async (event) => {
         event.preventDefault();
         if (newComment.trim()) {
@@ -31,53 +27,120 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
                 img: connectedUser.img,
                 userId: connectedUser._id
             };
-            console.log(newCommentObj)
+            console.log(newCommentObj);
             try {
                 const response = await fetch(`http://localhost:8000/api/videos/${id}/comments`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newCommentObj)
                 });
-
+    
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-
+    
                 const newCommentResponse = await response.json();
-                setComments([...comments, newCommentResponse]);
+    
+                setVideo(prevVideo => ({
+                    ...prevVideo,
+                    comments: [...prevVideo.comments, newCommentResponse]
+                }));
+    
                 setNewComment('');
             } catch (error) {
                 console.error('Error adding comment:', error);
             }
         }
     };
+    
 
-    const handleEditCommentSubmit = (event, index) => {
+    const handleEditCommentSubmit = async (event, index) => {
         event.preventDefault();
         if (editedComment.trim()) {
-            const updatedComments = [...comments];
-            updatedComments[index].text = editedComment;
-            setComments(updatedComments);
-            editComment(id, index, editedComment);
-            setEditIndex(null);
-            setEditedComment('');
+            try {
+                const response = await fetch(`http://localhost:8000/api/videos/${id}/comments/${index}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: editedComment })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const updatedComment = await response.json();
+
+                // Update the comments array in the video state at the given index
+                setVideo(prevVideo => {
+                    const updatedComments = [...prevVideo.comments];
+                    updatedComments[index] = updatedComment;
+                    return { ...prevVideo, comments: updatedComments };
+                });
+
+                // Clear edit state
+                setEditIndex(null);
+                setEditedComment('');
+            } catch (error) {
+                console.error('Error editing comment:', error);
+            }
+        }
+    };
+    const handleDeleteComment = async (index) => {
+      //  const commentId = video.comments[index]._id;
+        try {
+            const response = await fetch(`http://localhost:8000/api/videos/${id}/comments/${index}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+           const updatedComments = await response.json();
+
+           setVideo(prevVideo => ({
+            ...prevVideo,
+            comments: updatedComments
+        }));
+        } catch (error) {
+            console.error('Error deleting comment:', error);
         }
     };
 
-    const handleDeleteComment = (index) => {
-        const updatedComments = comments.filter((_, i) => i !== index);
-        deleteComment(id, index);
-        setComments(updatedComments);
+
+    const handleLikeVideo = async () => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/videos/${id}/like`, {
+                method: 'POST'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data)
+            setVideo(prevVideo => ({ ...prevVideo, likes: data.likes }));
+        } catch (error) {
+            console.error('Error liking video:', error);
+        }
     };
 
-    const handleLikeVideo = () => {
-        setVideoLikes(videoLikes + 1);
-        addLike(id);
-    };
+    const handleDislikeVideo = async () => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/videos/${id}/dislike`, {
+                method: 'POST'
+            });
 
-    const handleDislikeVideo = () => {
-        setVideoDislikes(videoDislikes + 1);
-        addDislike(id);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            setVideo(prevVideo => ({ ...prevVideo, dislikes: data.dislikes }));
+        } catch (error) {
+            console.error('Error disliking video:', error);
+        }
     };
 
     const handleShareVideo = () => {
@@ -94,15 +157,18 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
         }
     };
 
+    
+    
+    
     return (
         <div className="comments-section">
             <div className="row">
                 <nav className="nav">
                     <button className="nav-link btn" onClick={handleLikeVideo} disabled={!userConnect}>
-                        <i className="bi bi-hand-thumbs-up"></i> {videoLikes}
+                        <i className="bi bi-hand-thumbs-up"></i> {video.likes}
                     </button>
                     <button className="nav-link btn" onClick={handleDislikeVideo} disabled={!userConnect}>
-                        <i className="bi bi-hand-thumbs-down"></i> {videoDislikes}
+                        <i className="bi bi-hand-thumbs-down"></i> {video.dislikes}
                     </button>
                     <button className="nav-link btn" onClick={handleShareVideo}>
                         <i className="bi bi-share"></i>
@@ -110,6 +176,8 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
                 </nav>
             </div>
 
+    
+    
             {userConnect && (
                 <form onSubmit={handleCommentSubmit} className="mt-3">
                     <div className="form-group">
@@ -127,8 +195,10 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
                 </form>
             )}
 
+    
+    
             <ul className="list-group mt-3">
-                {comments.map((comment, index) => (
+                {video.comments.map((comment, index) => (
                     <div key={index} className="list-group-items">
                         {editIndex === index ? (
                             userConnect && (
@@ -172,6 +242,8 @@ function Comments({ id, video, editComment, deleteComment, addLike, addDislike, 
                                 </strong>
                                 </Link>
                                 <i>{comment.text}</i>
+    
+    
                                 {userConnect && (
                                     <div>
                                         <button

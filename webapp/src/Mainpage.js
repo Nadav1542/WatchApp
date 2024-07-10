@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useContext } from 'react';
 import { jwtDecode } from 'jwt-decode'; // Correct import for jwtDecode
 import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
@@ -6,11 +6,14 @@ import Quicksearch from './Topbar/Quicksearch';
 import Menu from './Topbar/Menu';
 import buttons from './data/buttons.json';
 import Usericon from './Topbar/Usericon';
+import { UserContext } from './contexts/UserContext';
 
 // Deep copy of buttons data from JSON
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Mainpage({ darkMode, userConnect, videoList, doSearch, setuserConnect, connectedUser, setconnectedUser }) {
+function Mainpage({   darkMode, doSearch }) {
+  const {userConnect, setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
+  
   // Function to check JWT in local storage and connect the user
   const checkJWT = async () => {
     const token = localStorage.getItem('jwtToken');
@@ -72,7 +75,7 @@ function Mainpage({ darkMode, userConnect, videoList, doSearch, setuserConnect, 
       </div>
 
       <div className="row m-4">
-        <Videolist videoList={videoList} />
+        <Videolist />
       </div>
     </div>
   );
