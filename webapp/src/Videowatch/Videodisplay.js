@@ -23,7 +23,6 @@ function Videodisplay() {
 
     useEffect(() => {
         const fetchVideo = async () => {
-            console.log('useEffect in Videodisplay is trrigered')
             try {
                 const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
                     method: 'GET',

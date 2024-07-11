@@ -223,7 +223,6 @@ function Comments({ id, video,setVideo}) {
                             )
                         ) : (
                             <>
-                            {console.log(comment.userId, comment)}
                             <Link to={`/Myvideos/${encodeURIComponent(comment.userId)}`}>
                                 <strong>
                                     <p>

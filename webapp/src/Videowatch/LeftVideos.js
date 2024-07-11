@@ -8,7 +8,7 @@ function LeftVideos() {
     <>
       {videoList.map((video, index) => (
         <Singlevideo
-          video={video}
+          video={video} key={video._id}
         />
       ))}
     </>
