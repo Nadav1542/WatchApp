@@ -93,7 +93,7 @@ const addLike = async (req,res) => {
   const { id } = req.params; // Video ID
   const userId = req.user._id; // Assumes you have user ID from auth middleware
   console.log("reach addlike")
- // console.log(id,userId)
+ 
   try {
     const video = await Video.findById(id);
     if (!video) {
@@ -111,7 +111,7 @@ const addLike = async (req,res) => {
 
     video.likes += 1;
     video.likedBy.push(userId);
-    console.log(video)
+ 
     await video.save();
 
     res.json({ likes: video.likes, dislikes: video.dislikes });
@@ -132,11 +132,12 @@ const addDislike = async (req,res) => {
       return res.status(404).json({ error: 'Video not found' });
     }
 
-    if (video.dislikedBy.includes(userId)) {
+    if (video.dislikedBy && video.dislikedBy.includes(userId)) {
       return res.status(400).json({ error: 'User has already disliked this video' });
     }
 
-    if (video.likedBy.includes(userId)) {
+    if (video.likedBy && video.likedBy.includes(userId)) {
+     
       video.likes -= 1;
       video.likedBy.pull(userId);
     }

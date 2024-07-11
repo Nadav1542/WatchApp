@@ -126,7 +126,7 @@ function Comments({ id, video, setVideo }) {
 
       const data = await response.json();
       console.log(data);
-      setVideo(prevVideo => ({ ...prevVideo, likes: data.likes }));
+      setVideo(prevVideo => ({ ...prevVideo, likes: data.likes, dislikes: data.dislikes }));
     } catch (error) {
       console.error('Error liking video:', error);
     }
@@ -135,7 +135,11 @@ function Comments({ id, video, setVideo }) {
   const handleDislikeVideo = async () => {
     try {
       const response = await fetch(`http://localhost:8000/api/videos/${id}/dislike`, {
-        method: 'POST'
+        method: 'POST',
+        'Content-Type': 'application/json',
+        headers: {
+            'Authorization': `Bearer ${(localStorage.getItem('jwtToken'))}`,
+          },
       });
 
       if (!response.ok) {
@@ -143,7 +147,7 @@ function Comments({ id, video, setVideo }) {
       }
 
       const data = await response.json();
-      setVideo(prevVideo => ({ ...prevVideo, dislikes: data.dislikes }));
+      setVideo(prevVideo => ({ ...prevVideo, dislikes: data.dislikes, likes: data.likes }));
     } catch (error) {
       console.error('Error disliking video:', error);
     }

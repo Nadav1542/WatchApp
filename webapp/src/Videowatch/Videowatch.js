@@ -13,8 +13,7 @@ const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 function Videowatch({  darkMode }) {
   const { id,creator } = useParams();
-  const [video, setVideo] = useState(null);
-  const {  videoList } = useContext(VideoContext);
+ 
   const {userConnect, setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
 
   // Function to check JWT in local storage and connect the user
