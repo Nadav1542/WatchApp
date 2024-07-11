@@ -71,19 +71,30 @@ const deleteUser = async (req, res) => {
 }
 };
 const updateUser = async (req, res) => {
-
-  const userId  = req.params.id;
-  console.log(userId)
+  const userId = req.params.id;
+  console.log(userId);
+  
   try {
-    const user = await User.findOne(userId);
-    
+    const user = await User.findById(userId);
+    console.log(user)
+
     if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found' });
     }
-    res.status(200).json({ message: 'User update successfully' });
-} catch (error) {
-    res.status(500).json({ message: 'Failed to update User', error: error.message });
-}
+
+    const { displayname, username, password } = req.body;
+    console.log(displayname)
+
+    if (displayname) user.displayname = displayname;
+    if (username) user.username = username;
+    if (password) user.password = password;
+
+    await user.save();
+
+    res.status(200).json({ message: 'User updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update user', error: error.message });
+  }
 };
 
 const addingVideo = async (req, res) => {

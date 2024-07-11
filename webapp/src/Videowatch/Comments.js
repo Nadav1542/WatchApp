@@ -4,7 +4,7 @@ import '../Topbar/Searchbar.css';
 import { UserContext } from '../contexts/UserContext';
 
 
-function Comments({ id, video,setVideo}) {
+function Comments({ id, video, setVideo}) {
    
     const { userConnect, connectedUser } = useContext(UserContext);
     const [newComment, setNewComment] = useState('');

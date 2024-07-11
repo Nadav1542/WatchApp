@@ -7,7 +7,7 @@ import { VideoContext } from '../contexts/VideoContext';
 // Component to render a list of videos
 function Videolist() {
  
-  const {  videoList } = useContext(VideoContext);
+  const { videoList } = useContext(VideoContext);
   
   return (
     <>
