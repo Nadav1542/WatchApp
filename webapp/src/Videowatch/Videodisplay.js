@@ -69,28 +69,27 @@ function Videodisplay() {
     }
   }, [connectedUser]);
 
-  useEffect(() => {
-    const fetchVideo = async () => {
-      console.log('useEffect in Videodisplay is triggered')
-      try {
-        const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setVideo(data);
-        setTitle(decodeURIComponent(data.title));
-        setDescription(decodeURIComponent(data.description));
-        setSource(data.source);
-        setViews(decodeURIComponent(data.views));
-        setUploadTime(decodeURIComponent(data.uploadTime));
-      } catch (error) {
-        console.error('Failed to fetch video', error);
-      }
-    };
+    useEffect(() => {
+        const fetchVideo = async () => {
+            try {
+                const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setVideo(data);
+                setTitle(decodeURIComponent(data.title));
+                setDescription(decodeURIComponent(data.description));
+                setSource(data.source);
+                setViews(decodeURIComponent(data.views));
+                setUploadTime(decodeURIComponent(data.uploadTime));
+            } catch (error) {
+                console.error('Failed to fetch video', error);
+            }
+        };
 
     fetchVideo();
   }, [id]);

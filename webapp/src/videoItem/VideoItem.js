@@ -27,7 +27,7 @@ function VideoItem({ video }) {
     <div className="card col-md-4 col-lg-3 col-sm-6 border-0 p-2">
       <Link to={`/videowatch/${encodeURIComponent(video._id)}/${encodeURIComponent(video.creator)}`}>
         <video
-          src={video.source} // Video source
+          src={`http://localhost:8000/videowatch/${video.source}`} // Video source
           className="card-img-top" // CSS class for styling
           ref={videoRef} // Reference to the video element
           onMouseEnter={handleMouseEnter} // Play video on mouse enter

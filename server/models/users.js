@@ -43,12 +43,10 @@ export const User = mongoose.model('User', userSchema);
 }
 
  async function createUser(username, displayname, password, img) {
-  console.log(img)
   // If the image hasn't a prefix, add it
   if (img && !img.startsWith("data")) {
     img = `data:image/png;base64,${img}`
   }
-  const randomId = new mongoose.Types.ObjectId();
   // Check if the username is already taken
   const existingUser = await User.findOne({ username });
   if (existingUser) {

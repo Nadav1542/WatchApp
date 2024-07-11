@@ -8,11 +8,13 @@ import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
 import { VideoProvider } from '../contexts/VideoContext';
 
-function Myvideos({ darkMode, userConnect,  setuserConnect }) {
+function Myvideos({ darkMode }) {
+
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [videos, setVideos] = useState([]);
-  const {  deleteUser } = useContext(UserContext);
+  const {  deleteUser,setuserConnect,userConnect } = useContext(UserContext);
+
 
   const navigate = useNavigate();
   const {  videoList } = useContext(VideoContext);
@@ -22,6 +24,21 @@ function Myvideos({ darkMode, userConnect,  setuserConnect }) {
   console.log('User State:', user);
 
   const menubuttons = JSON.parse(JSON.stringify(buttons));
+  const handleSignedout = (e) => {
+    e.preventDefault();
+  
+    // Check if there is a JWT token in local storage
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      // Remove the JWT token from local storage
+      localStorage.removeItem('jwtToken');
+      console.log('JWT token removed from local storage');
+    }
+  
+    setuserConnect(false); // Update state to indicate user is signed out
+    navigate("/"); // Navigate to the home page
+    console.log('User logged out'); // Log the logout action
+  };
 
   const handleDeleteUser = async () => {
     try {
@@ -41,8 +58,19 @@ function Myvideos({ darkMode, userConnect,  setuserConnect }) {
   };
   
 
-  const handleEditUserDetails = () => {
-    alert("Edit user details!");
+  const handleEditUserDetails = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/users/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+        } catch (error) {
+            console.error('Failed to update user', error);
+        }
   };
 
   useEffect(() => {
@@ -84,10 +112,10 @@ function Myvideos({ darkMode, userConnect,  setuserConnect }) {
     fetchVideos();
   }, [id]);
 
-  console.log('User after fetch:', user);
-
   return (
+    
     <div className={darkMode ? 'dark-mode' : ''}>
+    
       <div className="row align-items-center mb-3">
         <div className="col-auto">
           <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
@@ -112,6 +140,7 @@ function Myvideos({ darkMode, userConnect,  setuserConnect }) {
             className="btn btn-sign"
             type="button"
             id="register-button"
+            onClick={handleSignedout}
           ><i className="bi bi-box-arrow-left"></i> Log out
           </button>
         </div>

@@ -27,7 +27,6 @@ function Videowatch({  darkMode }) {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log('Decoded Token:', decodedToken); // This will log the decoded token, including user id and username
 
         // Check if the token is expired
         const currentTime = Date.now() / 1000; // Current time in seconds
@@ -40,7 +39,6 @@ function Videowatch({  darkMode }) {
           });
           if (response.ok) {
             const userDetails = await response.json();
-            console.log('Fetched User Details:', userDetails);
             setuserConnect(true);
             setconnectedUser(userDetails); // Set the connected user state with the fetched user details
             if (!localStorage.getItem('jwtToken')) {
@@ -66,10 +64,10 @@ function Videowatch({  darkMode }) {
     }
   }, [connectedUser]);
 
-  useEffect(() => {
-    console.log('userConnect:', userConnect);
-    console.log('connectedUser:', connectedUser);
-  });
+  // useEffect(() => {
+  //   console.log('userConnect:', userConnect);
+  //   console.log('connectedUser:', connectedUser);
+  // });
 
   useEffect(() => {
     const fetchVideoFromLocalStorage = () => {

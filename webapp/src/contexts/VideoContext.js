@@ -20,7 +20,6 @@ export const VideoProvider = ({ children, userId = null }) => {
           headers: { 'Content-Type': 'application/json' }
         });
         const data = await response.json();
-        console.log(data)
         setVideolist(data);
       } catch (error) {
         console.error('Error fetching videos:', error);
