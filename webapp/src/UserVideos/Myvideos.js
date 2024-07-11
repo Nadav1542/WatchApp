@@ -21,7 +21,6 @@ function Myvideos({ darkMode }) {
   const [success, setSuccess] = useState('');
 
   const navigate = useNavigate();
-  const { videoList } = useContext(VideoContext);
 
   console.log('User ID:', id);
   console.log('User State:', user);
