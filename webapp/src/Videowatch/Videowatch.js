@@ -12,7 +12,7 @@ import { UserContext } from '../contexts/UserContext';
 const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 function Videowatch({  darkMode }) {
-  const { id } = useParams();
+  const { id,creator } = useParams();
   const [video, setVideo] = useState(null);
   const {  videoList } = useContext(VideoContext);
   const {userConnect, setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
@@ -64,36 +64,7 @@ function Videowatch({  darkMode }) {
     }
   }, [connectedUser]);
 
-  // useEffect(() => {
-  //   console.log('userConnect:', userConnect);
-  //   console.log('connectedUser:', connectedUser);
-  // });
-
-  useEffect(() => {
-    const fetchVideoFromLocalStorage = () => {
-      const savedVideo = localStorage.getItem('currentVideo');
-      if (savedVideo) {
-        const parsedVideo = JSON.parse(savedVideo);
-        if (parsedVideo._id === id) {
-          setVideo(parsedVideo);
-          console.log('Video loaded from localStorage:', parsedVideo);
-        }
-      }
-    };
-
-    const fetchVideo = async () => {
-      const fetchedVideo = videoList.find((v) => v._id === id);
-      if (fetchedVideo) {
-        setVideo(fetchedVideo);
-        localStorage.setItem('currentVideo', JSON.stringify(fetchedVideo));
-        console.log('Video saved to localStorage:', fetchedVideo);
-      } else {
-        fetchVideoFromLocalStorage();
-      }
-    };
-
-    fetchVideo();
-  }, [id, videoList]);
+ 
 
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
@@ -114,11 +85,9 @@ function Videowatch({  darkMode }) {
                 <SearchBar darkMode={darkMode} />
               </div>
             </div>
-            {video ? (
-              <Videodisplay/>
-            ) : (
-              <div>Loading...</div>
-            )}
+            
+              <Videodisplay id={id} creator={creator}/>
+            
           </div>
         </div>
       </div>

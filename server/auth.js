@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-
+import {User} from './models/users.js'
 const secret = 'redacted'; // Make sure to keep this secret key safe and use environment variables in production
 
 // Generate JWT token
@@ -8,20 +8,28 @@ export function generateToken(user) {
 }
 
 // Verify JWT token
-export function verifyToken(req, res, next) {
-  const token = req.headers['authorization'];
-
-  if (!token) {
-    return res.status(403).send('Token is required');
+export async function verifyToken (req, res, next) {
+  const authHeader = req.header('Authorization');
+  console.log('Authorization Header:', authHeader);
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Authorization header missing' });
   }
 
-  jwt.verify(token, secret, (err, decoded) => {
-    if (err) {
-      return res.status(401).send('Invalid token');
+  const token = authHeader.replace('Bearer ', '');
+  
+  try {
+    const decoded = jwt.verify(token, 'redacted'); // Use your JWT secret
+    const user = await User.findById(decoded.id);
+    console.log(user)
+    if (!user) {
+      throw new Error();
     }
 
-    req.user = decoded;
+    req.user = user;
     next();
-  });
-}
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+};
+
 

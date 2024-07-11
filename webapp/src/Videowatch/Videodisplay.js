@@ -6,11 +6,13 @@ import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
 import {jwtDecode } from 'jwt-decode';
 
-function Videodisplay() {
+function Videodisplay({id,creator}) {
+  
+  console.log(id)
   const { deleteVideo } = useContext(VideoContext);
-  const { userConnect, setuserConnect, connectedUser, setConnectedUser } = useContext(UserContext);
+  const { userConnect, setuserConnect, connectedUser, setconnectedUser } = useContext(UserContext);
   const navigate = useNavigate();
-  const { id, creator } = useParams();
+  //const { id, creator } = useParams();
   const [video, setVideo] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -45,7 +47,7 @@ function Videodisplay() {
             const userDetails = await response.json();
             console.log('Fetched User Details:', userDetails);
             setuserConnect(true);
-            setConnectedUser(userDetails); // Set the connected user state with the fetched user details
+            setconnectedUser(userDetails); // Set the connected user state with the fetched user details
             if (!localStorage.getItem('jwtToken')) {
               localStorage.setItem('jwtToken', token);
             }
@@ -70,7 +72,8 @@ function Videodisplay() {
   }, [connectedUser]);
 
     useEffect(() => {
-        const fetchVideo = async () => {
+      console.log("useEffect")  
+      const fetchVideo = async () => {
             try {
                 const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
                     method: 'GET',
@@ -86,13 +89,34 @@ function Videodisplay() {
                 setSource(data.source);
                 setViews(decodeURIComponent(data.views));
                 setUploadTime(decodeURIComponent(data.uploadTime));
-            } catch (error) {
-                console.error('Failed to fetch video', error);
-            }
-        };
+              // Increment view count
+        await incrementViews();
+      } catch (error) {
+        console.error('Failed to fetch video', error);
+      }
+    };
+    console.log('Incrementing views');
+    const incrementViews = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}/views`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (response.ok) {
+          const updatedViews = await response.json();
+          setViews(updatedViews.views);
+        } else {
+          console.error('Failed to increment views');
+        }
+      } catch (error) {
+        console.error('Error incrementing views:', error);
+      }
+    };
 
     fetchVideo();
-  }, [id]);
+  }, [id,creator]);
 
   const handleTitleChange = (event) => setTitle(event.target.value);
   const handleDescriptionChange = (event) => setDescription(event.target.value);

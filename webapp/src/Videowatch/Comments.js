@@ -2,8 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../Topbar/Searchbar.css';
 import { UserContext } from '../contexts/UserContext';
+import {jwtDecode } from 'jwt-decode';
 
 function Comments({ id, video, setVideo }) {
+    
+  console.log(localStorage.getItem('jwtToken'))
+  console.log(jwtDecode(localStorage.getItem('jwtToken')))
+    
   const { userConnect, connectedUser } = useContext(UserContext);
   const [newComment, setNewComment] = useState('');
   const [editIndex, setEditIndex] = useState(null);
@@ -106,8 +111,14 @@ function Comments({ id, video, setVideo }) {
   const handleLikeVideo = async () => {
     try {
       const response = await fetch(`http://localhost:8000/api/videos/${id}/like`, {
-        method: 'POST'
-      });
+        method: 'POST',
+        'Content-Type': 'application/json',
+        headers: {
+            'Authorization': `Bearer ${(localStorage.getItem('jwtToken'))}`,
+          },
+        
+        
+    });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -212,7 +223,7 @@ function Comments({ id, video, setVideo }) {
               )
             ) : (
               <>
-                {console.log(comment.userId, comment)}
+                
                 <Link to={`/Myvideos/${encodeURIComponent(comment.userId)}`}>
                   <strong>
                     <p>

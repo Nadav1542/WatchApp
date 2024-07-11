@@ -29,6 +29,7 @@ function Signin({ darkMode }) {
 
         // Store the token in local storage
         localStorage.setItem('jwtToken', token);
+        console.log(token)
         setError('');
         setuserConnect(true);
         setconnectedUser(user);
