@@ -168,57 +168,61 @@ const addDislike = async (req,res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
-
 const editComment = async (req, res) => {
-  console.log(1);
   try {
     const { videoId, index } = req.params;
     const { text } = req.body;
-    console.log(req.params);
+    const user = req.user; // User information from the token
+    console.log("User information in editComment:", user); // Debugging line
 
     const video = await Video.findById(videoId);
     if (!video) {
-        return res.status(404).json({ message: 'Video not found' });
+      return res.status(404).json({ message: 'Video not found' });
     }
 
     if (index < 0 || index >= video.comments.length) {
-        return res.status(404).json({ message: 'Comment not found' });
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    if (video.comments[index].userId.toString() !== user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to edit this comment' });
     }
 
     video.comments[index].text = text;
-
-    // Explicitly mark the comments array as modified
     video.markModified('comments');
-    console.log(video.comments);
     await video.save();
-    console.log(video.comments);
-    console.log(video.comments[index]);
     res.status(200).json(video.comments[index]);
   } catch (error) {
     res.status(500).json({ message: 'Error editing comment', error: error.message });
   }
 };
 
-const deleteComment = async (req,res) => {
+
+const deleteComment = async (req, res) => {
   try {
     const { videoId, index } = req.params;
+    const user = req.user; // User information from the token
+    console.log("User information in deleteComment:", user); // Debugging line
 
     const video = await Video.findById(videoId);
     if (!video) {
-        return res.status(404).json({ message: 'Video not found' });
+      return res.status(404).json({ message: 'Video not found' });
     }
 
     if (index < 0 || index >= video.comments.length) {
-        return res.status(404).json({ message: 'Comment not found' });
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    if (video.comments[index].userId.toString() !== user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to delete this comment' });
     }
 
     video.comments.splice(index, 1);
     await video.save();
-
     res.status(200).json(video.comments);
-} catch (error) {
+  } catch (error) {
     res.status(500).json({ message: 'Error deleting comment', error: error.message });
-}
+  }
 };
 
 

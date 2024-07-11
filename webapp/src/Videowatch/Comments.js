@@ -55,12 +55,16 @@ function Comments({ id, video, setVideo }) {
   };
 
   const handleEditCommentSubmit = async (event, index) => {
+    if(!connectedUser) return;
     event.preventDefault();
     if (editedComment.trim()) {
       try {
         const response = await fetch(`http://localhost:8000/api/videos/${id}/comments/${index}`, {
           method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+          },
           body: JSON.stringify({ text: editedComment }),
         });
 
@@ -85,9 +89,13 @@ function Comments({ id, video, setVideo }) {
   };
 
   const handleDeleteComment = async (index) => {
+    if(!connectedUser) return;
     try {
       const response = await fetch(`http://localhost:8000/api/videos/${id}/comments/${index}`, {
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+        },
       });
 
       if (!response.ok) {
