@@ -39,18 +39,33 @@ const  getVideosForHomePage = async (req,res) => {
     }
 };
 
-const createComment = async (req,res) => {
+const createComment = async (req, res) => {
   const { videoId } = req.params;
-  const { text, user, img, userId } = req.body;
- 
+  const { text } = req.body;
+
   try {
-    const newComment = await addCommentToVideo(videoId, { text, user, img, userId });
+    const user = req.user; // User information from the token
+    console.log("User information in createComment:", user); // Debugging line
+
+    if (!user || !user.username || !user.img || !user._id) {
+      console.log("Incomplete user information:", user); // Debugging line
+      return res.status(400).json({ error: 'Incomplete user information' });
+    }
+
+    const newComment = await addCommentToVideo(videoId, {
+      text,
+      user: user.username,
+      img: user.img,
+      userId: user._id,
+    });
+
     res.json(newComment); // Return only the new comment object
   } catch (error) {
     console.error('Error adding comment:', error);
     res.status(500).json({ error: 'Failed to add comment' });
   }
 };
+
 
 const updateVideo = async (req, res) => {
   const { creator, id } = req.params;

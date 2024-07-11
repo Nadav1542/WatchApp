@@ -17,6 +17,7 @@ function Comments({ id, video, setVideo }) {
   }, [video, setVideo]);
 
   const handleCommentSubmit = async (event) => {
+    if(!userConnect) return;
     event.preventDefault();
     if (newComment.trim()) {
       const newCommentObj = {
@@ -28,7 +29,10 @@ function Comments({ id, video, setVideo }) {
       try {
         const response = await fetch(`http://localhost:8000/api/videos/${id}/comments`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+          },
           body: JSON.stringify(newCommentObj),
         });
 
@@ -279,15 +283,3 @@ function Comments({ id, video, setVideo }) {
 }
 
 export default Comments;
-
-
-
-
-
-
-
-
-
-
-
-
