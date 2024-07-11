@@ -35,8 +35,6 @@ server.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 server.use(cors());
 server.use(express.json());
 
-const upload = multer();
-
 
 // Route to serve video files
 server.get('/videowatch/:fileName', (req, res) => {
@@ -44,9 +42,6 @@ server.get('/videowatch/:fileName', (req, res) => {
   
   res.sendFile(videoPath);
 });
-
-
-
 
 
 

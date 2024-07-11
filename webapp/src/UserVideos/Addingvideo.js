@@ -6,31 +6,34 @@ import { UserContext } from '../contexts/UserContext';
 // Addingvideo component for uploading a new video
 function Addingvideo({ darkMode }) {
     // State variables for video details and error handling
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [source, setSource] = useState(null);
+
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const {  setVideolist,videoList } = useContext(VideoContext);
-    
     const {  connectedUser } = useContext(UserContext);
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        file: null,
+      });
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+        console.log(formData)
+      };
     
-    // Check if user is connected, if not navigate to sign-in page
-    useEffect(() => {
-        if (!connectedUser) {
-            navigate('/Signin');
-        }
-    }, [connectedUser, navigate]);
+    
 
     // Handle file input change
     const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        const validation = validateVideoFile(file); // Validate the selected video file
+        const validation = validateVideoFile(event.target.files[0]); // Validate the selected video file
         if (validation.isValid) {
-            setSource(file);
+            setFormData({ ...formData, file: event.target.files[0] });
             setError(''); // Clear any previous error messages
+            console.log(formData)
+
         } else {
-            setSource(null);
+            setFormData({ ...formData, file: null });
             setError(validation.error); // Set validation error message
         }
     };
@@ -51,26 +54,36 @@ function Addingvideo({ darkMode }) {
     };
 
     // Handle video upload form submission
-    const handleUpload = (event) => {
+    const handleUpload = async (event) => {
         event.preventDefault(); // Prevent form submission from refreshing the page
-        if (title && description && source) {
-            // Create new video object with provided details
-            const newVideo = {
-                title,
-                description,
-                source: URL.createObjectURL(source),
-                views: "100",
-                uploadtime: "now",
-                comments: [],
-                likes: 0,
-                dislike: 0
-            };
+        if (formData.title && formData.description && formData.file) {
+            
+            console.log(formData)
+            const newFormData = new FormData();
+            newFormData.append('title', formData.title)
+            newFormData.append('description', formData.description)
+            newFormData.append('file', formData.file)
+            
+            try {
+                const response = await fetch(`http://localhost:8000/api/users/${connectedUser._id}/videos`, {
+                    method: 'POST', 
+                    body: newFormData,
+                    });
 
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const newVideo = await response.json();
             // Update video list with the new video
             setVideolist([...videoList, newVideo]);
             navigate('/'); // Navigate to the home page after uploading
         }
+         catch (error) {
+            setError('Failed to upload video');
+            console.error('Error uploading video:', error);
+        }
     };
+}
 
     // Handle dark mode toggle
     const handleDarkModeToggle = () => {
@@ -98,9 +111,9 @@ function Addingvideo({ darkMode }) {
                         <div className="form-floating mb-3">
                             <input
                                 type="text"
-                                value={title}
+                                value={formData.title}
                                 name="title"
-                                onChange={(e) => setTitle(e.target.value)}
+                                onChange={handleChange}
                                 className="form-control"
                                 id="videoTitle"
                                 placeholder="Enter video title"
@@ -115,8 +128,8 @@ function Addingvideo({ darkMode }) {
                             <textarea
                                 className="form-control"
                                 name="description"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                value={formData.description}
+                                onChange={handleChange}
                                 id="videoDescription"
                                 rows="3"
                                 placeholder="Enter video description here"

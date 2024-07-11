@@ -1,10 +1,19 @@
 import express from 'express';
-import {getUserInfo, getUserVideos, signup, generateTokenForUser, deleteUser } from '../controllers/userController.js';
+import {getUserInfo, getUserVideos, signup, generateTokenForUser, deleteUser, updateUser, addingVideo } from '../controllers/userController.js';
 import {getVideobyUser,deleteVideo,updateVideo} from '../controllers/videoController.js'
-
+import multer from 'multer';
 
 
 const router = express.Router();
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'build/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+const upload = multer({storage: storage})
 
 
 //router.route('/:username/:password').get(logIn);
@@ -16,9 +25,7 @@ router.route('/').post(signup)
 router.route('/:id').get(getUserInfo)
 router.route('/:id/videos').get(getUserVideos)
 router.route('/:id').delete(deleteUser)
-
-
-// router.route('/:id/videos').post(addingVideo)
-
+router.route('/:id').patch(updateUser)
+router.post('/:id/videos', upload.single('file') ,addingVideo);
 //router.get('/:id', getUserByHandler);
 export default router;

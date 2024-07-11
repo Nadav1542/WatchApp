@@ -2,6 +2,7 @@ import { createUser, getUserByUsername } from '../models/users.js';
 import { generateToken } from '../auth.js';
 import { User } from '../models/users.js';
 import mongoose from 'mongoose';
+import { Video } from '../models/Video.js';
 
 const signup = async (req, res) => {
   try {
@@ -17,14 +18,10 @@ const signup = async (req, res) => {
 };
 
 const getUserInfo = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: 'Invalid user ID' });
-  }
+  const userId = req.params.id;
 
   try {
-    const user = await User.findById(id).populate('videos');
+    const user = await User.findById(userId).populate('videos');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -35,14 +32,10 @@ const getUserInfo = async (req, res) => {
 };
 
 const getUserVideos = async (req, res) => {
-
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: 'Invalid user ID' });
-  }
+  const  userId  = req.params.id;
 
   try {
-    const user = await User.findById(id).populate('videos');
+    const user = await User.findById(userId).populate('videos');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -64,8 +57,8 @@ const generateTokenForUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const { userId } = req.params;
-  console.log('here', userId)
+
+  const userId  = req.params.id;
   try {
     const user = await User.findOneAndDelete(userId);
     
@@ -76,7 +69,61 @@ const deleteUser = async (req, res) => {
 } catch (error) {
     res.status(500).json({ message: 'Failed to delete User', error: error.message });
 }
+};
+const updateUser = async (req, res) => {
+
+  const userId  = req.params.id;
+  console.log(userId)
+  try {
+    const user = await User.findOne(userId);
+    
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ message: 'User update successfully' });
+} catch (error) {
+    res.status(500).json({ message: 'Failed to update User', error: error.message });
 }
+};
+
+const addingVideo = async (req, res) => {
+  const userId  = req.params.id;
+
+  try {
+    const user = await User.findById(userId);
+    console.log(user)
+    // Changed to findById to correctly find the user by ID
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const { title, description } = req.body;
+
+    // Create a new video document
+    const video = new Video({
+      title,
+      description,
+      views: 0,
+      uploadtime: new Date(),
+      comments: [],
+      likes: 0,
+      dislike: 0,
+      creator: user._id,
+      source: req.file.filename, 
+    });
+
+    await video.save();
+
+    user.videos.push(video._id);
+    await user.save();
+
+    res.json(video);
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding video', error: error.message });
+  }
+};
+
+
 
 const getUserByHandler = async (req, res) => {
   try {
@@ -87,4 +134,4 @@ const getUserByHandler = async (req, res) => {
   }
 };
 
-export { signup, generateTokenForUser, getUserInfo, getUserVideos, deleteUser };
+export { signup, generateTokenForUser, getUserInfo, getUserVideos, deleteUser, updateUser, addingVideo };

@@ -75,8 +75,11 @@ const getTopAndRandomVideos = async () => {
     throw new Error('Failed to retrieve videos');
   }
 };
-
-
+  const createVideo = async (title) => {
+  // Create a new user
+  const video = new Video({ title, description, source, views, uploadtime, comments, likes, dislike, creator });
+  return await video.save();
+  }
 
 const getVideo = async (id) => {
   try {
@@ -91,7 +94,7 @@ const getVideo = async (id) => {
   }
 };
 
- export  {getVideo,addCommentToVideo,getTopAndRandomVideos};
+ export  {getVideo,addCommentToVideo,getTopAndRandomVideos, createVideo};
 
 
 
