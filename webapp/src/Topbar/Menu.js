@@ -2,7 +2,7 @@ import React from 'react';
 import LeftMenu from '../LeftMenu/LeftMenu';
 import './Menu.css'
 
-function Menu({ darkMode, buttons, userConnect, setuserConnect }) {
+function Menu({ darkMode, buttons, connectedUser, userConnect, setuserConnect }) {
     return (
         <>
             {/* Button to toggle the offcanvas menu */}

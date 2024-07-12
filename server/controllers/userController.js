@@ -19,12 +19,13 @@ const signup = async (req, res) => {
 
 const getUserInfo = async (req, res) => {
   const userId = req.params.id;
-
+  console.log('line 22', userId)
   try {
     const user = await User.findById(userId).populate('videos');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    console.log('line 28', user.displayname)
     res.json(user);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching user details' });
@@ -32,13 +33,15 @@ const getUserInfo = async (req, res) => {
 };
 
 const getUserVideos = async (req, res) => {
-  const  userId  = req.params.id;
+  const userId = req.params.id;
+  console.log('line 37', userId)
 
   try {
     const user = await User.findById(userId).populate('videos');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    console.log('line 43', user)
     res.json(user.videos);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching user videos' });
@@ -72,7 +75,6 @@ const deleteUser = async (req, res) => {
 };
 const updateUser = async (req, res) => {
   const userId = req.params.id;
-  console.log(req.body.displayname);
   
   try {
     const user = await User.findById(userId);

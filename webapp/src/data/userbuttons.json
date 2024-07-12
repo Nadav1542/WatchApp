@@ -21,16 +21,6 @@
         "description": "Liked videos",
         "link": "/",
         "icon": "bi bi-hand-thumbs-up"
-    },
-    {
-        "description": "Profile",
-        "link": "/",
-        "icon": "bi bi-person"
-    },
-    {
-        "description": "Myvideos",
-        "link": "/Myvideos/:id",
-        "icon": "bi bi-person-lines-fill"
     }
     
    
