@@ -33,6 +33,7 @@ function Signin({ darkMode }) {
         setError('');
         setuserConnect(true);
         setconnectedUser(user);
+        console.log("message from sign in in web", connectedUser)
       } else {
         const errorData = await response.json();
         setError(errorData.error || 'Invalid username or password');

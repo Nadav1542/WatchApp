@@ -73,19 +73,26 @@ function Myvideos({ darkMode }) {
     } 
     console.log(base64Image)
 
-    const formData = new FormData();
-    formData.append('displayname', displayName);
-    formData.append('username', username);
-    formData.append('password', password);
-    // formData.append('img', base64Image);
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-  }
-
+    const updateUser = {
+      username: username,
+      password: password,
+      displayname: displayName,
+      img: base64Image
+    };
+  //   const formData = new FormData();
+  //   formData.append('displayname', displayName);
+  //   formData.append('username', username);
+  //   formData.append('password', password);
+  //   formData.append('img', img);
+  //   for (let [key, value] of formData.entries()) {
+  //     console.log(`${key}: ${value}`);
+  // }
+    console.log(updateUser)
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
         method: 'PATCH',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateUser),
       });
 
       if (!response.ok) {

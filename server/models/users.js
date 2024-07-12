@@ -34,29 +34,5 @@ const userSchema = new mongoose.Schema({
 userSchema.index({ username: 1 }, { unique: true });
  const User = mongoose.model('User', userSchema);
 
- async function getUserByUsername(username, password) {
-  const user = await User.findOne({ username });
-  if (!user || user.password !== password) {
-    throw new Error('Incorrect username or password');
-  }
-  return user;
-}
 
- async function createUser(username, displayname, password, img) {
-  // If the image hasn't a prefix, add it
-  if (img && !img.startsWith("data")) {
-    img = `data:image/png;base64,${img}`
-  }
-  // Check if the username is already taken
-  const existingUser = await User.findOne({ username });
-  if (existingUser) {
-    throw new Error('Username already taken');
-  }
-  // Create a new user
-  const user = new User({ username, displayname, password, img });
-  return await user.save();
-}
-
-
-
-export { getUserByUsername, createUser,User };
+export { User };
