@@ -11,6 +11,7 @@ function Addingvideo({ darkMode }) {
     const [error, setError] = useState('');
     const {  setVideolist,videoList } = useContext(VideoContext);
     const {  connectedUser } = useContext(UserContext);
+    console.log("message from adding video", connectedUser)
     const [formData, setFormData] = useState({
         title: '',
         description: '',

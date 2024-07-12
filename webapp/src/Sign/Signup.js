@@ -167,7 +167,7 @@ function Signup({ darkMode }) {
               </div>
 
               {errorMessage && <div className="alert alert-danger" style={{ color: 'red'}}>{errorMessage}</div>}
-              {signedUp && <div className="alert alert-danger m-2" style={{ color: 'red', textAlign: 'center'}}><strong>You signed up successfully!</strong> to connect, click the Sign In button.</div>}
+              {signedUp && <div className="alert alert-success m-2" style={{ color: 'Green', textAlign: 'center'}}><strong>You signed up successfully!</strong> to connect, click the Sign In button.</div>}
               <div className="d-flex justify-content-between">
                 {!signedUp && <button className="btn btn-sign" type="submit" id="register-button">Sign Up</button>}
                 <div>
