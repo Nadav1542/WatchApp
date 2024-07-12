@@ -1,5 +1,5 @@
-import React, { useEffect, useState,useContext } from 'react';
-import {useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Menu from '../Topbar/Menu';
 import Videolist from '../videoItem/Videolist';
 import buttons from '../data/buttons.json';
@@ -9,68 +9,72 @@ import { UserContext } from '../contexts/UserContext';
 import { VideoProvider } from '../contexts/VideoContext';
 
 function Myvideos({ darkMode }) {
-
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [videos, setVideos] = useState([]);
-  const {  deleteUser,setuserConnect,userConnect } = useContext(UserContext);
-
-
+  const { deleteUser, setuserConnect, userConnect } = useContext(UserContext);
   const navigate = useNavigate();
-  const {  videoList } = useContext(VideoContext);
-  
-  
+  const { videoList } = useContext(VideoContext);
+
   console.log('User ID:', id);
   console.log('User State:', user);
 
   const menubuttons = JSON.parse(JSON.stringify(buttons));
+
   const handleSignedout = (e) => {
     e.preventDefault();
-  
-    // Check if there is a JWT token in local storage
+
     const token = localStorage.getItem('jwtToken');
     if (token) {
-      // Remove the JWT token from local storage
       localStorage.removeItem('jwtToken');
       console.log('JWT token removed from local storage');
     }
-  
-    setuserConnect(false); // Update state to indicate user is signed out
-    navigate("/"); // Navigate to the home page
-    console.log('User logged out'); // Log the logout action
+
+    setuserConnect(false);
+    navigate("/");
+    console.log('User logged out');
   };
 
   const handleDeleteUser = async () => {
+    if (!userConnect) return;
+
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' }
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
       });
 
       if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-      deleteUser(id)
-            navigate('/'); // Navigate to the homepage after deleting the user
-        } catch (error) {
-            console.error('Failed to delete user', error);
-        }
+      deleteUser(id);
+      navigate('/');
+    } catch (error) {
+      console.error('Failed to delete user', error);
+    }
   };
-  
 
   const handleEditUserDetails = async () => {
+    if (!userConnect) return;
+
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' }
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
       });
 
       if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-        } catch (error) {
-            console.error('Failed to update user', error);
-        }
+    } catch (error) {
+      console.error('Failed to update user', error);
+    }
   };
 
   useEffect(() => {
@@ -78,7 +82,10 @@ function Myvideos({ darkMode }) {
       try {
         const response = await fetch(`http://localhost:8000/api/users/${id}`, {
           method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+          }
         });
         if (!response.ok) {
           throw new Error(`Error fetching user: ${response.status}`);
@@ -95,7 +102,10 @@ function Myvideos({ darkMode }) {
       try {
         const response = await fetch(`http://localhost:8000/api/users/${id}/videos`, {
           method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+          }
         });
         if (!response.ok) {
           throw new Error(`Error fetching user videos: ${response.status}`);
@@ -113,9 +123,7 @@ function Myvideos({ darkMode }) {
   }, [id]);
 
   return (
-    
     <div className={darkMode ? 'dark-mode' : ''}>
-    
       <div className="row align-items-center mb-3">
         <div className="col-auto">
           <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
@@ -173,8 +181,8 @@ function Myvideos({ darkMode }) {
         </div>
       )}
       <div className="row m-4">
-      <VideoProvider userId={id}>  
-        <Videolist/>
+        <VideoProvider userId={id}>  
+          <Videolist/>
         </VideoProvider>
       </div>
     </div>

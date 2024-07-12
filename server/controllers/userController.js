@@ -1,7 +1,6 @@
 import { createUser, getUserByUsername } from '../models/users.js';
 import { generateToken } from '../auth.js';
 import { User } from '../models/users.js';
-import mongoose from 'mongoose';
 import { Video } from '../models/Video.js';
 
 const signup = async (req, res) => {
@@ -72,7 +71,8 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const userId = req.params.id;
-  console.log(userId);
+  console.log('User ID:', userId);
+  console.log('Request Body:', req.body);
   try {
     const user = await User.findByIdAndUpdate(userId, req.body, { new: true });
     
