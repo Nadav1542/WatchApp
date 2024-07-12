@@ -96,14 +96,15 @@ function Myvideos({ darkMode }) {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update user');
       }
 
       setSuccess('User details updated successfully');
       setError('');
       fetchUser(); // Fetch the updated user details
     } catch (error) {
-      setError('Failed to update user');
+      setError(error.message);
       console.error('Error updating user:', error);
       setSuccess('');
     }
@@ -157,20 +158,23 @@ function Myvideos({ darkMode }) {
             style={{ marginLeft: "10px" }}
             className="btn btn-danger"
             type="button"
-            onClick={handleDeleteUser}
-          ><i className="bi bi-trash"></i> Delete User
+            onClick={userConnect ? handleDeleteUser : null}
+            disabled={!userConnect}
+          >
+            <i className="bi bi-trash"></i> Delete User
           </button>
-
+  
           <button
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             style={{ marginLeft: '10px' }}
             className="btn btn-warning"
             type="button"
+            disabled={!userConnect}
           >
             <i className="bi bi-pencil"></i> Edit Details
           </button>
-
+  
           <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">
@@ -226,15 +230,18 @@ function Myvideos({ darkMode }) {
               </div>
             </div>
           </div>
-
-          <button
-            style={{ marginLeft: "50px" }}
-            className="btn btn-sign"
-            type="button"
-            id="register-button"
-            onClick={handleSignedout}
-          ><i className="bi bi-box-arrow-left"></i> Log out
-          </button>
+  
+          {userConnect && (
+            <button
+              style={{ marginLeft: "50px" }}
+              className="btn btn-sign"
+              type="button"
+              id="register-button"
+              onClick={handleSignedout}
+            >
+              <i className="bi bi-box-arrow-left"></i> Log out
+            </button>
+          )}
         </div>
         <div className="col">
           <SearchBar darkMode={darkMode} />
@@ -271,6 +278,7 @@ function Myvideos({ darkMode }) {
       </div>
     </div>
   );
+  
 }
 
 export default Myvideos;

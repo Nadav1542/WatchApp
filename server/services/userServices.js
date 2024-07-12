@@ -46,8 +46,21 @@ async function createUserSer(username, displayname, password, img) {
     }
     const updateUserSer = async (userId, displayname, username, password, img) => {
     const user = await User.findById(userId);
-    if (!user) {
+      if (!user) {
         throw new Error('User not found');
+      }
+      if (username) {
+        const existingUser = await User.findOne({ username });
+        if (existingUser && existingUser._id.toString() !== userId) {
+          throw new Error('Username already exists');
+        }
+      }
+        // Password validation: Must contain letters and numbers and at least 8 characters long
+      if (password) {
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (!passwordRegex.test(password)) {
+          throw new Error('Password must be at least 8 characters long and contain both letters and numbers');
+        }
       }
       if (displayname) user.displayname = displayname;
       if (username) user.username = username;
