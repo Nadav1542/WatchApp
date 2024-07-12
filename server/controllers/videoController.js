@@ -1,11 +1,30 @@
-import {Video,addCommentToVideo,getTopAndRandomVideos} from '../models/Video.js'
+
+import {deleteVideoSer,addCommentToVideo,getAllVideosSer,
+  getTopAndRandomVideos,updateVideoSer,getVideobyUserSer, 
+  addLikeSer,addDislikeSer, editCommentSer,deleteCommentSer,incrementViewsSer} from '../services/videoService.js'
+  import path from 'path'
+  import { fileURLToPath } from 'url';
+  // Get the directory name in ES module scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 
+const getVideoPath = async (req,res) => {
+
+  const videoPath = path.join(__dirname, '../build', req.params.fileName);
+
+  res.sendFile(videoPath, (err) => {
+    if (err) {
+      console.error('Error sending file:', err);
+      res.status(500).send('Error serving video file');
+    }
+  });
+};
 
  const  getAllVideos = async (req,res) => {
   try {
-    const videos = await Video.find();
+    const videos = await getAllVideosSer
     res.status(200).json(videos); // Ensure you return JSON
     
   } catch (error) {
@@ -24,15 +43,12 @@ const  getVideosForHomePage = async (req,res) => {
 }
 
   const deleteVideo = async (req, res) => {
+    const { id, creator } = req.params;
     try {
-        const { id, creator } = req.params;
-        
-        const video = await Video.findOneAndDelete({ _id: id, creator });
-        
+        const video = await deleteVideoSer(id,creator);
         if (!video) {
             return res.status(404).json({ message: 'Video not found' });
         }
-
         res.status(200).json({ message: 'Video deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Failed to delete video', error: error.message });
@@ -57,12 +73,7 @@ const updateVideo = async (req, res) => {
   const { title, description } = req.body;
 
   try {
-      const updatedVideo = await Video.findOneAndUpdate(
-          { _id: id, creator: creator },
-          { title, description },
-          { new: true } // returns the updated document
-      );
-
+      const updatedVideo = await updateVideoSer(id,creator,title,description)
       if (!updatedVideo) {
           return res.status(404).json({ message: 'Video not found' });
       }
@@ -73,13 +84,10 @@ const updateVideo = async (req, res) => {
   }
 };
 
-
-
-  const getVideobyUser = async (req,res) => {
+const getVideobyUser = async (req,res) => {
     const { creator ,id } = req.params;
   try {
-    const video = await Video.findById(id);
-
+    const video = await getVideobyUserSer(id)
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
     }
@@ -95,25 +103,7 @@ const addLike = async (req,res) => {
   console.log("reach addlike")
  
   try {
-    const video = await Video.findById(id);
-    if (!video) {
-      return res.status(404).json({ error: 'Video not found' });
-    }
-
-    if ( video.likedBy && video.likedBy.includes(userId)) {
-      return res.status(400).json({ error: 'User has already liked this video' });
-    }
-
-    if (video.dislikedBy && video.dislikedBy.includes(userId)) {
-      video.dislikes -= 1;
-      video.dislikedBy.pull(userId);
-    }
-
-    video.likes += 1;
-    video.likedBy.push(userId);
- 
-    await video.save();
-
+    const video = await addLikeSer(id,userId)
     res.json({ likes: video.likes, dislikes: video.dislikes });
   } catch (error) {
     console.error('Error liking video:', error);
@@ -126,27 +116,8 @@ const addDislike = async (req,res) => {
   const userId = req.user._id; // Assumes you have user ID from auth middleware
 
   try {
-    const video = await Video.findById(id);
-
-    if (!video) {
-      return res.status(404).json({ error: 'Video not found' });
-    }
-
-    if (video.dislikedBy && video.dislikedBy.includes(userId)) {
-      return res.status(400).json({ error: 'User has already disliked this video' });
-    }
-
-    if (video.likedBy && video.likedBy.includes(userId)) {
-     
-      video.likes -= 1;
-      video.likedBy.pull(userId);
-    }
-
-    video.dislikes += 1;
-    video.dislikedBy.push(userId);
-
-    await video.save();
-
+   
+    const video = await addDislikeSer(id,userId)
     res.json({ likes: video.likes, dislikes: video.dislikes });
   } catch (error) {
     console.error('Error disliking video:', error);
@@ -155,29 +126,11 @@ const addDislike = async (req,res) => {
 };
 
 const editComment = async (req, res) => {
-  console.log(1);
+  const { videoId, index } = req.params;
+  const { text } = req.body;
   try {
-    const { videoId, index } = req.params;
-    const { text } = req.body;
-    console.log(req.params);
-
-    const video = await Video.findById(videoId);
-    if (!video) {
-        return res.status(404).json({ message: 'Video not found' });
-    }
-
-    if (index < 0 || index >= video.comments.length) {
-        return res.status(404).json({ message: 'Comment not found' });
-    }
-
-    video.comments[index].text = text;
-
-    // Explicitly mark the comments array as modified
-    video.markModified('comments');
-    console.log(video.comments);
-    await video.save();
-    console.log(video.comments);
-    console.log(video.comments[index]);
+   
+    const video = await editCommentSer(videoId,index,text)
     res.status(200).json(video.comments[index]);
   } catch (error) {
     res.status(500).json({ message: 'Error editing comment', error: error.message });
@@ -185,41 +138,21 @@ const editComment = async (req, res) => {
 };
 
 const deleteComment = async (req,res) => {
+  
+  const { videoId, index } = req.params;
   try {
-    const { videoId, index } = req.params;
-
-    const video = await Video.findById(videoId);
-    if (!video) {
-        return res.status(404).json({ message: 'Video not found' });
-    }
-
-    if (index < 0 || index >= video.comments.length) {
-        return res.status(404).json({ message: 'Comment not found' });
-    }
-
-    video.comments.splice(index, 1);
-    await video.save();
-
+    const video = await deleteCommentSer (videoId,index)
     res.status(200).json(video.comments);
 } catch (error) {
     res.status(500).json({ message: 'Error deleting comment', error: error.message });
 }
 };
 
-
-
 const incrementViews = async (req, res) => {
   const { creator, id } = req.params;
 
   try {
-    const video = await Video.findById(id);
-
-    if (!video) {
-      return res.status(404).json({ error: 'Video not found' });
-    }
-
-    video.views += 1;
-    await video.save();
+    const video = await incrementViewsSer(id)
 
     res.json({ views: video.views });
   } catch (error) {
@@ -228,9 +161,9 @@ const incrementViews = async (req, res) => {
   }
 };
 
-// Other controller functions (fetchVideo, updateVideo, deleteVideo, etc.)
 
 
 
 
-export {getAllVideos, getVideobyUser,createComment,deleteVideo,getVideosForHomePage,updateVideo,addLike,addDislike,editComment,deleteComment,incrementViews};
+
+export {getVideoPath, getAllVideos, getVideobyUser,createComment,deleteVideo,getVideosForHomePage,updateVideo,addLike,addDislike,editComment,deleteComment,incrementViews};

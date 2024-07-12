@@ -15,7 +15,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
+
+
+
 connectDB();
+
+
 
 
 // Create an Express server
@@ -26,14 +31,27 @@ server.use(express.static(path.join(__dirname, 'build')));
 
 
 
+
 // Increase the request body size limit
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 
+
+
 // Middleware
 server.use(cors());
 server.use(express.json());
+
+
+
+
+
+
+// Use routes
+server.use('/api/videos', videoRoutes);
+server.use('/api/users', userRoutes);
+
 
 
 // Route to serve video files
@@ -42,17 +60,6 @@ server.get('/videowatch/:fileName', (req, res) => {
   
   res.sendFile(videoPath);
 });
-
-
-
-// Use routes
-server.use('/api/videos', videoRoutes);
-
-server.use('/api/users', userRoutes);
-
-
-
-
 
 
 // Start the server

@@ -26,6 +26,6 @@ router.route('/:id').get(getUserInfo)
 router.route('/:id/videos').get(getUserVideos)
 router.route('/:id').delete(deleteUser)
 router.patch('/:id', upload.single('img'), updateUser)
-router.post('/:id/videos', addingVideo);
+router.post('/:id/videos',upload.single('file'), addingVideo);
 //router.get('/:id', getUserByHandler);
 export default router;

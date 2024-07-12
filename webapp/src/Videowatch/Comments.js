@@ -7,7 +7,7 @@ import {jwtDecode } from 'jwt-decode';
 function Comments({ id, video, setVideo }) {
     
   console.log(localStorage.getItem('jwtToken'))
-  console.log(jwtDecode(localStorage.getItem('jwtToken')))
+  //console.log(jwtDecode(localStorage.getItem('jwtToken')))
     
   const { userConnect, connectedUser } = useContext(UserContext);
   const [newComment, setNewComment] = useState('');

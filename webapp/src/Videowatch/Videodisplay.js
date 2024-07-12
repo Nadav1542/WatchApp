@@ -83,12 +83,13 @@ function Videodisplay({id,creator}) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
+              
                 setVideo(data);
                 setTitle(decodeURIComponent(data.title));
                 setDescription(decodeURIComponent(data.description));
                 setSource(data.source);
                 setViews(decodeURIComponent(data.views));
-                setUploadTime(decodeURIComponent(data.uploadTime));
+                setUploadTime(decodeURIComponent(data.uploadtime));
               // Increment view count
         await incrementViews();
       } catch (error) {

@@ -1,5 +1,5 @@
 import express from 'express'
-import  {createComment,getVideosForHomePage,addLike,addDislike,editComment,deleteComment} from  '../controllers/videoController.js';
+import  {createComment,getVideosForHomePage,addLike,addDislike,editComment,deleteComment,getVideoPath} from  '../controllers/videoController.js';
 import { verifyToken } from '../auth.js';
 const router = express.Router();
 
