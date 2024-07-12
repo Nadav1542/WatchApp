@@ -60,7 +60,7 @@ const deleteUser = async (req, res) => {
 
   const userId  = req.params.id;
   try {
-    const user = await User.findOneAndDelete(userId);
+    const user = await User.findByIdAndDelete(userId);
     
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -72,23 +72,22 @@ const deleteUser = async (req, res) => {
 };
 const updateUser = async (req, res) => {
   const userId = req.params.id;
-  console.log(userId);
+  console.log(req.body.displayname);
   
   try {
     const user = await User.findById(userId);
-    console.log(user)
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const { displayname, username, password } = req.body;
-    console.log(displayname)
+    const { displayname, username, password, img } = req.body;
 
     if (displayname) user.displayname = displayname;
     if (username) user.username = username;
     if (password) user.password = password;
-
+    if (img) user.img = img;
+    
     await user.save();
 
     res.status(200).json({ message: 'User updated successfully', user });

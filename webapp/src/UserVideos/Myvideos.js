@@ -22,8 +22,6 @@ function Myvideos({ darkMode }) {
 
   const navigate = useNavigate();
 
-  console.log('User ID:', id);
-  console.log('User State:', user);
 
   const menubuttons = JSON.parse(JSON.stringify(buttons));
   const handleSignedout = (e) => {
@@ -59,12 +57,30 @@ function Myvideos({ darkMode }) {
 
   const handleEditUserDetails = async (event) => {
     event.preventDefault();
+    // Function to read the file as base64
+    const readFileAsBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    };
+    // Convert the selected image to base64
+    let base64Image = "";
+    if (img) {
+      base64Image = await readFileAsBase64(img);
+    } 
+    console.log(base64Image)
 
     const formData = new FormData();
     formData.append('displayname', displayName);
     formData.append('username', username);
     formData.append('password', password);
-    if (img) formData.append('img', img);
+    // formData.append('img', base64Image);
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+  }
 
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
@@ -97,7 +113,6 @@ function Myvideos({ darkMode }) {
       }
       const data = await response.json();
       setUser(data);
-      console.log('Fetched User:', data);
     } catch (error) {
       console.error('Error fetching user:', error);
     }
@@ -114,7 +129,6 @@ function Myvideos({ darkMode }) {
       }
       const data = await response.json();
       setVideos(data);
-      console.log('Fetched Videos:', data);
     } catch (error) {
       console.error('Error fetching user videos:', error);
     }
@@ -181,14 +195,14 @@ function Myvideos({ darkMode }) {
                       type="password"
                       name="password"
                       className="form-control mb-3"
-                      id="floatingInput"
+                      id="floatingPassword"
                       placeholder="New password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
                     <input
                       type="file"
-                      name="img"
+                      name="profile-picture"
                       className="form-control mb-3"
                       id="floatingInput"
                       placeholder="New profile picture"
