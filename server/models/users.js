@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.index({ username: 1 }, { unique: true });
-export const User = mongoose.model('User', userSchema);
+ const User = mongoose.model('User', userSchema);
 
  async function getUserByUsername(username, password) {
   const user = await User.findOne({ username });
@@ -59,4 +59,4 @@ export const User = mongoose.model('User', userSchema);
 
 
 
-export { getUserByUsername, createUser };
+export { getUserByUsername, createUser,User };

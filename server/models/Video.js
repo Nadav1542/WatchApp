@@ -9,17 +9,19 @@ import mongoose from 'mongoose';
 // });
 
 const videoSchema = new mongoose.Schema({
-  
   title: String,
   description: String,
   source: String,
   views: Number,
-  uploadtime: String,
+  uploadTime: String,
   comments: Array,
-  likes: Number,
-  dislikes: Number,
+  likes: { type: Number, default: 0 },
+  dislikes: { type: Number, default: 0 },
+  likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
+  dislikedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',default: [] }],
   creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
+
 
 videoSchema.index({ views: -1 });
 

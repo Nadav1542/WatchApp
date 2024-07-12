@@ -90,31 +90,68 @@ const updateVideo = async (req, res) => {
 };
 
 const addLike = async (req,res) => {
+  const { id } = req.params; // Video ID
+  const userId = req.user._id; // Assumes you have user ID from auth middleware
+  console.log("reach addlike")
+ 
   try {
-    const video = await Video.findById(req.params.id);
+    const video = await Video.findById(id);
     if (!video) {
-        return res.status(404).json({ message: 'Video not found' });
+      return res.status(404).json({ error: 'Video not found' });
     }
+
+    if ( video.likedBy && video.likedBy.includes(userId)) {
+      return res.status(400).json({ error: 'User has already liked this video' });
+    }
+
+    if (video.dislikedBy && video.dislikedBy.includes(userId)) {
+      video.dislikes -= 1;
+      video.dislikedBy.pull(userId);
+    }
+
     video.likes += 1;
+    video.likedBy.push(userId);
+ 
     await video.save();
-    res.status(200).json({ likes: video.likes });
-} catch (error) {
-    res.status(500).json({ message: 'Error liking video', error: error.message });
-}
+
+    res.json({ likes: video.likes, dislikes: video.dislikes });
+  } catch (error) {
+    console.error('Error liking video:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
 };
 
 const addDislike = async (req,res) => {
+  const { id } = req.params; // Video ID
+  const userId = req.user._id; // Assumes you have user ID from auth middleware
+
   try {
-    const video = await Video.findById(req.params.id);
+    const video = await Video.findById(id);
+
     if (!video) {
-        return res.status(404).json({ message: 'Video not found' });
+      return res.status(404).json({ error: 'Video not found' });
     }
+
+    if (video.dislikedBy && video.dislikedBy.includes(userId)) {
+      return res.status(400).json({ error: 'User has already disliked this video' });
+    }
+
+    if (video.likedBy && video.likedBy.includes(userId)) {
+     
+      video.likes -= 1;
+      video.likedBy.pull(userId);
+    }
+
     video.dislikes += 1;
+    video.dislikedBy.push(userId);
+
     await video.save();
-    res.status(200).json({ dislikes: video.dislikes });
-} catch (error) {
-    res.status(500).json({ message: 'Error disliking video', error: error.message });
-}
+
+    res.json({ likes: video.likes, dislikes: video.dislikes });
+  } catch (error) {
+    console.error('Error disliking video:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
 };
 
 const editComment = async (req, res) => {
@@ -171,6 +208,29 @@ const deleteComment = async (req,res) => {
 
 
 
+const incrementViews = async (req, res) => {
+  const { creator, id } = req.params;
+
+  try {
+    const video = await Video.findById(id);
+
+    if (!video) {
+      return res.status(404).json({ error: 'Video not found' });
+    }
+
+    video.views += 1;
+    await video.save();
+
+    res.json({ views: video.views });
+  } catch (error) {
+    console.error('Error incrementing views:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// Other controller functions (fetchVideo, updateVideo, deleteVideo, etc.)
 
 
-export {getAllVideos, getVideobyUser,createComment,deleteVideo,getVideosForHomePage,updateVideo,addLike,addDislike,editComment,deleteComment};
+
+
+export {getAllVideos, getVideobyUser,createComment,deleteVideo,getVideosForHomePage,updateVideo,addLike,addDislike,editComment,deleteComment,incrementViews};

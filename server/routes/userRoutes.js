@@ -1,6 +1,6 @@
 import express from 'express';
 import {getUserInfo, getUserVideos, signup, generateTokenForUser, deleteUser, updateUser, addingVideo } from '../controllers/userController.js';
-import {getVideobyUser,deleteVideo,updateVideo} from '../controllers/videoController.js'
+import {getVideobyUser,deleteVideo,updateVideo,incrementViews} from '../controllers/videoController.js'
 import multer from 'multer';
 
 
@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({storage: storage})
 
-
+router.post('/:creator/videos/:id/views', incrementViews);
 //router.route('/:username/:password').get(logIn);
 router.route('/:creator/videos/:id').get(getVideobyUser)
 router.delete('/:creator/videos/:id', deleteVideo);
