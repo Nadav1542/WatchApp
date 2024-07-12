@@ -1,20 +1,17 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, {  useEffect,useContext } from 'react';
 import LeftVideos from './LeftVideos';
 import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
 import Menu from '../Topbar/Menu';
-import buttons from '../data/buttons.json';
 import { useParams } from 'react-router-dom';
 import Usericon from '../Topbar/Usericon';
 import {jwtDecode} from 'jwt-decode';
-import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
-const menubuttons = JSON.parse(JSON.stringify(buttons));
 
 function Videowatch({  darkMode }) {
   const { id,creator } = useParams();
  
-  const {userConnect, setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
+  const { setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
 
   // Function to check JWT in local storage and connect the user
   const checkJWT = async () => {
@@ -75,19 +72,17 @@ function Videowatch({  darkMode }) {
           <div className="col-9">
             <div className="row align-items-center mb-3">
               <div className="col-auto">
-                <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
+                <Menu/>
               </div>
               <div className="col-auto">
-                <Usericon userConnect={userConnect} connectedUser={connectedUser} setuserConnect={setuserConnect} />
+                <Usericon/>
               </div>
               <div className="col">
                 <SearchBar darkMode={darkMode} />
               </div>
             </div>
-            
-              <Videodisplay id={id} creator={creator}/>
-            
-          </div>
+                <Videodisplay id={id} creator={creator}/>
+            </div>
         </div>
       </div>
     </div>

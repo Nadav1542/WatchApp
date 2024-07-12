@@ -2,16 +2,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Menu from '../Topbar/Menu';
 import Videolist from '../videoItem/Videolist';
-import buttons from '../data/buttons.json';
 import SearchBar from '../Topbar/SearchBar';
-import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
 import { VideoProvider } from '../contexts/VideoContext';
 
 function Myvideos({ darkMode }) {
   const { id } = useParams();
   const [user, setUser] = useState(null);
-  const [videos, setVideos] = useState([]);
   const { deleteUser, setuserConnect, userConnect } = useContext(UserContext);
   const [displayName, setDisplayName] = useState('');
   const [username, setUsername] = useState('');
@@ -21,12 +18,10 @@ function Myvideos({ darkMode }) {
   const [success, setSuccess] = useState('');
 
   const navigate = useNavigate();
-  const { videoList } = useContext(VideoContext);
 
-  console.log('User ID:', id);
-  console.log('User State:', user);
+  // console.log('User ID:', id);
+  // console.log('User State:', user);
 
-  const menubuttons = JSON.parse(JSON.stringify(buttons));
 
   const handleSignedout = (e) => {
     e.preventDefault();
@@ -93,14 +88,7 @@ function Myvideos({ darkMode }) {
       displayname: displayName,
       img: base64Image
     };
-  //   const formData = new FormData();
-  //   formData.append('displayname', displayName);
-  //   formData.append('username', username);
-  //   formData.append('password', password);
-  //   formData.append('img', img);
-  //   for (let [key, value] of formData.entries()) {
-  //     console.log(`${key}: ${value}`);
-  // }
+ 
     console.log(updateUser)
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
@@ -145,35 +133,15 @@ function Myvideos({ darkMode }) {
     }
   };
 
-  const fetchVideos = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/users/${id}/videos`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
-          }
-      });
-      if (!response.ok) {
-        throw new Error(`Error fetching user videos: ${response.status}`);
-      }
-      const data = await response.json();
-      setVideos(data);
-    } catch (error) {
-      console.error('Error fetching user videos:', error);
-    }
-  };
-
-  useEffect(() => {
+ useEffect(() => {
     fetchUser();
-    fetchVideos();
-  }, [id]);
+    }, [id]);
 
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="row align-items-center mb-3">
         <div className="col-auto">
-          <Menu darkMode={darkMode} buttons={menubuttons} userConnect={userConnect} setuserConnect={setuserConnect} />
+          <Menu/>
         </div>
         <div className="col-auto">
           <button

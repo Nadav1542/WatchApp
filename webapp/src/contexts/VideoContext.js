@@ -15,7 +15,8 @@ export const VideoProvider = ({ children, userId = null }) => {
           ? `http://localhost:8000/api/users/${userId}/videos`
           : 'http://localhost:8000/api/videos';
 
-        const response = await fetch(url, {
+        
+          const response = await fetch(url, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' }
         });

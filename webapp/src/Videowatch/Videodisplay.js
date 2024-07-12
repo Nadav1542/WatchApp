@@ -1,18 +1,16 @@
 import './Singlevideo.css';
 import { useState, useEffect, useContext } from 'react';
 import Comments from './Comments';
-import { useNavigate, useParams } from 'react-router-dom'; 
+import { useNavigate} from 'react-router-dom'; 
 import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
 import {jwtDecode} from 'jwt-decode';
 
 function Videodisplay({id,creator}) {
   
-  console.log(id)
   const { deleteVideo } = useContext(VideoContext);
-  const { userConnect, setuserConnect, connectedUser, setconnectedUser } = useContext(UserContext);
+  const {  setuserConnect, connectedUser, setconnectedUser } = useContext(UserContext);
   const navigate = useNavigate();
-  //const { id, creator } = useParams();
   const [video, setVideo] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -72,9 +70,10 @@ function Videodisplay({id,creator}) {
   }, [connectedUser]);
 
     useEffect(() => {
-      console.log("useEffect")  
+      
       const fetchVideo = async () => {
-            try {
+        console.log("useEffect")
+        try {
                 const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
@@ -96,8 +95,9 @@ function Videodisplay({id,creator}) {
         console.error('Failed to fetch video', error);
       }
     };
-    console.log('Incrementing views');
+   
     const incrementViews = async () => {
+      console.log('Incrementing views');
       try {
         const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}/views`, {
           method: 'POST',

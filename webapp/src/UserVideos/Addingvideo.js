@@ -1,8 +1,10 @@
 import './Addingvideo.css';
-import { useState, useEffect,useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
+
+
 // Addingvideo component for uploading a new video
 function Addingvideo({ darkMode }) {
     // State variables for video details and error handling

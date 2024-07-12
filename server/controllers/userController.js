@@ -28,6 +28,7 @@ const getUserInfo = async (req, res) => {
 
 const getUserVideos = async (req, res) => {
   const userId = req.params.id;
+  console.log("reached")
   try {
     const videos = await getUserVideosSer(userId)
     res.json(videos);

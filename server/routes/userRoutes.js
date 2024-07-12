@@ -23,7 +23,7 @@ router.post('/:creator/videos/:id/views', incrementViews);
 router.get('/:creator/videos/:id', getVideobyUser);
 router.delete('/:creator/videos/:id', verifyToken, deleteVideo);
 router.patch('/:creator/videos/:id', verifyToken, updateVideo);
-router.post('/tokens', generateTokenForUser);
+router.post('/', generateTokenForUser);
 router.post('/', signup);
 router.get('/:id', getUserInfo);
 router.get('/:id/videos', getUserVideos);

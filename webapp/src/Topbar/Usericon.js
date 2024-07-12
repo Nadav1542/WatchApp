@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import {React, useContext} from 'react';
+import { UserContext } from '../contexts/UserContext';
 
-function Usericon({ userConnect, connectedUser, setuserConnect }) {
+function Usericon() {
     const navigate = useNavigate();
-
+    const { userConnect, connectedUser, setuserConnect,setconnectedUser } = useContext(UserContext);
     
 
    // Function to handle user sign-out
@@ -20,6 +21,7 @@ const handleSignedout = (e) => {
     }
   
     setuserConnect(false); // Update state to indicate user is signed out
+    setconnectedUser(null)
     navigate("/"); // Navigate to the home page
     console.log('User logged out'); // Log the logout action
   };

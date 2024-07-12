@@ -1,12 +1,14 @@
 
+import { useContext } from 'react';
 import Menubutton from "./Menubutton"; 
 import buttons from '../data/buttons.json'; 
 import userbuttons from '../data/userbuttons.json'; 
 import './Itemslist.css'; 
-import { useNavigate } from 'react-router-dom'; 
+import { UserContext } from '../contexts/UserContext';
 
-
-function LeftMenu({ darkMode, userConnect, setuserConnect }) {
+function LeftMenu() {
+    
+    const {  userConnect } = useContext(UserContext);
     return (
         <>
             <div className="bg-light transparent-bg"> {/* Container div with background styling */}
