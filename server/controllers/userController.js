@@ -32,7 +32,7 @@ const getUserInfo = async (req, res) => {
 };
 
 const getUserVideos = async (req, res) => {
-  const  userId  = req.params.id;
+  const userId = req.params.id;
 
   try {
     const user = await User.findById(userId).populate('videos');
@@ -57,47 +57,44 @@ const generateTokenForUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-
-  const userId  = req.params.id;
+  const userId = req.params.id;
   try {
-    const user = await User.findOneAndDelete(userId);
+    const user = await User.findByIdAndDelete(userId);
     
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
     }
     res.status(200).json({ message: 'User deleted successfully' });
-} catch (error) {
+  } catch (error) {
     res.status(500).json({ message: 'Failed to delete User', error: error.message });
-}
+  }
 };
-const updateUser = async (req, res) => {
 
-  const userId  = req.params.id;
-  console.log(userId)
+const updateUser = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
   try {
-    const user = await User.findOne(userId);
+    const user = await User.findByIdAndUpdate(userId, req.body, { new: true });
     
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
     }
-    res.status(200).json({ message: 'User update successfully' });
-} catch (error) {
+    res.status(200).json({ message: 'User updated successfully', user });
+  } catch (error) {
     res.status(500).json({ message: 'Failed to update User', error: error.message });
-}
+  }
 };
 
 const addingVideo = async (req, res) => {
-  const userId  = req.params.id;
+  const { title, description } = req.body;
 
   try {
-    const user = await User.findById(userId);
-    console.log(user)
-    // Changed to findById to correctly find the user by ID
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+    const user = req.user; // User information from the token
+    console.log("User information in addingVideo:", user); // Debugging line
 
-    const { title, description } = req.body;
+    if (!user || !user._id) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
 
     // Create a new video document
     const video = new Video({
@@ -107,9 +104,9 @@ const addingVideo = async (req, res) => {
       uploadtime: new Date(),
       comments: [],
       likes: 0,
-      dislike: 0,
+      dislikes: 0,
       creator: user._id,
-      source: req.file.filename, 
+      source: req.file.filename, // Ensure this matches your file upload handling
     });
 
     await video.save();
@@ -122,8 +119,6 @@ const addingVideo = async (req, res) => {
     res.status(500).json({ message: 'Error adding video', error: error.message });
   }
 };
-
-
 
 const getUserByHandler = async (req, res) => {
   try {
