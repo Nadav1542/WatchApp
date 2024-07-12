@@ -4,7 +4,7 @@ import Comments from './Comments';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
-import {jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
 function Videodisplay({id,creator}) {
   
@@ -135,12 +135,15 @@ function Videodisplay({id,creator}) {
   };
 
   const handleEdit = async () => {
+    if (!connectedUser) return;
+
     const updatedVideo = { title, description };
     try {
       const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
-        method: 'PATCH', // or 'PUT'
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
         },
         body: JSON.stringify(updatedVideo),
       });
@@ -159,10 +162,15 @@ function Videodisplay({id,creator}) {
   };
 
   const handleDelete = async () => {
+    if (!connectedUser) return;
+
     try {
       const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+        },
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -264,28 +272,3 @@ function Videodisplay({id,creator}) {
 }
 
 export default Videodisplay;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

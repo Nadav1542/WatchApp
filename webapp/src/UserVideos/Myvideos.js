@@ -21,11 +21,16 @@ function Myvideos({ darkMode }) {
   const [success, setSuccess] = useState('');
 
   const navigate = useNavigate();
+  const { videoList } = useContext(VideoContext);
 
+  console.log('User ID:', id);
+  console.log('User State:', user);
 
   const menubuttons = JSON.parse(JSON.stringify(buttons));
+
   const handleSignedout = (e) => {
     e.preventDefault();
+
 
     const token = localStorage.getItem('jwtToken');
     if (token) {
@@ -36,13 +41,22 @@ function Myvideos({ darkMode }) {
     setuserConnect(false);
     navigate("/");
     console.log('User logged out');
+
+    setuserConnect(false);
+    navigate("/");
+    console.log('User logged out');
   };
 
   const handleDeleteUser = async () => {
+    if (!userConnect) return;
+
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
       });
 
       if (!response.ok) {
@@ -91,7 +105,10 @@ function Myvideos({ darkMode }) {
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        },
         body: JSON.stringify(updateUser),
       });
 
@@ -114,8 +131,10 @@ function Myvideos({ darkMode }) {
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      });
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }});
       if (!response.ok) {
         throw new Error(`Error fetching user: ${response.status}`);
       }
@@ -130,7 +149,10 @@ function Myvideos({ darkMode }) {
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}/videos`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+          }
       });
       if (!response.ok) {
         throw new Error(`Error fetching user videos: ${response.status}`);
@@ -272,8 +294,8 @@ function Myvideos({ darkMode }) {
         </div>
       )}
       <div className="row m-4">
-        <VideoProvider userId={id}>
-          <Videolist />
+        <VideoProvider userId={id}>  
+          <Videolist/>
         </VideoProvider>
       </div>
     </div>

@@ -68,6 +68,9 @@ function Addingvideo({ darkMode }) {
             try {
                 const response = await fetch(`http://localhost:8000/api/users/${connectedUser._id}/videos`, {
                     method: 'POST', 
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+                      },
                     body: newFormData,
                     });
 
