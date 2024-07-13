@@ -38,7 +38,6 @@ const getUserVideos = async (req, res) => {
 
 const generateTokenForUser = async (req, res) => {
   const { username, password } = req.body;
-  console.log("reached")
   try {
     const user = await getUserByUsernameSer(username, password);
     const token = generateToken(user);

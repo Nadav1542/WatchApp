@@ -51,14 +51,7 @@ function Signup({ darkMode }) {
         reader.readAsDataURL(file);
       });
     };
-    // Convert the selected image to base64
-    let base64Image = "";
-    if (document.getElementById('profile-picture').files[0]) {
-      base64Image = await readFileAsBase64(document.getElementById('profile-picture').files[0]);
-    } else {
-      alert("Please select an image.");
-      return;
-    }
+    
     if (!formData.username.trim()) {
       setErrorMessage("Username is required.");
       return;
@@ -69,7 +62,7 @@ function Signup({ darkMode }) {
     }
 
     if (formData.password.length < 8) {
-      alert('Password must be at least 8 characters.');
+      setErrorMessage("The password must contain at least 8 characters.");
       return;
     }
 
@@ -79,17 +72,24 @@ function Signup({ darkMode }) {
     const hasNumber = numberPattern.test(formData.password);
 
     if (!hasLetter || !hasNumber) {
-      alert("Password must contain letters and numbers");
+      setErrorMessage("Password must contain letters and numbers.");
       return;
     }
 
     if (formData.password !== formData.confirmpassword) {
-      alert("Password and Confirm Password must match");
+      setErrorMessage("Password and Confirm Password must match.");
       return;
     }
-
+    // Convert the selected image to base64
+    let base64Image = "";
+    if (document.getElementById('profile-picture').files[0]) {
+      base64Image = await readFileAsBase64(document.getElementById('profile-picture').files[0]);
+    } else {
+      setErrorMessage("Please select an image.");
+      return;
+    }
     if (!formData.img) {
-      alert("Please select an image.");
+      setErrorMessage("Please select an image.");
       return;
     }
     const userData = {
@@ -113,7 +113,11 @@ function Signup({ darkMode }) {
         setErrorMessage("");
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.error);
+        if (response.status === 409) {
+          setErrorMessage(errorData.error || 'Username is already taken. Please choose a different name');
+        } else {
+          setErrorMessage(errorData.error || 'Failed to sign up.');
+        }
       }
     } catch (error) {
       setErrorMessage("An error occurred. Please try again.");

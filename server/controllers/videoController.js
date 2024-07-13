@@ -1,4 +1,4 @@
-import {deleteVideoSer,addCommentToVideo,getAllVideosSer,
+import {deleteVideoSer,addCommentToVideo,
   getTopAndRandomVideos,updateVideoSer,getVideobyUserSer, 
   addLikeSer,addDislikeSer, editCommentSer,deleteCommentSer,incrementViewsSer} from '../services/videoService.js'
   import path from 'path'
@@ -24,7 +24,6 @@ const getVideoPath = async (req,res) => {
 
 const filterVideos = async (req, res) => {
   const { filter } = req.body;
-  console.log("reached")
   try {
     const videos = await Video.find({ title: { $regex: filter, $options: 'i' } });
     res.status(200).json(videos);
@@ -33,15 +32,15 @@ const filterVideos = async (req, res) => {
   }
 };
 
- const  getAllVideos = async (req,res) => {
-  try {
-    const videos = await getAllVideosSer();
-    res.status(200).json(videos); // Ensure you return JSON
+//  const  getAllVideos = async (req,res) => {
+//   try {
+//     const videos = await getAllVideosSer();
+//     res.status(200).json(videos); // Ensure you return JSON
     
-  } catch (error) {
-    res.status(500).json({ error: 'Server Error' }); // Return JSON error response
-  }
-}
+//   } catch (error) {
+//     res.status(500).json({ error: 'Server Error' }); // Return JSON error response
+//   }
+// }
 
 const  getVideosForHomePage = async (req,res) => {
   try {
@@ -191,4 +190,4 @@ const incrementViews = async (req, res) => {
 
 
 
-export {filterVideos,getVideoPath, getAllVideos, getVideobyUser,createComment,deleteVideo,getVideosForHomePage,updateVideo,addLike,addDislike,editComment,deleteComment,incrementViews};
+export {filterVideos,getVideoPath, getVideobyUser,createComment,deleteVideo,getVideosForHomePage,updateVideo,addLike,addDislike,editComment,deleteComment,incrementViews};

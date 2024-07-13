@@ -28,10 +28,10 @@ const addCommentToVideo = async (videoId, comment) => {
     }
   };
 
-  const getAllVideosSer = async () => {
-    const videos = await Video.find();
-    return videos;
-}
+//   const getAllVideosSer = async () => {
+//     const videos = await Video.find();
+//     return videos;
+// }
 
 const getTopAndRandomVideos = async () => {
     try {
@@ -170,4 +170,4 @@ const incrementViewsSer = async (id) => {
 
 }
 
-export {deleteVideoSer,addCommentToVideo,getAllVideosSer,getTopAndRandomVideos,updateVideoSer,getVideobyUserSer,addLikeSer,addDislikeSer,editCommentSer,deleteCommentSer,incrementViewsSer}
+export {deleteVideoSer,addCommentToVideo,getTopAndRandomVideos,updateVideoSer,getVideobyUserSer,addLikeSer,addDislikeSer,editCommentSer,deleteCommentSer,incrementViewsSer}
