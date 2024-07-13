@@ -78,7 +78,7 @@ const addingVideo = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    const video = await addingVideoSer(req.body.title, req.body.description, user._id, req.file.filename)
+    const video = await addingVideoSer(req.body.title, req.body.description, user._id, user.displayname,  req.file.filename)
     await video.save();
 
     user.videos.push(video._id);

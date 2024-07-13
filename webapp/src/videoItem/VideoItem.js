@@ -36,8 +36,8 @@ function VideoItem({ video }) {
           loop // Loop the video
         />
         <div className="card-body">
-          <p className="card-text">{video.title}</p> {/* Video title */}
-          <p className="card-text">{video.description}</p> {/* Video description */}
+          <h4 className="card-text">{video.title}</h4> {/* Video title */}
+          <p className="card-text"><i>{video.creatorName}</i></p>
           <p className="card-text">{video.views} views - {video.uploadtime}</p> {/* Video views and upload time */}
         </div>
       </Link>

@@ -10,11 +10,13 @@ const videoSchema = new mongoose.Schema({
   views: Number,
   uploadTime: String,
   comments: Array,
+  creatorName: String,
   likes: { type: Number, default: 0 },
   dislikes: { type: Number, default: 0 },
   likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
   dislikedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',default: [] }],
   creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  
 });
 
 
@@ -33,7 +35,7 @@ export const Video = mongoose.model('Video', videoSchema);
 
 const createVideo = async (title) => {
   // Create a new user
-  const video = new Video({ title, description, source, views, uploadtime, comments, likes, dislike, creator });
+  const video = new Video({ title, description, source, views, uploadtime, comments, creatorName, likes, dislike, creator });
   return await video.save();
   }
 

@@ -1,10 +1,11 @@
 import './Singlevideo.css';
 import { useState, useEffect, useContext } from 'react';
 import Comments from './Comments';
-import { useNavigate} from 'react-router-dom'; 
+import { useNavigate, Link} from 'react-router-dom'; 
 import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
 import {jwtDecode} from 'jwt-decode';
+
 
 function Videodisplay({id,creator}) {
   
@@ -211,7 +212,7 @@ function Videodisplay({id,creator}) {
                 </>
               ) : (
                 <>
-                  {title}
+                  <h3> {title} </h3>
                   {connectedUser && connectedUser._id === video.creator && (
                     <button
                       onClick={handleEditTitle}
@@ -220,7 +221,8 @@ function Videodisplay({id,creator}) {
                       <i className="bi bi-pencil"></i> Edit
                     </button>
                   )}
-                </>
+                  <strong><Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}>{video.creatorName}</Link>
+                </strong></>
               )}
             </div>
             <div className="card-text">
@@ -241,7 +243,7 @@ function Videodisplay({id,creator}) {
                 </>
               ) : (
                 <>
-                  {description}
+                  <i> {description} </i>
                   {connectedUser && connectedUser._id === video.creator && (
                     <button
                       onClick={handleEditDescription}

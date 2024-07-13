@@ -83,7 +83,7 @@ async function createUserSer(username, displayname, password, img) {
     }
   
   
-    const addingVideoSer = async (title, description,creator, source) =>{
+    const addingVideoSer = async (title, description, creator, creatorName, source) =>{
         // Create a new video document
         const video = new Video({
             title,
@@ -94,6 +94,7 @@ async function createUserSer(username, displayname, password, img) {
             likes: 0,
             dislike: 0,
             creator: creator,
+            creatorName: creatorName,
             source: source, 
         });
             return video;
