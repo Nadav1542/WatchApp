@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import Menu from '../Topbar/Menu';
 import Videolist from '../videoItem/Videolist';
 import SearchBar from '../Topbar/SearchBar';
@@ -7,11 +7,10 @@ import { UserContext } from '../contexts/UserContext';
 import { VideoProvider } from '../contexts/VideoContext';
 import './myvideos.css'
 
-
 function Myvideos({ darkMode }) {
   const { id } = useParams();
   const [user, setUser] = useState(null);
-  const { deleteUser, setuserConnect, userConnect } = useContext(UserContext);
+  const { deleteUser, setuserConnect, userConnect, connectedUser } = useContext(UserContext);
   const [displayName, setDisplayName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -144,26 +143,26 @@ function Myvideos({ darkMode }) {
           <Menu/>
         </div>
         <div className="col-auto">
-          <button
-            style={{ marginLeft: "10px" }}
-            className="btn btn-danger"
-            type="button"
-            onClick={userConnect ? handleDeleteUser : null}
-            disabled={!userConnect}
-          >
-            <i className="bi bi-trash"></i> Delete User
-          </button>
+              <button
+                style={{ marginLeft: '10px' }}
+                className="btn btn-danger"
+                type="button"
+                onClick={handleDeleteUser}
+                disabled={!userConnect || id !== connectedUser._id}
+              >
+                <i className="bi bi-trash"></i> Delete User
+              </button>
   
-          <button
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            style={{ marginLeft: '10px' }}
-            className="btn btn-warning"
-            type="button"
-            disabled={!userConnect}
-          >
-            <i className="bi bi-pencil"></i> Edit Details
-          </button>
+              <button
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                style={{ marginLeft: '10px' }}
+                className="btn btn-warning"
+                type="button"
+                disabled={!userConnect || id !== connectedUser._id}
+              >
+                <i className="bi bi-pencil"></i> Edit Details
+              </button>
   
           <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
