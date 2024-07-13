@@ -13,12 +13,14 @@
   
   /* Dark mode placeholder text */
   .dark-mode-input::placeholder {
-    color: #bbbbbb;
+    color: #bbbbbb !important;
   }
-  
   /* Modal dark mode */
   .modal-content.dark-mode {
     background-color: #1e1e1e;
     color: #ffffff;
   }
-  
+  /* Dark mode close button */
+.dark-mode .btn-close {
+  filter: invert(1);
+}

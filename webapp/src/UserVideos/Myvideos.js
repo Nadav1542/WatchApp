@@ -99,6 +99,13 @@ function Myvideos({ darkMode }) {
       setSuccess('User details updated successfully');
       setError('');
       fetchUser(); // Fetch the updated user details
+
+      // Clear input fields
+      setDisplayName('');
+      setUsername('');
+      setPassword('');
+      setImg(null);
+
     } catch (error) {
       setError(error.message);
       console.error('Error updating user:', error);

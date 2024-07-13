@@ -1,4 +1,3 @@
-
 import {deleteVideoSer,addCommentToVideo,getAllVideosSer,
   getTopAndRandomVideos,updateVideoSer,getVideobyUserSer, 
   addLikeSer,addDislikeSer, editCommentSer,deleteCommentSer,incrementViewsSer} from '../services/videoService.js'
@@ -36,7 +35,7 @@ const filterVideos = async (req, res) => {
 
  const  getAllVideos = async (req,res) => {
   try {
-    const videos = await getAllVideosSer
+    const videos = await getAllVideosSer();
     res.status(200).json(videos); // Ensure you return JSON
     
   } catch (error) {
@@ -52,7 +51,7 @@ const  getVideosForHomePage = async (req,res) => {
   } catch (error) {
     res.status(500).json({ error: 'Server Error' }); // Return JSON error response
   }
-}
+};
 
   const deleteVideo = async (req, res) => {
     const { id, creator } = req.params;
@@ -93,7 +92,6 @@ const createComment = async (req, res) => {
     res.status(500).json({ error: 'Failed to add comment' });
   }
 };
-
 
 const updateVideo = async (req, res) => {
   const { creator, id } = req.params;
@@ -151,6 +149,7 @@ const addDislike = async (req,res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
 const editComment = async (req, res) => {
   const { videoId, index } = req.params;
   const { text } = req.body;
