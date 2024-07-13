@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import './Searchbar.css';
 
 // SearchBar component for displaying a search input and dark mode toggle button
-function SearchBar({ darkMode, doSearch }) { // Fix props destructuring here
+function SearchBar({ darkMode, setFilter = null }) { // Fix props destructuring here
   // Function to handle dark mode toggle
   const handleDarkModeToggle = () => {
     const event = new Event('toggleDarkMode'); // Create a new event for dark mode toggle
@@ -12,7 +12,7 @@ function SearchBar({ darkMode, doSearch }) { // Fix props destructuring here
   const searchBox = useRef(null);
 
   const search = function() {
-    doSearch(searchBox.current.value); // Call doSearch with the search input value
+    setFilter(searchBox.current.value); // Call setFilter with the search input value
   };
 
   return (

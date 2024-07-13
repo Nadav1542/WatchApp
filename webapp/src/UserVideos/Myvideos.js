@@ -5,6 +5,8 @@ import Videolist from '../videoItem/Videolist';
 import SearchBar from '../Topbar/SearchBar';
 import { UserContext } from '../contexts/UserContext';
 import { VideoProvider } from '../contexts/VideoContext';
+import './myvideos.css'
+
 
 function Myvideos({ darkMode }) {
   const { id } = useParams();
@@ -19,23 +21,14 @@ function Myvideos({ darkMode }) {
 
   const navigate = useNavigate();
 
-  // console.log('User ID:', id);
-  // console.log('User State:', user);
-
-
   const handleSignedout = (e) => {
     e.preventDefault();
-
 
     const token = localStorage.getItem('jwtToken');
     if (token) {
       localStorage.removeItem('jwtToken');
       console.log('JWT token removed from local storage');
     }
-
-    setuserConnect(false);
-    navigate("/");
-    console.log('User logged out');
 
     setuserConnect(false);
     navigate("/");
@@ -66,7 +59,6 @@ function Myvideos({ darkMode }) {
 
   const handleEditUserDetails = async (event) => {
     event.preventDefault();
-    // Function to read the file as base64
     const readFileAsBase64 = (file) => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -75,12 +67,11 @@ function Myvideos({ darkMode }) {
         reader.readAsDataURL(file);
       });
     };
-    // Convert the selected image to base64
     let base64Image = "";
     if (img) {
       base64Image = await readFileAsBase64(img);
-    } 
-    console.log(base64Image)
+    }
+    console.log(base64Image);
 
     const updateUser = {
       username: username,
@@ -88,8 +79,8 @@ function Myvideos({ darkMode }) {
       displayname: displayName,
       img: base64Image
     };
- 
-    console.log(updateUser)
+
+    console.log(updateUser);
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
         method: 'PATCH',
@@ -133,9 +124,11 @@ function Myvideos({ darkMode }) {
     }
   };
 
- useEffect(() => {
+  useEffect(() => {
     fetchUser();
-    }, [id]);
+  }, [id]);
+
+  const [filter, setFilter] = useState('')
 
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
@@ -167,7 +160,7 @@ function Myvideos({ darkMode }) {
   
           <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
-              <div className="modal-content">
+              <div className={`modal-content ${darkMode ? 'dark-mode' : ''}`}>
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id="exampleModalLabel">Edit details</h1>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -177,7 +170,7 @@ function Myvideos({ darkMode }) {
                     <input
                       type="text"
                       name="displayname"
-                      className="form-control mb-3"
+                      className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
                       id="floatingInput"
                       placeholder="New display name"
                       value={displayName}
@@ -186,7 +179,7 @@ function Myvideos({ darkMode }) {
                     <input
                       type="text"
                       name="username"
-                      className="form-control mb-3"
+                      className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
                       id="floatingInput"
                       placeholder="New username"
                       value={username}
@@ -195,7 +188,7 @@ function Myvideos({ darkMode }) {
                     <input
                       type="password"
                       name="password"
-                      className="form-control mb-3"
+                      className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
                       id="floatingPassword"
                       placeholder="New password"
                       value={password}
@@ -204,7 +197,7 @@ function Myvideos({ darkMode }) {
                     <input
                       type="file"
                       name="profile-picture"
-                      className="form-control mb-3"
+                      className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
                       id="floatingInput"
                       placeholder="New profile picture"
                       onChange={(e) => setImg(e.target.files[0])}
@@ -234,7 +227,7 @@ function Myvideos({ darkMode }) {
           )}
         </div>
         <div className="col">
-          <SearchBar darkMode={darkMode} />
+          <SearchBar darkMode={darkMode} setFilter={setFilter} />
         </div>
       </div>
       {user && (
@@ -268,7 +261,6 @@ function Myvideos({ darkMode }) {
       </div>
     </div>
   );
-  
 }
 
 export default Myvideos;

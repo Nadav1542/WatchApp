@@ -1,4 +1,4 @@
-import React, {  useEffect,useContext } from 'react';
+import React, {  useEffect,useContext,useState } from 'react';
 import LeftVideos from './LeftVideos';
 import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
@@ -7,10 +7,11 @@ import { useParams } from 'react-router-dom';
 import Usericon from '../Topbar/Usericon';
 import {jwtDecode} from 'jwt-decode';
 import { UserContext } from '../contexts/UserContext';
+import { VideoProvider } from '../contexts/VideoContext';
 
 function Videowatch({  darkMode }) {
+  
   const { id,creator } = useParams();
- 
   const { setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
 
   // Function to check JWT in local storage and connect the user
@@ -60,6 +61,7 @@ function Videowatch({  darkMode }) {
     }
   }, [connectedUser]);
 
+  const [filter, setFilter] = useState('')
  
 
   return (
@@ -67,7 +69,9 @@ function Videowatch({  darkMode }) {
       <div className="container-fluid">
         <div className="row">
           <div className="col-3">
+          
             <LeftVideos/>
+           
           </div>
           <div className="col-9">
             <div className="row align-items-center mb-3">
@@ -78,7 +82,7 @@ function Videowatch({  darkMode }) {
                 <Usericon/>
               </div>
               <div className="col">
-                <SearchBar darkMode={darkMode} />
+                <SearchBar darkMode={darkMode} setFilter={setFilter} />
               </div>
             </div>
                 <Videodisplay id={id} creator={creator}/>

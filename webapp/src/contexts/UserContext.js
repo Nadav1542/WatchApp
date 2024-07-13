@@ -1,15 +1,29 @@
 import React, { createContext, useState,useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     
-    const [userConnect, setuserConnect] = useState(false);
-    const [connectedUser, setconnectedUser] = useState(null);
+    const [userConnect, setuserConnect] = useState(() => {
+        const savedUserConnect = localStorage.getItem('userConnect');
+        return savedUserConnect === 'true';
+      });
     
-
-    const deleteUser = (id) => {
+      const [connectedUser, setconnectedUser] = useState(() => {
+        const savedUser = localStorage.getItem('connectedUser');
+        return savedUser ? JSON.parse(savedUser) : null;
+      });
+    
+      useEffect(() => {
+        localStorage.setItem('userConnect', userConnect);
+      }, [userConnect]);
+    
+      useEffect(() => {
+        localStorage.setItem('connectedUser', JSON.stringify(connectedUser));
+      }, [connectedUser]);
+    
+    
+      const deleteUser = (id) => {
         setconnectedUser(false)
         setuserConnect(false)
     }

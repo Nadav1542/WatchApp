@@ -4,6 +4,7 @@ import {deleteVideoSer,addCommentToVideo,getAllVideosSer,
   addLikeSer,addDislikeSer, editCommentSer,deleteCommentSer,incrementViewsSer} from '../services/videoService.js'
   import path from 'path'
   import { fileURLToPath } from 'url';
+  import { Video } from '../models/Video.js';
   // Get the directory name in ES module scope
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +21,17 @@ const getVideoPath = async (req,res) => {
       res.status(500).send('Error serving video file');
     }
   });
+};
+
+const filterVideos = async (req, res) => {
+  const { filter } = req.body;
+  console.log("reached")
+  try {
+    const videos = await Video.find({ title: { $regex: filter, $options: 'i' } });
+    res.status(200).json(videos);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching videos', error });
+  }
 };
 
  const  getAllVideos = async (req,res) => {
@@ -180,4 +192,4 @@ const incrementViews = async (req, res) => {
 
 
 
-export {getVideoPath, getAllVideos, getVideobyUser,createComment,deleteVideo,getVideosForHomePage,updateVideo,addLike,addDislike,editComment,deleteComment,incrementViews};
+export {filterVideos,getVideoPath, getAllVideos, getVideobyUser,createComment,deleteVideo,getVideosForHomePage,updateVideo,addLike,addDislike,editComment,deleteComment,incrementViews};

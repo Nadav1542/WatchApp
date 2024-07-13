@@ -1,4 +1,4 @@
-import React, { useEffect,useContext } from 'react';
+import React, { useEffect,useContext, useState } from 'react';
 import { jwtDecode } from 'jwt-decode'; // Correct import for jwtDecode
 import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
@@ -7,11 +7,11 @@ import Menu from './Topbar/Menu';
 import buttons from './data/buttons.json';
 import Usericon from './Topbar/Usericon';
 import { UserContext } from './contexts/UserContext';
+import { VideoProvider } from './contexts/VideoContext';
 
-// Deep copy of buttons data from JSON
-const menubuttons = JSON.parse(JSON.stringify(buttons));
 
-function Mainpage({   darkMode, doSearch }) {
+
+function Mainpage({darkMode}) {
   const {setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
   
   // Function to check JWT in local storage and connect the user
@@ -56,6 +56,10 @@ function Mainpage({   darkMode, doSearch }) {
     }
   }, [connectedUser]);
 
+
+  const [filter, setFilter] = useState('')
+console.log(filter)
+
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
       <div className="row align-items-center mb-3">
@@ -66,16 +70,17 @@ function Mainpage({   darkMode, doSearch }) {
           <Usericon/>
         </div>
         <div className="col">
-          <SearchBar darkMode={darkMode} doSearch={doSearch} />
+          <SearchBar darkMode={darkMode} setFilter={setFilter} />
         </div>
       </div>
 
       <div className="row">
         <Quicksearch darkMode={darkMode} />
       </div>
-
-      <div className="row m-4">
+    <div className="row m-4">
+      <VideoProvider filter={filter}>
         <Videolist />
+        </VideoProvider>
       </div>
     </div>
   );

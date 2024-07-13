@@ -9,7 +9,7 @@ import userRoutes from './routes/userRoutes.js';
 import path from 'path'
 import { fileURLToPath } from 'url';
 import connectDB from './db.js';
-
+import { generateTokenForUser } from './controllers/userController.js';
 // Get the directory name in ES module scope
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,7 +51,7 @@ server.use(express.json());
 // Use routes
 server.use('/api/videos', videoRoutes);
 server.use('/api/users', userRoutes);
-
+server.use('/api/tokens/',generateTokenForUser);
 
 
 // Route to serve video files

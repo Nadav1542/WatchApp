@@ -10,13 +10,19 @@ async function createUserSer(username, displayname, password, img) {
     // Check if the username is already taken
     const existingUser = await User.findOne({ username });
     if (existingUser) {
+      
       throw new Error('Username already taken');
+    }
+    const existingDisplay = await User.findOne({ displayname });
+    if (existingDisplay) {
+      throw new Error('Displayname already taken');
     }
     // Create a new user
     const user = new User({ username, displayname, password, img });
     return await user.save();
     }
-  async function getUserByUsernameSer(username, password) {
+  
+    async function getUserByUsernameSer(username, password) {
     const user = await User.findOne({ username });
     if (!user || user.password !== password) {
       throw new Error('Incorrect username or password');
@@ -44,6 +50,7 @@ async function createUserSer(username, displayname, password, img) {
         }
         return user;
     }
+   
     const updateUserSer = async (userId, displayname, username, password, img) => {
     const user = await User.findById(userId);
       if (!user) {
@@ -54,6 +61,7 @@ async function createUserSer(username, displayname, password, img) {
         if (existingUser && existingUser._id.toString() !== userId) {
           throw new Error('Username already exists');
         }
+        user.username = username;
       }
         // Password validation: Must contain letters and numbers and at least 8 characters long
       if (password) {
@@ -61,13 +69,20 @@ async function createUserSer(username, displayname, password, img) {
         if (!passwordRegex.test(password)) {
           throw new Error('Password must be at least 8 characters long and contain both letters and numbers');
         }
+        user.password = password;
       }
-      if (displayname) user.displayname = displayname;
-      if (username) user.username = username;
-      if (password) user.password = password;
+      if (displayname) {
+        const existingUser = await User.findOne({ displayname });
+        if (existingUser && existingUser._id.toString() !== userId) {
+          throw new Error('Displayname already taken');
+        }
+        user.displayname = displayname;
+      }
       if (img) user.img = img;
-    return user;
+      return user;
     }
+  
+  
     const addingVideoSer = async (title, description,creator, source) =>{
         // Create a new video document
         const video = new Video({
