@@ -13,7 +13,6 @@ import { generateTokenForUser } from './controllers/userController.js';
 // Get the directory name in ES module scope
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 connectDB();
 
 // Create an Express server
