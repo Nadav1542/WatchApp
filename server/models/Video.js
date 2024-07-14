@@ -6,7 +6,7 @@ const videoSchema = new mongoose.Schema({
   description: String, // Description of the video
   source: String, // Source URL or path of the video
   views: Number, // Number of views the video has
-  uploadTime: String, // Time when the video was uploaded
+  uploadtime: { type: Date, default: Date.now }, // Time when the video was uploaded
   comments: Array, // Array of comments on the video
   creatorName: String, // Name of the video's creator
   likes: { type: Number, default: 0 }, // Number of likes, default is 0
