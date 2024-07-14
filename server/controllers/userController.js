@@ -3,11 +3,14 @@ import { User } from '../models/users.js';
 import {getUserByUsernameSer, createUserSer, getUserInfoSer, getUserVideosSer,
    deleteUserSer, updateUserSer, addingVideoSer } from '../services/userServices.js';
 
+// Controller function for user signup
 const signup = async (req, res) => {
   try {
+    // Create a new user using the createUserSer service
     const createdUser = await createUserSer(req.body.username, req.body.displayname, req.body.password, req.body.img);
     res.json(createdUser);
   } catch (error) {
+    // Handle username already taken error
     if (error.message === 'Username already taken') {
       res.status(409).json({ message: error.message });
     } else {
@@ -16,6 +19,7 @@ const signup = async (req, res) => {
   }
 };
 
+// Controller function to get user information by ID
 const getUserInfo = async (req, res) => {
   const userId = req.params.id;
   try {
@@ -26,6 +30,7 @@ const getUserInfo = async (req, res) => {
   }
 };
 
+// Controller function to get user videos by user ID
 const getUserVideos = async (req, res) => {
   const userId = req.params.id;
   try {
@@ -36,6 +41,7 @@ const getUserVideos = async (req, res) => {
   }
 };
 
+// Controller function to generate token for user authentication
 const generateTokenForUser = async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -47,17 +53,18 @@ const generateTokenForUser = async (req, res) => {
   }
 };
 
+// Controller function to delete a user by ID
 const deleteUser = async (req, res) => {
   const userId  = req.params.id;
   try {
     await deleteUserSer(userId);
     res.status(200).json({ message: 'User deleted successfully' });
-} catch (error) {
+  } catch (error) {
     res.status(500).json({ message: error.message, error: error.message });
-}
+  }
 };
 
-
+// Controller function to update user details by ID
 const updateUser = async (req, res) => {
   const userId = req.params.id;
   try {
@@ -70,6 +77,7 @@ const updateUser = async (req, res) => {
   }
 };
 
+// Controller function to add a new video for a user
 const addingVideo = async (req, res) => {
   const userId  = req.params.id;
   try {
@@ -88,16 +96,5 @@ const addingVideo = async (req, res) => {
     res.status(500).json({ message: 'Error adding video', error: error.message });
   }
 };
-
-
-
-// const getUserByHandler = async (req, res) => {
-//   try {
-//     const user = await getUserById(req.params.id);
-//     res.status(200).json(user);
-//   } catch (error) {
-//     res.status(404).json({ error: 'User not found' });
-//   }
-// };
 
 export { signup, generateTokenForUser, getUserInfo, getUserVideos, deleteUser, updateUser, addingVideo };

@@ -1,40 +1,23 @@
 import mongoose from 'mongoose';
 
+// Define the schema for a video
 const videoSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  source: String,
-  views: Number,
-  uploadTime: String,
-  comments: Array,
-  creatorName: String,
-  likes: { type: Number, default: 0 },
-  dislikes: { type: Number, default: 0 },
-  likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
-  dislikedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',default: [] }],
-  creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  
+  title: String, // Title of the video
+  description: String, // Description of the video
+  source: String, // Source URL or path of the video
+  views: Number, // Number of views the video has
+  uploadTime: String, // Time when the video was uploaded
+  comments: Array, // Array of comments on the video
+  creatorName: String, // Name of the video's creator
+  likes: { type: Number, default: 0 }, // Number of likes, default is 0
+  dislikes: { type: Number, default: 0 }, // Number of dislikes, default is 0
+  likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }], // Array of user IDs who liked the video
+  dislikedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }], // Array of user IDs who disliked the video
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Reference to the user who created the video
 });
 
+// Create an index on the views field for sorting in descending order
 videoSchema.index({ views: -1 });
 
+// Create a Mongoose model for the video schema
 export const Video = mongoose.model('Video', videoSchema);
-
-
-//   const getVideo = async (id) => {
-//   try {
-      
-//       const video = await Video.findOne({ _id: id });
-//       if (!video) {
-//           throw new Error('Video not found or does not belong to the user');
-//       }
-//       return video;
-//   } catch (error) {
-//       throw new Error('Database query failed');
-//   }
-// };
-
-//  export  {getVideo, createVideo};
-
-
-

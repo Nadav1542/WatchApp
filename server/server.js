@@ -14,39 +14,21 @@ import { generateTokenForUser } from './controllers/userController.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
-
-
-
 connectDB();
-
-
-
 
 // Create an Express server
 const server = express();
 // Middleware to serve static files
 server.use(express.static(path.join(__dirname, 'build')));
 
-
-
-
-
 // Increase the request body size limit
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 
-
-
 // Middleware
 server.use(cors());
 server.use(express.json());
-
-
-
-
-
 
 // Use routes
 server.use('/api/videos', videoRoutes);
@@ -66,5 +48,3 @@ server.get('/videowatch/:fileName', (req, res) => {
 server.listen(8000, () => {
   console.log("Server is running on http://localhost:8000");
 });
-
-

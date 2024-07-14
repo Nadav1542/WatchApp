@@ -192,7 +192,7 @@ function Videodisplay({id,creator}) {
     <>
       <div className="row m-4">
         <div>
-          <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay muted />
+          <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay/>
           <div className="card-body singlevideo">
             <div className="card-text">
               {isEditingTitle ? (
