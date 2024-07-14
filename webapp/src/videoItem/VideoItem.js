@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef,useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { VideoContext } from '../contexts/VideoContext';
 
 // VideoItem component to display individual video items
 function VideoItem({ video }) {
+  const { formatDate } = useContext(VideoContext);
   const videoRef = useRef(null); // Reference to the video element
   //const video = videoList.find((v) => v._id === decodeURIComponent(id));
   // Function to handle mouse enter event on the video
@@ -23,6 +25,9 @@ function VideoItem({ video }) {
     }
   };
 
+
+
+
   return (
     <div className="card col-md-4 col-lg-3 col-sm-6 border-0 p-2">
       <Link to={`/videowatch/${encodeURIComponent(video._id)}/${encodeURIComponent(video.creator)}`}>
@@ -38,7 +43,7 @@ function VideoItem({ video }) {
         <div className="card-body">
           <h4 className="card-text">{video.title}</h4> {/* Video title */}
           <p className="card-text"><i>{video.creatorName}</i></p>
-          <p className="card-text">{video.views} views - {video.uploadtime}</p> {/* Video views and upload time */}
+          <p className="card-text">{video.views} views - {formatDate(video.uploadtime)}</p> {/* Video views and upload time */}
         </div>
       </Link>
     </div>

@@ -1,9 +1,12 @@
 import './Singlevideo.css';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-
+import { VideoContext } from '../contexts/VideoContext';
+import { useContext } from 'react';
 function Singlevideo({ video }) {
     
+    
+    const {  formatDate } = useContext(VideoContext);
   
     const videoRef = useRef(null);
 
@@ -40,7 +43,7 @@ function Singlevideo({ video }) {
                     <div className="card-body singlevideo">
                         <p className="card-text">{video.title}</p>
                         <p className="card-text">{video.description}</p>
-                        <p className="card-text">{video.views} views - {video.uploadtime}</p>
+                        <p className="card-text">{video.views} views - {formatDate(video.uploadtime)}</p>
                     </div>
                 </Link>
             </div>

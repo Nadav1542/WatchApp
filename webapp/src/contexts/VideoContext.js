@@ -8,6 +8,17 @@ export const VideoProvider = ({ children, userId = null, filter = null }) => {
   const [videoList, setVideolist] = useState([]);
   const navigate = useNavigate();
   
+  const formatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+    const year = date.getFullYear();
+    return `${hours}:${minutes}          ${day}/${month}/${year}`;
+};
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,6 +44,7 @@ export const VideoProvider = ({ children, userId = null, filter = null }) => {
 
         const response = await fetch(url, options);
         const data = await response.json();
+        console.log(data)
         setVideolist(data);
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -49,7 +61,7 @@ export const VideoProvider = ({ children, userId = null, filter = null }) => {
   };
 
   return (
-    <VideoContext.Provider value={{ videoList, setVideolist, deleteVideo }}>
+    <VideoContext.Provider value={{ videoList, setVideolist, deleteVideo,formatDate }}>
       {children}
     </VideoContext.Provider>
   );

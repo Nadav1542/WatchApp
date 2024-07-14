@@ -9,7 +9,7 @@ import {jwtDecode} from 'jwt-decode';
 
 function Videodisplay({id,creator}) {
   
-  const { deleteVideo } = useContext(VideoContext);
+  const { deleteVideo,formatDate } = useContext(VideoContext);
   const {  setuserConnect, connectedUser, setconnectedUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [video, setVideo] = useState(null);
@@ -83,13 +83,22 @@ function Videodisplay({id,creator}) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-              
+                
+              //   const formatDate = (isoDateString) => {
+              //     const date = new Date(isoDateString);
+              //     const hours = date.getHours().toString().padStart(2, '0');
+              //     const minutes = date.getMinutes().toString().padStart(2, '0');
+              //     const day = date.getDate().toString().padStart(2, '0');
+              //     const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+              //     const year = date.getFullYear();
+              //     return `${hours}:${minutes}          ${day}/${month}/${year}`;
+              // };
                 setVideo(data);
                 setTitle(decodeURIComponent(data.title));
                 setDescription(decodeURIComponent(data.description));
                 setSource(data.source);
                 setViews(decodeURIComponent(data.views));
-                setUploadTime(decodeURIComponent(data.uploadtime));
+                setUploadTime(decodeURIComponent(formatDate(data.uploadtime)));
               // Increment view count
         await incrementViews();
       } catch (error) {

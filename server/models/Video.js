@@ -5,7 +5,7 @@ const videoSchema = new mongoose.Schema({
   description: String,
   source: String,
   views: Number,
-  uploadTime: String,
+  uploadtime: { type: Date, default: Date.now },
   comments: Array,
   creatorName: String,
   likes: { type: Number, default: 0 },

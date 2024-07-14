@@ -30,6 +30,7 @@ const getUserVideos = async (req, res) => {
   const userId = req.params.id;
   try {
     const videos = await getUserVideosSer(userId)
+    console.log("reached")
     res.json(videos);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching user videos' });
