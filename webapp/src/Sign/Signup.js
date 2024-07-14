@@ -99,10 +99,7 @@ function Signup({ darkMode }) {
       img: base64Image
     };
     try {
-      {console.log(userData)}
-      let response;
-
-      response = await fetch('http://localhost:8000/api/users', {
+      let response = await fetch('http://localhost:8000/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)

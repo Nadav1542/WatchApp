@@ -6,16 +6,16 @@ function Quicksearch() {
     return (
         <nav className="nav nav-pills nav-fill nav-pills-container">
             {/* Each <a> tag represents a navigation link for quick search */}
-            <a className="nav-link active" href="#">Sports</a>
-            <a className="nav-link active" href="#">Music</a>
-            <a className="nav-link active" href="#">News</a>
-            <a className="nav-link active" href="#">Food</a>
-            <a className="nav-link active" href="#">Politics</a>
-            <a className="nav-link active" href="#">Comedy</a>
-            <a className="nav-link active" href="#">Nature</a>
-            <a className="nav-link active" href="#">Mixes</a>
-            <a className="nav-link active" href="#">Lives</a>
-            <a className="nav-link active" href="#">Animated</a>
+            <button className="nav-link active" href="#">Sports</button>
+            <button className="nav-link active" href="#">Music</button>
+            <button className="nav-link active" href="#">News</button>
+            <button className="nav-link active" href="#">Food</button>
+            <button className="nav-link active" href="#">Politics</button>
+            <button className="nav-link active" href="#">Comedy</button>
+            <button className="nav-link active" href="#">Nature</button>
+            <button className="nav-link active" href="#">Mixes</button>
+            <button className="nav-link active" href="#">Lives</button>
+            <button className="nav-link active" href="#">Animated</button>
         </nav>
     );
 }

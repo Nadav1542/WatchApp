@@ -245,6 +245,7 @@ function Comments({ id, video, setVideo }) {
                     <p>
                       <img
                         src={comment.img}
+                        alt=""
                         style={{
                           width: '1.5rem',
                           height: '1.5rem',

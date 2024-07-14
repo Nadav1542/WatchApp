@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 import Usericon from '../Topbar/Usericon';
 import {jwtDecode} from 'jwt-decode';
 import { UserContext } from '../contexts/UserContext';
-import { VideoProvider } from '../contexts/VideoContext';
 
 function Videowatch({  darkMode }) {
   
@@ -59,7 +58,7 @@ function Videowatch({  darkMode }) {
     if (!connectedUser) {
       checkJWT();
     }
-  }, [connectedUser]);
+  }, [connectedUser, checkJWT]);
 
   const [filter, setFilter] = useState('')
  

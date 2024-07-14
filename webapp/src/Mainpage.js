@@ -4,7 +4,6 @@ import SearchBar from './Topbar/SearchBar';
 import Videolist from './videoItem/Videolist';
 import Quicksearch from './Topbar/Quicksearch';
 import Menu from './Topbar/Menu';
-import buttons from './data/buttons.json';
 import Usericon from './Topbar/Usericon';
 import { UserContext } from './contexts/UserContext';
 import { VideoProvider } from './contexts/VideoContext';
@@ -54,7 +53,7 @@ function Mainpage({darkMode}) {
     if (!connectedUser) {
       checkJWT();
     }
-  }, [connectedUser]);
+  }, [connectedUser, checkJWT]);
 
 
   const [filter, setFilter] = useState('')
