@@ -1,7 +1,14 @@
-# web
-To run the code, go to the "webapp" folder and run the command "npm start".  
+React + Express Video Project
+Overview
+This project is a full-stack application built with React for the front end and Express.js for the back end. It allows users to upload, view, edit, and delete videos. The application also includes user authentication with JWT tokens.
 
-Work process: First, we created html templates for the pages as a "skeleton" for the future page structure. That is, the templates were the prototypes of the screens.  
-After that we moved each code of a page to React environment and divided everything into components.  
-The application ran from 'app' and according to the user's clicks it displays the required pages with the help of 'routes' for each page.  
-We divided the components into folders according to their presentation logic. Also, when we were required to do so, we created css files and placed them in the appropriate folders. Along the way we changed the appearance of the pages according to our needs and to maintain order.
+Technologies Used
+1.React: A JavaScript library for building user interfaces.
+2.Express.js: A web application framework for Node.js.
+3.Mongoose: An ODM (Object Data Modeling) library for MongoDB and Node.js.
+4.JWT (JSON Web Tokens): A standard for creating access tokens for user authentication.
+5.Bootstrap: A CSS framework for responsive design.
+
+Prerequisites
+1.Node.js: Ensure you have Node.js installed. You can download it from nodejs.org
+2.MongoDB: Ensure you have MongoDB installed and running. You can download it from mongodb.com.
