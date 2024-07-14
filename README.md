@@ -1,4 +1,23 @@
-Sure! Here are explanations specifically for the commands `node seed.js` and `npm run build`:
+Sure! Here's a README file for your React + Express project:
+
+---
+
+# React + Express Video Project
+
+## Overview
+This project is a full-stack application built with React for the front end and Express.js for the back end. It allows users to upload, view, edit, and delete videos. The application also includes user authentication with JWT tokens.
+
+## Technologies Used
+- **React**: A JavaScript library for building user interfaces.
+- **Express.js**: A web application framework for Node.js.
+- **Mongoose**: An ODM (Object Data Modeling) library for MongoDB and Node.js.
+- **JWT (JSON Web Tokens)**: A standard for creating access tokens for user authentication.
+- **Bootstrap**: A CSS framework for responsive design.
+
+## Prerequisites
+- **Node.js**: Ensure you have Node.js installed. You can download it from [nodejs.org](https://nodejs.org/).
+- **MongoDB**: Ensure you have MongoDB installed and running. You can download it from [mongodb.com](https://www.mongodb.com/).
+
 
 ## Commands Explanation
 
