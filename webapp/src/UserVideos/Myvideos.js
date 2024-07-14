@@ -164,61 +164,61 @@ function Myvideos({ darkMode }) {
                 <i className="bi bi-pencil"></i> Edit Details
               </button>
   
-          <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
-              <div className={`modal-content ${darkMode ? 'dark-mode' : ''}`}>
-                <div className="modal-header">
-                  <h1 className="modal-title fs-5" id="exampleModalLabel">Edit details</h1>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog">
+                <div className={`modal-content ${darkMode ? 'dark-mode' : ''}`}>
+                  <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="exampleModalLabel">Edit details</h1>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form id="registration-form" onSubmit={handleEditUserDetails}>
+                    <div className="modal-body">
+                      <input
+                        type="text"
+                        name="displayname"
+                        className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
+                        id="floatingInput"
+                        placeholder="New display name"
+                        value={displayName}
+                        onChange={(e) => setDisplayName(e.target.value)}
+                      />
+                      <input
+                        type="text"
+                        name="username"
+                        className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
+                        id="floatingInput"
+                        placeholder="New username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <input
+                        type="password"
+                        name="password"
+                        className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
+                        id="floatingPassword"
+                        placeholder="New password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      <input
+                        type="file"
+                        name="profile-picture"
+                        className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
+                        id="floatingInput"
+                        placeholder="New profile picture"
+                        onChange={(e) => setImg(e.target.files[0])}
+                      />
+                      {error && <div className="alert alert-danger">{error}</div>}
+                      {success && <div className="alert alert-success">{success}</div>}
+                    </div>
+                    <div className="modal-footer">
+                      <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" className="btn btn-primary">Save changes</button>
+                    </div>
+                  </form>
                 </div>
-                <form id="registration-form" onSubmit={handleEditUserDetails}>
-                  <div className="modal-body">
-                    <input
-                      type="text"
-                      name="displayname"
-                      className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
-                      id="floatingInput"
-                      placeholder="New display name"
-                      value={displayName}
-                      onChange={(e) => setDisplayName(e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      name="username"
-                      className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
-                      id="floatingInput"
-                      placeholder="New username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <input
-                      type="password"
-                      name="password"
-                      className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
-                      id="floatingPassword"
-                      placeholder="New password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <input
-                      type="file"
-                      name="profile-picture"
-                      className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
-                      id="floatingInput"
-                      placeholder="New profile picture"
-                      onChange={(e) => setImg(e.target.files[0])}
-                    />
-                    {error && <div className="alert alert-danger">{error}</div>}
-                    {success && <div className="alert alert-success">{success}</div>}
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" className="btn btn-primary">Save changes</button>
-                  </div>
-                </form>
               </div>
             </div>
-          </div>
   
           {userConnect && (
             <button

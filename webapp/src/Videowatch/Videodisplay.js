@@ -7,7 +7,7 @@ import { UserContext } from '../contexts/UserContext';
 import {jwtDecode} from 'jwt-decode';
 
 
-function Videodisplay({id,creator}) {
+function Videodisplay({id, creator, darkMode}) {
   
   const { deleteVideo } = useContext(VideoContext);
   const {  setuserConnect, connectedUser, setconnectedUser } = useContext(UserContext);
@@ -195,73 +195,65 @@ function Videodisplay({id,creator}) {
           <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay/>
           <div className="card-body singlevideo">
             <div className="card-text">
-              {isEditingTitle ? (
                 <>
-                  <input
-                    type="text"
-                    value={title}
-                    onChange={handleTitleChange}
-                    className="form-control d-inline w-auto"
-                  />
-                  <button
-                    onClick={handleSaveTitle}
-                    className="btn btn-sm btn-outline-primary ms-2"
-                  >
-                    Save
-                  </button>
-                </>
-              ) : (
-                <>
-                  <h3> {title} </h3>
-                  {connectedUser && connectedUser._id === video.creator && (
-                    <button
-                      onClick={handleEditTitle}
-                      className="btn btn-sm btn-outline-primary ms-2 edit-button"
-                    >
-                      <i className="bi bi-pencil"></i> Edit
-                    </button>
-                  )}
-                  <strong><Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}>{video.creatorName}</Link>
+                <strong><Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}>{video.creatorName}</Link>
                 </strong></>
-              )}
-            </div>
-            <div className="card-text">
-              {isEditingDescription ? (
-                <>
-                  <input
-                    type="text"
-                    value={description}
-                    onChange={handleDescriptionChange}
-                    className="form-control d-inline w-auto"
-                  />
-                  <button
-                    onClick={handleSaveDescription}
-                    className="btn btn-sm btn-outline-primary ms-2"
-                  >
-                    Save
-                  </button>
-                </>
-              ) : (
-                <>
+                
+                  <h3> {title} </h3>
                   <i> {description} </i>
-                  {connectedUser && connectedUser._id === video.creator && (
-                    <button
-                      onClick={handleEditDescription}
-                      className="btn btn-sm btn-outline-primary ms-2 edit-button"
-                    >
-                      <i className="bi bi-pencil"></i> Edit
-                    </button>
-                  )}
-                </>
-              )}
+                  <div>{views} views - {uploadTime}</div>
             </div>
-            <div className="card-text">{views} views - {uploadTime}</div>
-            {connectedUser && connectedUser._id === video.creator && (
-              <button onClick={handleDelete} className="btn btn-sm btn-outline-danger ms-2">
-                <i className="bi bi-trash"></i> Delete
-              </button>
-            )}
-          </div>
+            
+                  {connectedUser && connectedUser._id === video.creator && (
+                    <>
+                    <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      //onClick={handleEditTitle}
+                      className="btn btn-sm btn-outline-primary edit-button mt-3"
+                    >
+                      <i className="bi bi-pencil"></i> Edit video details
+                    </button>
+
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class={`modal-content ${darkMode ? 'dark-mode-input' : ''}`}>
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                          <input
+                          type="text"
+                          value={title}
+                          onChange={handleTitleChange}
+                          placeholder='New title'
+                          className={`form-control d-inline w-auto`}
+                        /><p className="mt-3">
+                          <input
+                          type="text"
+                          value={description}
+                          onChange={handleDescriptionChange}
+                          placeholder='New description'
+                          className="form-control d-inline w-auto"
+                        /></p>
+                        {connectedUser && connectedUser._id === video.creator && (
+              <p className="mt-3"><button onClick={handleDelete} className="btn btn-sm btn-outline-danger ms-2" data-bs-dismiss="modal">
+                <i className="bi bi-trash"></i> Delete video
+              </button></p>
+            )} 
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={handleSaveDescription}>Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                  )}
+            </div>
         </div>
       </div>
       <Comments
