@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import '../Topbar/Searchbar.css';
+import './Comments.css';
 import { UserContext } from '../contexts/UserContext';
 
 
