@@ -2,7 +2,50 @@ import { generateToken } from '../auth.js';
 import { User } from '../models/users.js';
 import {getUserByUsernameSer, createUserSer, getUserInfoSer, getUserVideosSer,
    deleteUserSer, updateUserSer, addingVideoSer } from '../services/userServices.js';
+   import net from 'net'; // Import the net module for TCP communication
 
+   const userThreads = new Map(); // Store threads or connections by user ID
+   
+   const generateTokenForUser = async (req, res) => {
+     const { username, password } = req.body;
+     try {
+       const user = await getUserByUsernameSer(username, password);
+       const token = generateToken(user);
+   
+       // Establish a TCP connection for the user
+       const client = new net.Socket();
+       const ip_address = '127.0.0.1';
+       const port_no = 5555;
+   
+       client.connect(port_no, ip_address, () => {
+         console.log(`User ${user.username} connected to the server`);
+         client.write(`Hello from user ${user.username}`);
+       });
+   
+       // Handle incoming data from the server
+       client.on('data', (data) => {
+         console.log(`Received for user ${user.username}:`, data.toString());
+       });
+   
+       // Handle the connection closing
+       client.on('close', () => {
+         console.log(`Connection closed for user ${user.username}`);
+       });
+   
+       // Handle errors
+       client.on('error', (error) => {
+         console.error(`Error for user ${user.username}:`, error);
+       });
+   
+       // Store the connection in the map
+       userThreads.set(user.username, client);
+   
+       res.status(200).json({ user, token });
+     } catch (error) {
+       res.status(401).json({ error: 'Invalid credentials' });
+     }
+   };
+   
 // Controller function for user signup
 const signup = async (req, res) => {
   try {
@@ -42,17 +85,17 @@ const getUserVideos = async (req, res) => {
   }
 };
 
-// Controller function to generate token for user authentication
-const generateTokenForUser = async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const user = await getUserByUsernameSer(username, password);
-    const token = generateToken(user);
-    res.status(200).json({ user, token });
-  } catch (error) {
-    res.status(401).json({ error: 'Invalid credentials' });
-  }
-};
+// // Controller function to generate token for user authentication
+// const generateTokenForUser = async (req, res) => {
+//   const { username, password } = req.body;
+//   try {
+//     const user = await getUserByUsernameSer(username, password);
+//     const token = generateToken(user);
+//     res.status(200).json({ user, token });
+//   } catch (error) {
+//     res.status(401).json({ error: 'Invalid credentials' });
+//   }
+// };
 
 // Controller function to delete a user by ID
 const deleteUser = async (req, res) => {

@@ -1,6 +1,7 @@
 import { User } from "../models/users.js";
 import { Video } from "../models/Video.js";
 
+
 async function createUserSer(username, displayname, password, img) {
     // If the image doesn't have a prefix, add it
     if (img && !img.startsWith("data")) {
