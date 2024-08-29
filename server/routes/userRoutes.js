@@ -5,7 +5,9 @@ import {
   signup, 
   generateTokenForUser, 
   deleteUser, 
-  updateUser, 
+  updateUser,
+  updateRecommend,
+  getRecommendedVideos, 
   addingVideo 
 } from '../controllers/userController.js';
 import { 
@@ -31,6 +33,10 @@ const storage = multer.diskStorage({
 
 // Initialize multer with the configured storage
 const upload = multer({ storage: storage });
+
+router.post('/:userId/updateRecommend/:videoId', updateRecommend);
+
+router.get('/:userId/recommendedVideo', getRecommendedVideos);
 
 // Route to increment views for a specific video
 router.post('/:creator/videos/:id/views', incrementViews);

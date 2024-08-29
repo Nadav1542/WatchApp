@@ -1,7 +1,9 @@
 import { generateToken } from '../auth.js';
 import { User } from '../models/users.js';
+import { Video } from '../models/Video.js';
 import {getUserByUsernameSer, createUserSer, getUserInfoSer, getUserVideosSer,
    deleteUserSer, updateUserSer, addingVideoSer } from '../services/userServices.js';
+import { getTopAndRandomVideos } from '../services/videoService.js';
    import net from 'net'; // Import the net module for TCP communication
 
    const userThreads = new Map(); // Store threads or connections by user ID
@@ -38,7 +40,7 @@ import {getUserByUsernameSer, createUserSer, getUserInfoSer, getUserVideosSer,
        });
    
        // Store the connection in the map
-       userThreads.set(user.username, client);
+       userThreads.set(user._id, client);
    
        res.status(200).json({ user, token });
      } catch (error) {
@@ -141,4 +143,54 @@ const addingVideo = async (req, res) => {
   }
 };
 
-export { signup, generateTokenForUser, getUserInfo, getUserVideos, deleteUser, updateUser, addingVideo };
+const getRecommendedVideos = async (req, res) => {
+  try {
+    const videos = await getTopAndRandomVideos();
+    res.status(200).json(videos);
+  } catch (error) {
+    res.status(500).json({ error: 'Server Error' });
+  }
+};
+
+
+
+const updateRecommend = async (req, res) => {
+  const { userId, videoId } = req.params;
+  try {
+    // Find the user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Find the video by ID
+    const video = await Video.findById(videoId);
+    if (!video) {
+      return res.status(404).json({ message: 'Video not found' });
+    }
+
+    // Retrieve the TCP client from the userThreads map
+    const client = userThreads.get(userId);
+    if (!client) {
+      return res.status(500).json({ message: 'TCP connection for user not found' });
+    }
+
+    // Create the message to be sent to the TCP server
+    const message = JSON.stringify({
+      type: 'WATCHED_VIDEO',
+      userId,
+      videoId
+    });
+    console.log("reached1")
+    // Send the message to the TCP server
+    client.write(message);
+    console.log("reached2")
+    // Send a success response to the HTTP request
+    res.status(200).json({ message: 'Recommendation sent successfully' });
+  } catch (error) {
+    // Handle any errors that occur during the process
+    res.status(500).json({ message: 'Error updating recommendation', error: error.message });
+  }
+};
+
+export { signup, generateTokenForUser, getUserInfo, getUserVideos, deleteUser, updateUser, addingVideo, updateRecommend, getRecommendedVideos };

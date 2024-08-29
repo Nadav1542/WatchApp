@@ -1,16 +1,14 @@
 import './Singlevideo.css';
 import { useState, useEffect, useContext } from 'react';
 import Comments from './Comments';
-import { useNavigate, Link} from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom';
 import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
 import {jwtDecode} from 'jwt-decode';
 
-
-function Videodisplay({id, creator, darkMode}) {
-  
-  const { deleteVideo,formatDate } = useContext(VideoContext);
-  const {  setuserConnect, connectedUser, setconnectedUser } = useContext(UserContext);
+function Videodisplay({ id, creator, darkMode }) {
+  const { deleteVideo, formatDate } = useContext(VideoContext);
+  const { setuserConnect, connectedUser, setconnectedUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [video, setVideo] = useState(null);
   const [title, setTitle] = useState('');
@@ -21,7 +19,6 @@ function Videodisplay({id, creator, darkMode}) {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
 
-  // Function to check JWT in local storage and connect the user
   const checkJWT = async () => {
     let token = localStorage.getItem('jwtToken');
     if (!token) {
@@ -31,12 +28,8 @@ function Videodisplay({id, creator, darkMode}) {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log('Decoded Token:', decodedToken); // This will log the decoded token, including user id and username
-
-        // Check if the token is expired
-        const currentTime = Date.now() / 1000; // Current time in seconds
+        const currentTime = Date.now() / 1000;
         if (decodedToken.exp > currentTime) {
-          // Token is valid, fetch user details
           const response = await fetch(`http://localhost:8000/api/users/${decodedToken.id}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -44,9 +37,8 @@ function Videodisplay({id, creator, darkMode}) {
           });
           if (response.ok) {
             const userDetails = await response.json();
-            console.log('Fetched User Details:', userDetails);
             setuserConnect(true);
-            setconnectedUser(userDetails); // Set the connected user state with the fetched user details
+            setconnectedUser(userDetails);
             if (!localStorage.getItem('jwtToken')) {
               localStorage.setItem('jwtToken', token);
             }
@@ -70,50 +62,39 @@ function Videodisplay({id, creator, darkMode}) {
     }
   }, [connectedUser]);
 
-    useEffect(() => {
-      
-      const fetchVideo = async () => {
-        console.log("useEffect")
-        try {
-                const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                
-              //   const formatDate = (isoDateString) => {
-              //     const date = new Date(isoDateString);
-              //     const hours = date.getHours().toString().padStart(2, '0');
-              //     const minutes = date.getMinutes().toString().padStart(2, '0');
-              //     const day = date.getDate().toString().padStart(2, '0');
-              //     const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
-              //     const year = date.getFullYear();
-              //     return `${hours}:${minutes}          ${day}/${month}/${year}`;
-              // };
-                setVideo(data);
-                setTitle(decodeURIComponent(data.title));
-                setDescription(decodeURIComponent(data.description));
-                setSource(data.source);
-                setViews(decodeURIComponent(data.views));
-                setUploadTime(decodeURIComponent(formatDate(data.uploadtime)));
-              // Increment view count
+  useEffect(() => {
+    const fetchVideo = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setVideo(data);
+        setTitle(decodeURIComponent(data.title));
+        setDescription(decodeURIComponent(data.description));
+        setSource(data.source);
+        setViews(decodeURIComponent(data.views));
+        setUploadTime(decodeURIComponent(formatDate(data.uploadtime)));
+
+        // Increment view count and update recommendation
         await incrementViews();
+        await updateRecommendation(connectedUser._id, id);
       } catch (error) {
         console.error('Failed to fetch video', error);
       }
     };
-   
+
     const incrementViews = async () => {
-      console.log('Incrementing views');
       try {
         const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}/views`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         });
         if (response.ok) {
           const updatedViews = await response.json();
@@ -126,8 +107,24 @@ function Videodisplay({id, creator, darkMode}) {
       }
     };
 
+    const updateRecommendation = async (userId, videoId) => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(userId)}/updateRecommend/${encodeURIComponent(videoId)}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) {
+          console.error('Failed to update recommendation');
+        }
+      } catch (error) {
+        console.error('Error updating recommendation:', error);
+      }
+    };
+
     fetchVideo();
-  }, [id,creator]);
+  }, [id, creator, connectedUser]);
 
   const handleTitleChange = (event) => setTitle(event.target.value);
   const handleDescriptionChange = (event) => setDescription(event.target.value);
@@ -138,7 +135,7 @@ function Videodisplay({id, creator, darkMode}) {
     setIsEditingTitle(false);
     handleEdit();
   };
-  
+
   const handleSaveDescription = () => {
     setIsEditingDescription(false);
     handleEdit();
@@ -159,11 +156,8 @@ function Videodisplay({id, creator, darkMode}) {
       });
       if (response.ok) {
         const updatedVideoData = await response.json();
-        // Handle successful update (e.g., update the state or re-fetch the video details)
-        console.log('Video updated:', updatedVideoData);
         setVideo(updatedVideoData);
       } else {
-        // Handle error
         console.error('Failed to update video');
       }
     } catch (error) {
@@ -185,9 +179,8 @@ function Videodisplay({id, creator, darkMode}) {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      // Call the deleteVideo function to update the video list in the parent component
       deleteVideo(video._id);
-      navigate('/'); // Navigate to the homepage after deleting the video
+      navigate('/');
     } catch (error) {
       console.error('Failed to delete video', error);
     }
@@ -201,75 +194,70 @@ function Videodisplay({id, creator, darkMode}) {
     <>
       <div className="row m-4">
         <div>
-          <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay/>
+          <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay />
           <div className="card-body singlevideo">
             <div className="card-text">
-                <>
-                <strong><Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}>{video.creatorName}</Link>
-                </strong></>
-                
-                  <h3> {title} </h3>
-                  <i> {description} </i>
-                  <div>{views} views - {uploadTime}</div>
+              <>
+                <strong><Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}>{video.creatorName}</Link></strong>
+              </>
+              <h3>{title}</h3>
+              <i>{description}</i>
+              <div>{views} views - {uploadTime}</div>
             </div>
-            
-                  {connectedUser && connectedUser._id === video.creator && (
-                    <>
-                    <button
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      //onClick={handleEditTitle}
-                      className="btn btn-sm btn-outline-primary edit-button mt-3"
-                    >
-                      <i className="bi bi-pencil"></i> Edit video details
-                    </button>
-
-
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class={`modal-content ${darkMode ? 'dark-mode-input' : ''}`}>
-                          <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                          <input
+            {connectedUser && connectedUser._id === video.creator && (
+              <>
+                <button
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  className="btn btn-sm btn-outline-primary edit-button mt-3"
+                >
+                  <i className="bi bi-pencil"></i> Edit video details
+                </button>
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog">
+                    <div className={`modal-content ${darkMode ? 'dark-mode-input' : ''}`}>
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div className="modal-body">
+                        <input
                           type="text"
                           value={title}
                           onChange={handleTitleChange}
-                          placeholder='New title'
-                          className={`form-control d-inline w-auto`}
-                        /><p className="mt-3">
-                          <input
-                          type="text"
-                          value={description}
-                          onChange={handleDescriptionChange}
-                          placeholder='New description'
+                          placeholder="New title"
                           className="form-control d-inline w-auto"
-                        /></p>
+                        />
+                        <p className="mt-3">
+                          <input
+                            type="text"
+                            value={description}
+                            onChange={handleDescriptionChange}
+                            placeholder="New description"
+                            className="form-control d-inline w-auto"
+                          />
+                        </p>
                         {connectedUser && connectedUser._id === video.creator && (
-              <p className="mt-3"><button onClick={handleDelete} className="btn btn-sm btn-outline-danger ms-2" data-bs-dismiss="modal">
-                <i className="bi bi-trash"></i> Delete video
-              </button></p>
-            )} 
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={handleSaveDescription}>Save changes</button>
-                          </div>
-                        </div>
+                          <p className="mt-3">
+                            <button onClick={handleDelete} className="btn btn-sm btn-outline-danger ms-2" data-bs-dismiss="modal">
+                              <i className="bi bi-trash"></i> Delete video
+                            </button>
+                          </p>
+                        )}
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleSaveDescription}>Save changes</button>
                       </div>
                     </div>
-                  </>
-                  )}
-            </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
-      <Comments
-        id={id}
-        video={video}
-        setVideo={setVideo}
-      />
+      <Comments id={id} video={video} setVideo={setVideo} />
     </>
   );
 }
