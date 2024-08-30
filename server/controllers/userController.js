@@ -4,49 +4,50 @@ import { Video } from '../models/Video.js';
 import {getUserByUsernameSer, createUserSer, getUserInfoSer, getUserVideosSer,
    deleteUserSer, updateUserSer, addingVideoSer } from '../services/userServices.js';
 import { getTopAndRandomVideos } from '../services/videoService.js';
-   import net from 'net'; // Import the net module for TCP communication
+import net from 'net'; // Import the net module for TCP communication
 
    const userThreads = new Map(); // Store threads or connections by user ID
    
-   const generateTokenForUser = async (req, res) => {
-     const { username, password } = req.body;
-     try {
-       const user = await getUserByUsernameSer(username, password);
-       const token = generateToken(user);
+const generateTokenForUser = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await getUserByUsernameSer(username, password);
+    const token = generateToken(user);
    
-       // Establish a TCP connection for the user
-       const client = new net.Socket();
-       const ip_address = '127.0.0.1';
-       const port_no = 5555;
+    // Establish a TCP connection for the user
+    const client = new net.Socket();
+    const ip_address = '127.0.0.1';
+    const port_no = 5555;
    
-       client.connect(port_no, ip_address, () => {
-         console.log(`User ${user.username} connected to the server`);
-         client.write(`Hello from user ${user.username}`);
-       });
+    client.connect(port_no, ip_address, () => {
+      console.log(`User ${user.username} connected to the server`);
+      client.write(`Hello from user ${user.username}`);
+    });
    
-       // Handle incoming data from the server
-       client.on('data', (data) => {
-         console.log(`Received for user ${user.username}:`, data.toString());
-       });
+    // Handle incoming data from the server
+    client.on('data', (data) => {
+      console.log(`Received for user ${user.username}:`, data.toString());
+    });
    
-       // Handle the connection closing
-       client.on('close', () => {
-         console.log(`Connection closed for user ${user.username}`);
-       });
+    // Handle the connection closing
+    client.on('close', () => {
+      console.log(`Connection closed for user ${user.username}`);
+    });
    
-       // Handle errors
-       client.on('error', (error) => {
-         console.error(`Error for user ${user.username}:`, error);
-       });
+    // Handle errors
+    client.on('error', (error) => {
+      console.error(`Error for user ${user.username}:`, error);
+   });
+    // Store the connection in the map
+    const userId = user._id.toString();
+    userThreads.set(userId, client);
+    //console.log("userThreads", userThreads)
    
-       // Store the connection in the map
-       userThreads.set(user._id, client);
-   
-       res.status(200).json({ user, token });
-     } catch (error) {
-       res.status(401).json({ error: 'Invalid credentials' });
-     }
-   };
+    res.status(200).json({ user, token });
+    } catch (error) {
+      res.status(401).json({ error: 'Invalid credentials' });
+    }
+  };
    
 // Controller function for user signup
 const signup = async (req, res) => {
@@ -168,9 +169,10 @@ const updateRecommend = async (req, res) => {
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
     }
-
     // Retrieve the TCP client from the userThreads map
+    console.log("userThreads", userThreads)
     const client = userThreads.get(userId);
+    console.log("client", client)
     if (!client) {
       return res.status(500).json({ message: 'TCP connection for user not found' });
     }
@@ -181,10 +183,8 @@ const updateRecommend = async (req, res) => {
       userId,
       videoId
     });
-    console.log("reached1")
     // Send the message to the TCP server
     client.write(message);
-    console.log("reached2")
     // Send a success response to the HTTP request
     res.status(200).json({ message: 'Recommendation sent successfully' });
   } catch (error) {
