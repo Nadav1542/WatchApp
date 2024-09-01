@@ -1,14 +1,35 @@
 import { useState, useEffect } from 'react';
 import Singlevideo from './Singlevideo';
 import './videostyle.css';
-
-function LeftVideos({ userId }) {
+import { useContext } from 'react';
+import { VideoContext } from '../contexts/VideoContext';
+function LeftVideos({ videoId, userId }) {
   const [videoList, setVideoList] = useState([]);
-
-  useEffect(() => {
+ // const { videoList,setVideoList } = useContext(VideoContext);
+  console.log('lalalala');
+ if(!userId){
+  
+  const fetchVideos = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/videos');
+      if (response.ok) {
+        const data = await response.json();
+        setVideoList(data);
+      } else {
+        console.error('Failed to fetch videos:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+    }
+  };
+  fetchVideos();
+ }
+ 
+ 
+ useEffect(() => {
     const fetchRecommendedVideos = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/users/${userId}/recommendedVideo`);
+        const response = await fetch(`http://localhost:8000/api/users/${userId}/recommendedVideo/${videoId}`);
         if (response.ok) {
           const data = await response.json();
           setVideoList(data);
@@ -19,9 +40,12 @@ function LeftVideos({ userId }) {
         console.error('Error fetching videos:', error);
       }
     };
-
+  
+    console.log('User id:', userId);
+    
     fetchRecommendedVideos();
-  }, [userId]);
+    
+}, [userId]);
 
   return (
     <>

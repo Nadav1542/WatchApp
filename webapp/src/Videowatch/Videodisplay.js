@@ -82,10 +82,10 @@ function Videodisplay({ id, creator, darkMode }) {
 
         // Increment view count and update recommendation
         await incrementViews();
-        await updateRecommendation(connectedUser._id, id);
       } catch (error) {
         console.error('Failed to fetch video', error);
       }
+      
     };
 
     const incrementViews = async () => {
@@ -104,22 +104,6 @@ function Videodisplay({ id, creator, darkMode }) {
         }
       } catch (error) {
         console.error('Error incrementing views:', error);
-      }
-    };
-
-    const updateRecommendation = async (userId, videoId) => {
-      try {
-        const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(userId)}/updateRecommend/${encodeURIComponent(videoId)}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!response.ok) {
-          console.error('Failed to update recommendation');
-        }
-      } catch (error) {
-        console.error('Error updating recommendation:', error);
       }
     };
 

@@ -41,42 +41,6 @@ server.get('/videowatch/:fileName', (req, res) => {
   res.sendFile(videoPath);
 });
 
-// Function to notify the C++ server when a user logs in
-function notifyCppServer(userId) {
-  const client = new net.Socket();
-  const ip_address = '127.0.0.1';  // The IP address of your C++ server
-  const port_no = 5555;            // The port number of your C++ server
-
-  client.connect(port_no, ip_address, () => {
-    console.log(`Connected to the C++ server for user ${userId}`);
-    client.write(userId); // Send the user ID to the C++ server
-  });
-
-  client.on('data', (data) => {
-    console.log('Received from C++ server:', data.toString());
-    client.destroy(); // Close the connection after receiving the response
-  });
-
-  client.on('close', () => {
-    console.log('Connection to C++ server closed');
-  });
-
-  client.on('error', (error) => {
-    console.error('Error connecting to C++ server:', error);
-  });
-}
-
-// Example of calling the notify function when a user logs in
-server.post('/api/login', (req, res) => {
-  const { userId } = req.body;
-
-  // Notify the C++ server
-  notifyCppServer(userId);
-
-  // Your existing login logic here
-  res.send({ message: `User ${userId} logged in` });
-});
-
 // Start the server
 server.listen(8000, () => {
   console.log("Server is running on http://localhost:8000");

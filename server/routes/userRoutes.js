@@ -36,7 +36,7 @@ const upload = multer({ storage: storage });
 
 router.post('/:userId/updateRecommend/:videoId', updateRecommend);
 
-router.get('/:userId/recommendedVideo', getRecommendedVideos);
+router.get('/:userId/recommendedVideo/:videoId', getRecommendedVideos);
 
 // Route to increment views for a specific video
 router.post('/:creator/videos/:id/views', incrementViews);

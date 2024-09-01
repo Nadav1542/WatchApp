@@ -1,3 +1,4 @@
+import { vi } from '@faker-js/faker';
 import { generateToken } from '../auth.js';
 import { User } from '../models/users.js';
 import { Video } from '../models/Video.js';
@@ -21,7 +22,7 @@ const generateTokenForUser = async (req, res) => {
    
     client.connect(port_no, ip_address, () => {
       console.log(`User ${user.username} connected to the server`);
-      client.write(`Hello from user ${user.username}`);
+      client.write(`${user._id}`);
     });
    
     // Handle incoming data from the server
@@ -47,7 +48,7 @@ const generateTokenForUser = async (req, res) => {
     } catch (error) {
       res.status(401).json({ error: 'Invalid credentials' });
     }
-  };
+};
    
 // Controller function for user signup
 const signup = async (req, res) => {
@@ -59,7 +60,7 @@ const signup = async (req, res) => {
     // Handle username already taken error
     if (error.message === 'Username already taken') {
       res.status(409).json({ message: error.message });
-    } else {
+    } {
       res.status(500).json({ message: error.message });
     }
   }
@@ -145,34 +146,69 @@ const addingVideo = async (req, res) => {
 };
 
 const getRecommendedVideos = async (req, res) => {
+  const { userId, videoId } = req.params;
   try {
-    const videos = await getTopAndRandomVideos();
-    res.status(200).json(videos);
+    // Retrieve the TCP client from the userThreads map
+    const client = userThreads.get(userId);
+    if (!client) {
+      return res.status(500).json({ message: 'TCP connection for user not found' });
+    }
+
+    // Send the GET_RECOMMENDATIONS request to the C++ server
+    const message = JSON.stringify({
+      type: 'GET_RECOMMENDATIONS',
+      userId: userId,
+      videoId: videoId
+    });
+    client.write(message);
+
+    // Listen for the response from the C++ server
+    client.once('data', async (data) => {
+      console.log(`Received recommended videos for user ${userId}:`, data.toString());
+
+      // The response is expected to be in JSON format {"type":"RECOMMENDATIONS","videos":["videoId1","videoId2",...]}
+      const response = JSON.parse(data.toString());
+      
+      if (response.type === 'RECOMMENDATIONS') {
+        const videoIds = response.videos || [];
+        console.log('videoIds', videoIds);
+
+        if (videoIds.length === 0) {
+          console.log("No recommendations found");
+          const videos = await getTopAndRandomVideos();
+          res.status(200).json(videos);
+        } else {
+          // Fetch video details from the database based on the received video IDs
+          const videos = await Video.find({ _id: { $in: videoIds } }).sort({ views: -1 });
+
+          // Send the video details as the response
+          res.status(200).json(videos);
+        }
+      } else {
+        res.status(500).json({ error: 'Unexpected response format from recommendation server' });
+      }
+    });
+
+    // Handle errors in the TCP connection
+    client.on('error', (error) => {
+      console.error(`Error for user ${userId}:`, error);
+      res.status(500).json({ error: 'Error connecting to the recommendation server' });
+    });
+
   } catch (error) {
     res.status(500).json({ error: 'Server Error' });
   }
 };
 
 
-
 const updateRecommend = async (req, res) => {
   const { userId, videoId } = req.params;
-  try {
-    // Find the user by ID
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
 
-    // Find the video by ID
-    const video = await Video.findById(videoId);
-    if (!video) {
-      return res.status(404).json({ message: 'Video not found' });
-    }
+  try {
+    console.log("userID", userId)
     // Retrieve the TCP client from the userThreads map
-    console.log("userThreads", userThreads)
     const client = userThreads.get(userId);
-    console.log("client", client)
+    //console.log("client", client)
     if (!client) {
       return res.status(500).json({ message: 'TCP connection for user not found' });
     }
