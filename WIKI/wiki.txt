@@ -75,7 +75,7 @@ Managing Videos
 Create a Video
 
 Description: after connecting to a user press the uploadvideo button, next enter title description and the video ,note thet you need to upload the video itself and not a uri.
-Screenshot: Video added successfully.
+Screenshot: WIKI/pictures for wiki/f140c1ee-4880-439a-8f00-647407fc6e22.jpg
 Edit a Video
 
 Description: after connecting to the user that uploaded the video click the video , next click the edit video button to enter the edit activity there you can edit the provided fields as you please, to save press the edit button.
