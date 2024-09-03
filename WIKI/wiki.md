@@ -7,9 +7,9 @@ Setting Up the Environment
 
 Step 1: Start MongoDB
 
-Command: mongod
+Command: mongod or open mongo compass and press connect
 Description: Assuming your mongod is configured correctly (as per instructions in the prerequisites), open CMD or Terminal and run the command mongod. Ensure the local server address is set to mongodb://localhost:27017.
-Screenshot: WIKI/pictures for wiki/Screenshot 2024-09-02 221124.png
+Screenshot: ![WIKI/pictures for wiki/Screenshot 2024-09-02 221124.pn](https://github.com/Nadav1542/MainProject/blob/ex04-with-wiki/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221113.png)g
 Step 2: Start the TCP Server
 
 Command: press the arrow
