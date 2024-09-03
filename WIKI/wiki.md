@@ -14,19 +14,24 @@ Step 2: Start the TCP Server
 
 Command: press the arrow
 Description: just press the play arrow and the cpp server will start
-![run TCP](https://github.com/Nadav1542/MainProject/blob/feccfb464a2aa1bb9e4a7c326328da85aa96afa6/WIKI/pictures%20for%20wiki/44bb922b-01a9-46e5-aa00-6b29e5e07cff.jpg)
+![run TCP](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20220940.png)
 Step 3: Start the Node.js Server
 
 Command: node server.js
 Description: Open the mainproject directory in your text editor and navigate to the server subdirectory by running cd server. Then, start the server using node server.js.
+![starting up node js server](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221310.png)
 
+step 4: seeding the data base
+in order for you to have a full data base with users and videos you need to run the seed file found in the MAINPROJECT directory
 
-Step 4: Starting up the front end
+Step 5: Starting up the front end
 
 webapp:
 Command: npm start 
 Description: In the "mainproject" file enter the command "cd webapp" then enter "npm start" to open the web app.
-Screenshot: WIKI/pictures for wiki/Screenshot 2024-09-02 221332.png
+![starting up the webapp](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221332.png)
+the webapp main page 
+![main page](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221359.png)
 User Operations
 
 Registration and Login
@@ -35,28 +40,34 @@ Register a New User
 
 Description: press the three lines icon to open the side menu, then click the signup button.
 follow the instructions to enter username (must be a unique name), nickname, password, password confermation and finally uplopad a profile picture by clikcing on the alloted space.
+![filling in the details](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221436.png)
+all thats left is to press upload
 
 Login
 
 Description:press the three lines icon to open the side menu, then click the signin button.
 enter your username and password then press signin.
+![entering details](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221616.png)
+press home and youll reach the next picture
+![user main page](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221626.png)
 
 Managing Videos
 Create a Video
-
 Description: after loggin in open the side menu and press the upload video tab, in the new screen fill the required fields and press upload.
+![how to upload a video](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221803.png)
 
 Edit a Video or delete it
 
 Description: after loggin in with the same account that uploaded the video, click the video and press the edit button in the video Description.
-now you can edit the video name and description to save press the corresponding button, press the delete button to delete.
+now you can edit the video name and description to save press the corresponding button, press the delete button to delete the video.
+![editing and deleting a video](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221850.png)
 
-Delete a Video
 
 android app:
 
 Description: open the android file in android studio , set up an emulator of your choosing then press the green arrow to run the app.
-
+in the next picture you can see the main screen and the green arrow mentioned above
+![press the green arrow to run](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-03%20023740.png)
 User Operations
 Registration and Login
 
@@ -64,23 +75,21 @@ Register a New User
 
 Description: press the signup folating button then,follow the instructions to enter username (must be a unique name), nickname, password, password confermation.
 finally uplopad a profile picture(note that the pictures taken by the emulators app are uri and not supported by the app you must upload a real picture so it can be converted to base64) by clikcing on the alloted space.
+![signingup to the app](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/7c8530a1-5815-4929-abec-959224efcc7d.jpg)
 
 
 Login
 
-Description: press the floating signin button and enter your username and password.
-
+Description: press the floating signin button on the main page and enter your username and password.
+![filling details on android](https://github.com/Nadav1542/MainProject/blob/feccfb464a2aa1bb9e4a7c326328da85aa96afa6/WIKI/pictures%20for%20wiki/44bb922b-01a9-46e5-aa00-6b29e5e07cff.jpg)
 Managing Videos
 Create a Video
 
-Description: after connecting to a user press the uploadvideo button, next enter title description and the video ,note thet you need to upload the video itself and not a uri.
-
+Description: after connecting to a user press the floating  uploadvideo button (the lowest one in the main page), next enter title description and the video ,note thet you need to upload the video itself and not a uri.
+![uploading a video](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/f140c1ee-4880-439a-8f00-647407fc6e22.jpg)
 Edit a Video
 
-Description: after connecting to the user that uploaded the video click the video , next click the edit video button to enter the edit activity there you can edit the provided fields as you please, to save press the edit button.
-
-Delete a Video
-
-Description: after entering the edit activity(as described above) press the delete video button.
+Description: after connecting to the user that uploaded the video click the video , next click the edit video button to enter the edit activity there you can edit the provided fields as you please, to save press the edit button to delete the video just press the delete buttons.
+![editing and deleting](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/c1fed451-0ec8-4779-ab8d-d1ab0b1c4dfd.jpg)
 
 
