@@ -6,6 +6,7 @@
 /webapp/node_modules
 /server/build
 /webapp/.pnp
+/c++_server/cmake-build-debug
 .pnp.js
 
 # testing

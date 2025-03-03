@@ -9,22 +9,44 @@ function Usericon() {
     
 
    // Function to handle user sign-out
-const handleSignedout = (e) => {
+   const handleSignedout = async (e) => {
     e.preventDefault();
   
-    // Check if there is a JWT token in local storage
     const token = localStorage.getItem('jwtToken');
-    if (token) {
-      // Remove the JWT token from local storage
-      localStorage.removeItem('jwtToken');
-      console.log('JWT token removed from local storage');
+
+    if (token && connectedUser) {
+        try {
+            const userId = connectedUser._id; // Extract user ID
+            
+            // Send sign-out request to the server with userId in the URL
+            const response = await fetch(`http://localhost:8000/api/users/${userId}/signout`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                console.log(`User ${userId} signed out successfully on the server`);
+            } else {
+                console.error(`Failed to sign out user ${userId} on the server`);
+            }
+        } catch (error) {
+            console.error("Error during sign-out request:", error);
+        }
+
+        // Remove JWT token from local storage
+        localStorage.removeItem('jwtToken');
+        console.log('JWT token removed from local storage');
     }
-  
+
     setuserConnect(false); // Update state to indicate user is signed out
-    setconnectedUser(null)
-    navigate("/"); // Navigate to the home page
-    console.log('User logged out'); // Log the logout action
-  };
+    setconnectedUser(null);
+    navigate("/"); // Navigate to home page
+    console.log('User logged out');
+};
+
   
 
 

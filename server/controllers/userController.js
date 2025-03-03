@@ -89,17 +89,7 @@ const getUserVideos = async (req, res) => {
   }
 };
 
-// // Controller function to generate token for user authentication
-// const generateTokenForUser = async (req, res) => {
-//   const { username, password } = req.body;
-//   try {
-//     const user = await getUserByUsernameSer(username, password);
-//     const token = generateToken(user);
-//     res.status(200).json({ user, token });
-//   } catch (error) {
-//     res.status(401).json({ error: 'Invalid credentials' });
-//   }
-// };
+
 
 // Controller function to delete a user by ID
 const deleteUser = async (req, res) => {
@@ -146,14 +136,16 @@ const addingVideo = async (req, res) => {
 };
 
 const getRecommendedVideos = async (req, res) => {
+  
   const { userId, videoId } = req.params;
+  
+  if(!(userId==='null')){
   try {
     // Retrieve the TCP client from the userThreads map
     const client = userThreads.get(userId);
     if (!client) {
       return res.status(500).json({ message: 'TCP connection for user not found' });
     }
-
     // Send the GET_RECOMMENDATIONS request to the C++ server
     const message = JSON.stringify({
       type: 'GET_RECOMMENDATIONS',
@@ -187,6 +179,7 @@ const getRecommendedVideos = async (req, res) => {
       } else {
         res.status(500).json({ error: 'Unexpected response format from recommendation server' });
       }
+    
     });
 
     // Handle errors in the TCP connection
@@ -198,7 +191,14 @@ const getRecommendedVideos = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Server Error' });
   }
+ } else {
+  const videos = await getTopAndRandomVideos();
+  res.status(200).json(videos);
+ }
 };
+
+
+
 
 
 const updateRecommend = async (req, res) => {
@@ -221,6 +221,7 @@ const updateRecommend = async (req, res) => {
     });
     // Send the message to the TCP server
     client.write(message);
+    console.log("reached")
     // Send a success response to the HTTP request
     res.status(200).json({ message: 'Recommendation sent successfully' });
   } catch (error) {
@@ -229,4 +230,23 @@ const updateRecommend = async (req, res) => {
   }
 };
 
-export { signup, generateTokenForUser, getUserInfo, getUserVideos, deleteUser, updateUser, addingVideo, updateRecommend, getRecommendedVideos };
+const signoutUser = async (req, res) => {
+  try {
+      const { userId } = req.params; // Get userId from URL
+
+      // Close the TCP connection if it exists
+      if (userThreads.has(userId)) {
+          console.log(`Closing TCP connection for user ${userId}`);
+          userThreads.get(userId).destroy(); // Properly close the connection
+          userThreads.delete(userId);
+      }
+
+      res.status(200).json({ message: `User ${userId} signed out successfully` });
+  } catch (error) {
+      console.error("Error signing out:", error);
+      res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+export {signoutUser, signup, generateTokenForUser, getUserInfo, getUserVideos, deleteUser, updateUser, addingVideo, updateRecommend, getRecommendedVideos };

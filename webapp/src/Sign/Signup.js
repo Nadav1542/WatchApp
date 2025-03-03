@@ -140,6 +140,7 @@ function Signup({ darkMode }) {
               <div className="validinput">Enter your name</div>
               <div className="form-floating mb-3">
                 <input type="text" name="username" className="form-control" id="floatingInput" onChange={handleChange} placeholder="text" required />
+              
                 <label className="float" htmlFor="floatingInput">Username</label>
               </div>
 

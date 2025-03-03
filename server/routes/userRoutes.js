@@ -1,5 +1,6 @@
 import express from 'express';
 import { 
+  signoutUser,
   getUserInfo, 
   getUserVideos, 
   signup, 
@@ -37,6 +38,8 @@ const upload = multer({ storage: storage });
 router.post('/:userId/updateRecommend/:videoId', updateRecommend);
 
 router.get('/:userId/recommendedVideo/:videoId', getRecommendedVideos);
+
+router.post("/:userId/signout", verifyToken, signoutUser);
 
 // Route to increment views for a specific video
 router.post('/:creator/videos/:id/views', incrementViews);

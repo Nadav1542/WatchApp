@@ -1,4 +1,4 @@
-import React, {  useEffect,useContext,useState } from 'react';
+import React, {  useEffect,useContext,useState,useCallback } from 'react';
 import LeftVideos from './LeftVideos';
 import Videodisplay from './Videodisplay';
 import SearchBar from '../Topbar/SearchBar';
@@ -15,30 +15,24 @@ function Videowatch({  darkMode }) {
   const [recommendationUpdated, setRecommendationUpdated] = useState(false);
 
   // Function to check JWT in local storage and connect the user
-  const checkJWT = async () => {
-    let token = localStorage.getItem('jwtToken');
-    if (!token) {
-      token = localStorage.getItem('jwtTokenBackup');
-    }
-
+  const checkJWT = useCallback(async () => {
+    let token = localStorage.getItem('jwtToken') || localStorage.getItem('jwtTokenBackup');
+    
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-
-        // Check if the token is expired
-        const currentTime = Date.now() / 1000; // Current time in seconds
+        const currentTime = Date.now() / 1000;
+  
         if (decodedToken.exp > currentTime) {
-          // Token is valid, fetch user details
           const response = await fetch(`http://localhost:8000/api/users/${decodedToken.id}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
+            headers: { 'Authorization': `Bearer ${token}` },
           });
+  
           if (response.ok) {
             const userDetails = await response.json();
             setuserConnect(true);
-            setconnectedUser(userDetails); // Set the connected user state with the fetched user details
-            console.log('User connected1:', userDetails);
+            setconnectedUser(userDetails);
+  
             if (!localStorage.getItem('jwtToken')) {
               localStorage.setItem('jwtToken', token);
             }
@@ -54,11 +48,12 @@ function Videowatch({  darkMode }) {
     } else {
       console.log('No token found in localStorage');
     }
-  };
+  }, [setuserConnect, setconnectedUser]);  // ✅ Stable function reference
 
   useEffect(() => {
     const updateRecommendation = async (userId, videoId) => {
         try {
+          console.log("reached")
           const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(userId)}/updateRecommend/${encodeURIComponent(videoId)}`, {
             method: 'POST',
             headers: {
@@ -75,9 +70,10 @@ function Videowatch({  darkMode }) {
           console.error('Error updating recommendation:', error);
         }
       };
-      
+      console.log(recommendationUpdated);
       console.log('User connected2:', connectedUser);
     if (!connectedUser) {
+      
       checkJWT();
     }
     if (connectedUser && id) {
@@ -95,8 +91,8 @@ function Videowatch({  darkMode }) {
       <div className="container-fluid">
         <div className="row">
           <div className="col-3">
-          
-          {recommendationUpdated && <LeftVideos videoId={id} userId={connectedUser._id} />} {/* Only render LeftVideos after update */}
+         
+          <LeftVideos videoId={id} userId={connectedUser ? connectedUser._id : null} /> {/* Only render LeftVideos after update */}
           </div>
           <div className="col-9">
             <div className="row align-items-center mb-3">
