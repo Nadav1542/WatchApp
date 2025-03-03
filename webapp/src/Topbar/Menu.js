@@ -2,7 +2,7 @@ import React from 'react';
 import LeftMenu from '../LeftMenu/LeftMenu';
 import './Menu.css'
 
-function Menu({ darkMode, buttons, userConnect, setuserConnect }) {
+function Menu() {
     return (
         <>
             {/* Button to toggle the offcanvas menu */}
@@ -19,7 +19,7 @@ function Menu({ darkMode, buttons, userConnect, setuserConnect }) {
                 </div>
                 <div className="offcanvas-body">
                     {/* Render the LeftMenu component with props */}
-                    <LeftMenu darkMode={darkMode} buttons={buttons} userConnect={userConnect} setuserConnect={setuserConnect} />
+                    <LeftMenu/>
                 </div>
             </div>
         </>

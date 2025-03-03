@@ -2,14 +2,18 @@
 
 # dependencies
 /node_modules
-/.pnp
+/server/node_modules
+/webapp/node_modules
+/server/build
+/webapp/.pnp
+/c++_server/cmake-build-debug
 .pnp.js
 
 # testing
 /coverage
 
 # production
-/build
+/webapp/build
 
 # misc
 .DS_Store

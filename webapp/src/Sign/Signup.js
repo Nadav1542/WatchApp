@@ -1,16 +1,13 @@
 import { Link } from 'react-router-dom'; 
 import { useState } from 'react'; 
-import { useNavigate } from 'react-router-dom'; 
 import './Sign.css'; 
 
-function Signup({ darkMode, usersData, setusersData }) {
-  // Function to handle dark mode toggle
+function Signup({ darkMode }) {
   const handleDarkModeToggle = () => {
-    const event = new Event('toggleDarkMode'); // Create a new event for dark mode toggle
-    window.dispatchEvent(event); // Dispatch the event
+    const event = new Event('toggleDarkMode');
+    window.dispatchEvent(event);
   };
 
-  // State variables for form data, sign-up status, and error message
   const [formData, setFormData] = useState({
     username: "",
     displayname: "",
@@ -22,13 +19,11 @@ function Signup({ darkMode, usersData, setusersData }) {
   const [signedUp, setsignedUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Function to handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((formData) => ({ ...formData, [name]: value }));
   };
 
-  // Function to handle image file selection
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -43,63 +38,90 @@ function Signup({ darkMode, usersData, setusersData }) {
       });
     }
   };
+  
 
-  // Function to handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission
-
-    // Check if username is already taken
-    const isUsernameTaken = usersData.some(user => user.username === formData.username);
-    if (isUsernameTaken) {
-      setErrorMessage("Username is already taken. Please choose another one.");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // Function to read the file as base64
+    const readFileAsBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    };
+    
+    if (!formData.username.trim()) {
+      setErrorMessage("Username is required.");
       return;
     }
-     // Check if username is empty
-     if (!formData.username.trim()) {
-       setErrorMessage("Username is required.");
-      return;
-    }
-    // Set display name to username if not provided
-     if (!formData.displayname.trim()) {
-       setFormData((prevFormData) => ({ ...prevFormData, displayname: prevFormData.username }));
-      }
 
-    // Password validation
+    if (!formData.displayname.trim()) {
+      setFormData((prevFormData) => ({ ...prevFormData, displayname: prevFormData.username }));
+    }
+
     if (formData.password.length < 8) {
-      alert('Invalid Form, Password must contain greater than or equal to 8 characters.');
+      setErrorMessage("The password must contain at least 8 characters.");
       return;
     }
 
     const letterPattern = /[a-zA-Z]/;
     const numberPattern = /[0-9]/;
-
     const hasLetter = letterPattern.test(formData.password);
     const hasNumber = numberPattern.test(formData.password);
 
     if (!hasLetter || !hasNumber) {
-      alert("Password must contain letters and numbers");
+      setErrorMessage("Password must contain letters and numbers.");
       return;
     }
 
     if (formData.password !== formData.confirmpassword) {
-      alert("Password and Confirm Password must be the same");
+      setErrorMessage("Password and Confirm Password must match.");
       return;
     }
-
+    // Convert the selected image to base64
+    let base64Image = "";
+    if (document.getElementById('profile-picture').files[0]) {
+      base64Image = await readFileAsBase64(document.getElementById('profile-picture').files[0]);
+    } else {
+      setErrorMessage("Please select an image.");
+      return;
+    }
     if (!formData.img) {
-      alert("Please select an image.");
+      setErrorMessage("Please select an image.");
       return;
     }
-    
+    const userData = {
+      username: formData.username,
+      password: formData.password,
+      displayname: formData.displayname,
+      img: base64Image
+    };
+    try {
+      let response = await fetch('http://localhost:8000/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+      });
 
-    // Add new user data to usersData
-    setusersData([...usersData, formData]);
-    setsignedUp(true); // Set sign-up status to true
-    setErrorMessage(""); // Clear any previous error messages
+      if (response.ok) {
+        setsignedUp(true);
+        setErrorMessage("");
+      } else {
+        const errorData = await response.json();
+        if (response.status === 409) {
+          setErrorMessage(errorData.error || 'Username is already taken. Please choose a different name');
+        } else {
+          setErrorMessage(errorData.error || 'Failed to sign up.');
+        }
+      }
+    } catch (error) {
+      setErrorMessage("An error occurred. Please try again.");
+    }
   };
 
   return (
-    // Text display
     <>
       <div className="container">
         <div className="row justify-content-center">
@@ -108,7 +130,7 @@ function Signup({ darkMode, usersData, setusersData }) {
               <div className="d-flex justify-content-end">
                 <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>
                   <i className={darkMode ? 'bi bi-sun' : 'bi bi-moon-stars-fill'}></i>
-                  {darkMode ? '   Light Mode' : '   Dark Mode'}
+                  {darkMode ? ' Light Mode' : ' Dark Mode'}
                 </button>
               </div>
               <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
@@ -118,6 +140,7 @@ function Signup({ darkMode, usersData, setusersData }) {
               <div className="validinput">Enter your name</div>
               <div className="form-floating mb-3">
                 <input type="text" name="username" className="form-control" id="floatingInput" onChange={handleChange} placeholder="text" required />
+              
                 <label className="float" htmlFor="floatingInput">Username</label>
               </div>
 
@@ -146,8 +169,7 @@ function Signup({ darkMode, usersData, setusersData }) {
               </div>
 
               {errorMessage && <div className="alert alert-danger" style={{ color: 'red'}}>{errorMessage}</div>}
-              {/* successfully sign up */}
-              {signedUp && <div className="alert alert-danger m-2" style={{ color: 'red' ,textAlign: 'center'}}><strong>You signed up successfully!</strong> to connect, click the Sign In button.</div>}
+              {signedUp && <div className="alert alert-success m-2" style={{ color: 'Green', textAlign: 'center'}}><strong>You signed up successfully!</strong> to connect, click the Sign In button.</div>}
               <div className="d-flex justify-content-between">
                 {!signedUp && <button className="btn btn-sign" type="submit" id="register-button">Sign Up</button>}
                 <div>
@@ -163,4 +185,4 @@ function Signup({ darkMode, usersData, setusersData }) {
   );
 }
 
-export default Signup; 
+export default Signup;

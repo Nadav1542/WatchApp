@@ -1,75 +1,178 @@
-import React, { useState, useEffect } from 'react';
-import '../Topbar/Searchbar.css';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import './Comments.css';
+import { UserContext } from '../contexts/UserContext';
 
-function Comments({ id, videoList, addComment, editComment, deleteComment, addLike, addDislike, connectedUser, userConnect }) {
-  const [comments, setComments] = useState(videoList[id].comments); // State to store comments of the video
-  const [newComment, setNewComment] = useState(''); // State to store new comment input
-  const [editIndex, setEditIndex] = useState(null); // State to track which comment is being edited
-  const [editedComment, setEditedComment] = useState(''); // State to store edited comment input
-  const [videoLikes, setVideoLikes] = useState(videoList[id].likes); // State to store likes of the video
-  const [videoDislikes, setVideoDislikes] = useState(videoList[id].dislikes); // State to store dislikes of the video
+
+function Comments({ id, video, setVideo }) {
+  const { userConnect, connectedUser } = useContext(UserContext);
+  const [newComment, setNewComment] = useState('');
+  const [editIndex, setEditIndex] = useState(null);
+  const [editedComment, setEditedComment] = useState('');
 
   useEffect(() => {
-    // Update comments, likes, and dislikes when videoList or id changes
-    setComments(videoList[id].comments);
-    setVideoLikes(videoList[id].likes);
-    setVideoDislikes(videoList[id].dislikes);
-  }, [id, videoList]);
+    if (video) {
+      setVideo(video);
+    }
+  }, [video, setVideo]);
 
-  const handleCommentSubmit = (event) => {
+  const handleCommentSubmit = async (event) => {
+    if(!userConnect) return;
     event.preventDefault();
     if (newComment.trim()) {
       const newCommentObj = {
         text: newComment,
-        user: connectedUser.displayname // Add the connected user's name to the comment object
+        user: connectedUser.displayname,
+        img: connectedUser.img,
+        userId: connectedUser._id,
       };
-      setComments([...comments, newCommentObj]); // Update comments state
-      addComment(id, newCommentObj); // Call addComment function passed as a prop
-      setNewComment(''); // Reset new comment input
+      try {
+        const response = await fetch(`http://localhost:8000/api/videos/${id}/comments`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+          },
+          body: JSON.stringify(newCommentObj),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const newCommentResponse = await response.json();
+
+        setVideo((prevVideo) => ({
+          ...prevVideo,
+          comments: [...prevVideo.comments, newCommentResponse],
+        }));
+
+        setNewComment('');
+      } catch (error) {
+        console.error('Error adding comment:', error);
+      }
     }
   };
 
-  const handleEditCommentSubmit = (event, index) => {
+  const handleEditCommentSubmit = async (event, index) => {
+    if(!connectedUser) return;
     event.preventDefault();
     if (editedComment.trim()) {
-      const updatedComments = [...comments];
-      updatedComments[index].text = editedComment; // Update the text of the edited comment
-      setComments(updatedComments); // Update comments state
-      editComment(id, index, editedComment); // Call editComment function passed as a prop
-      setEditIndex(null); // Reset edit index
-      setEditedComment(''); // Reset edited comment input
+      try {
+        const response = await fetch(`http://localhost:8000/api/videos/${id}/comments/${index}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+          },
+          body: JSON.stringify({ text: editedComment }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const updatedComment = await response.json();
+
+        setVideo((prevVideo) => {
+          const updatedComments = [...prevVideo.comments];
+          updatedComments[index] = updatedComment;
+          return { ...prevVideo, comments: updatedComments };
+        });
+
+        setEditIndex(null);
+        setEditedComment('');
+      } catch (error) {
+        console.error('Error editing comment:', error);
+      }
     }
   };
 
-  const handleDeleteComment = (index) => {
-    const updatedComments = comments.filter((_, i) => i !== index); // Filter out the deleted comment
-    deleteComment(id, index); // Call deleteComment function passed as a prop
-    setComments(updatedComments); // Update comments state
+  const handleDeleteComment = async (index) => {
+    if(!connectedUser) return;
+    try {
+      const response = await fetch(`http://localhost:8000/api/videos/${id}/comments/${index}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const updatedComments = await response.json();
+
+      setVideo((prevVideo) => ({
+        ...prevVideo,
+        comments: updatedComments,
+      }));
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
   };
 
-  const handleLikeVideo = () => {
-    setVideoLikes(videoLikes + 1); // Increment likes state
-    addLike(id); // Call addLike function passed as a prop
+  const handleLikeVideo = async () => {
+    if (!userConnect) return; // Return early if the user is not connected
+    try {
+      const response = await fetch(`http://localhost:8000/api/videos/${id}/like`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setVideo((prevVideo) => ({ ...prevVideo, likes: data.likes, dislikes: data.dislikes }));
+    } catch (error) {
+      console.error('Error liking video:', error);
+    }
   };
 
-  const handleDislikeVideo = () => {
-    setVideoDislikes(videoDislikes + 1); // Increment dislikes state
-    addDislike(id); // Call addDislike function passed as a prop
+  const handleDislikeVideo = async () => {
+    if (!userConnect) return; // Return early if the user is not connected
+    try {
+      const response = await fetch(`http://localhost:8000/api/videos/${id}/dislike`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setVideo((prevVideo) => ({ ...prevVideo, dislikes: data.dislikes, likes: data.likes }));
+    } catch (error) {
+      console.error('Error disliking video:', error);
+    }
   };
 
   const handleShareVideo = () => {
-    const videoUrl = window.location.href; // Get current URL
+    const videoUrl = window.location.href;
     if (navigator.share) {
-      // Use Web Share API if available
-      navigator.share({
-        title: 'Check out this video!',
-        url: videoUrl,
-      }).catch((error) => console.log('Error sharing:', error));
+      navigator
+        .share({
+          title: 'Check out this video!',
+          url: videoUrl,
+        })
+        .catch((error) => console.log('Error sharing:', error));
     } else {
-      // Fallback to copying URL to clipboard
-      navigator.clipboard.writeText(videoUrl).then(() => {
-        alert('Video URL copied to clipboard!');
-      }).catch((error) => console.log('Error copying URL:', error));
+      navigator.clipboard
+        .writeText(videoUrl)
+        .then(() => {
+          alert('Video URL copied to clipboard!');
+        })
+        .catch((error) => console.log('Error copying URL:', error));
     }
   };
 
@@ -78,10 +181,10 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
       <div className="row">
         <nav className="nav">
           <button className="nav-link btn" onClick={handleLikeVideo} disabled={!userConnect}>
-            <i className="bi bi-hand-thumbs-up"></i> {videoLikes}
+            <i className="bi bi-hand-thumbs-up"></i> {video.likes}
           </button>
           <button className="nav-link btn" onClick={handleDislikeVideo} disabled={!userConnect}>
-            <i className="bi bi-hand-thumbs-down"></i> {videoDislikes}
+            <i className="bi bi-hand-thumbs-down"></i> {video.dislikes}
           </button>
           <button className="nav-link btn" onClick={handleShareVideo}>
             <i className="bi bi-share"></i>
@@ -102,13 +205,15 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
               required
             ></textarea>
           </div>
-          <button type="submit" className="btn btn-primary mt-2">Submit</button>
+          <button type="submit" className="btn btn-primary mt-2">
+            Submit
+          </button>
         </form>
       )}
 
       <ul className="list-group mt-3">
-        {comments.map((comment, index) => (
-          <li key={index} className="list-group-items">
+        {video.comments.map((comment, index) => (
+          <div key={index} className="list-group-items">
             {editIndex === index ? (
               userConnect && (
                 <form onSubmit={(e) => handleEditCommentSubmit(e, index)}>
@@ -121,7 +226,9 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
                       required
                     ></textarea>
                   </div>
-                  <button type="submit" className="btn btn-primary m-2">Save</button>
+                  <button type="submit" className="btn btn-primary m-2">
+                    Save
+                  </button>
                   <button
                     type="button"
                     className="btn btn-secondary m-2"
@@ -133,30 +240,51 @@ function Comments({ id, videoList, addComment, editComment, deleteComment, addLi
               )
             ) : (
               <>
-                <strong><p>{comment.user}:</p></strong>
+                <Link to={`/Myvideos/${encodeURIComponent(comment.userId)}`}>
+                  <strong>
+                    <p>
+                      <img
+                        src={comment.img}
+                        alt=""
+                        style={{
+                          width: '1.5rem',
+                          height: '1.5rem',
+                          borderRadius: '50%',
+                          marginRight: '0.5rem',
+                        }}
+                      />
+                      {comment.user}:
+                    </p>
+                  </strong>
+                </Link>
                 <i>{comment.text}</i>
-                {userConnect && (
+
+                {userConnect && connectedUser._id === comment.userId && (
                   <div>
                     <button
-                      className="alert alert-info p-1 m-2" style={{ color: 'blue'}}
+                      className="alert alert-info p-1 m-2"
+                      style={{ color: 'blue' }}
                       onClick={() => {
-                      setEditIndex(index);
-                      setEditedComment(comment.text);
+                        setEditIndex(index);
+                        setEditedComment(comment.text);
                       }}
-                    ><i className="bi bi-pencil m-1"></i>
+                    >
+                      <i className="bi bi-pencil m-1"></i>
                       Edit
                     </button>
                     <button
-                      className="alert alert-danger p-1 m-2" style={{ color: 'red'}}
+                      className="alert alert-danger p-1 m-2"
+                      style={{ color: 'red' }}
                       onClick={() => handleDeleteComment(index)}
-                    ><i className="bi bi-trash m-1"></i>
+                    >
+                      <i className="bi bi-trash m-1"></i>
                       Delete
                     </button>
                   </div>
                 )}
               </>
             )}
-          </li>
+          </div>
         ))}
       </ul>
     </div>

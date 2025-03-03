@@ -1,41 +1,58 @@
 import { Link } from 'react-router-dom';
 import './Sign.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 
-function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUser, setconnectedUser }) {
-  // State variables for username, password, and error message
+function Signin({ darkMode }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  console.log(userConnect); // Log user connection status
-  console.log(usersData); // Log users data
+  const {userConnect, setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
+  
+  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  // Function to handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission
+    try {
+      const response = await fetch('http://localhost:8000/api/tokens', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+     
+      if (response.ok) {
+        const data = await response.json();
+        const { user, token } = data;
+        console.log('message from signin' ,user);
 
-    // Find the user with matching username and password
-    const user = usersData.find(
-      (user) => user.username === username && user.password === password
-    );
-
-    if (user) {
-      setError(''); // Clear error message
-      if (!userConnect) {
-        setuserConnect(true); // Set user connection status to true
-        setconnectedUser(user); // Set the connected user
+        // Store the token in local storage
+        localStorage.setItem('jwtToken', token);
+        console.log(token)
+        setError('');
+        setuserConnect(true);
+        setconnectedUser(user);
+        console.log("message from sign in in web", connectedUser)
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || 'Invalid username or password');
       }
-      // Perform further actions on successful sign-in
-    } else {
-      setError('Invalid username or password'); // Set error message
+    } catch (error) {
+      console.log(error)
+      setError('An error occurred. Please try again.');
     }
   };
 
-  // Function to handle dark mode toggle
   const handleDarkModeToggle = () => {
-    const event = new Event('toggleDarkMode'); // Create a new event for dark mode toggle
-    window.dispatchEvent(event); // Dispatch the event
+    const event = new Event('toggleDarkMode');
+    window.dispatchEvent(event);
   };
+
+  useEffect(() => {
+    console.log('userConnect:', userConnect);
+    console.log('connectedUser:', connectedUser);
+  }, [userConnect, connectedUser]);
 
   return (
     <>
@@ -45,9 +62,7 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
             <form
               id="registration-form"
               className="cardreg p-4 shadow-lg"
-              onSubmit={(event) => {
-                handleSubmit(event); // Calling the function with event argument
-              }}
+              onSubmit={handleSubmit}
               noValidate
             >
               <div className="d-flex justify-content-end">
@@ -91,7 +106,7 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
               </div>
 
               {error && <div className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>{error}</div>}
-              {userConnect && <div className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}><strong>You signed in successfully.</strong> Click the Home button</div>}
+              {userConnect && <div className="alert alert-success" style={{ color: 'green', textAlign: 'center', marginTop: '1rem' }}><strong>You signed in successfully.</strong> Click the Home button</div>}
               <div className="d-flex justify-content-between">
                 {!userConnect && <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>}
                 <Link to='/'><button className="btn btn-sign">Home</button></Link>
@@ -104,6 +119,5 @@ function Signin({ darkMode, usersData, userConnect, setuserConnect, connectedUse
     </>
   );
 }
-
 
 export default Signin;
