@@ -18,7 +18,7 @@
 ![MongoDB Screenshot](https://github.com/Nadav1542/MainProject/blob/ex04-with-wiki/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20221113.png)
 
 ### Step 2: Start the TCP Server
-- **note**: To download the tcp server node js and webapp go to the MainProject reppsotory in git and pull it.
+- **note**: To download the tcp server node js and webapp go to the MainProject repository in git and pull it.
 - **Command**: Press the arrow
 - **Description**: Just press the play arrow and the C++ server will start.
 ![Run TCP](https://github.com/Nadav1542/MainProject/blob/2bb1a7e0721ae59059cbf82869cc1f5ce45462d2/WIKI/pictures%20for%20wiki/Screenshot%202024-09-02%20220940.png)
