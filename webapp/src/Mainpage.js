@@ -73,7 +73,7 @@ console.log(filter)
         </div>
       </div>
 
-      <div className="row">
+      <div className="flex justify-center">
         <Quicksearch darkMode={darkMode} />
       </div>
     <div className="row m-4">
