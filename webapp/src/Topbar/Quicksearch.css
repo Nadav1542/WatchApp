@@ -31,7 +31,6 @@ body, html {
 
 .nav-pills-container {
     margin-top: 6px;
-    margin-left: 5%;
     display: flex;
     justify-content: flex-start;
 }

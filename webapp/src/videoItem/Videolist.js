@@ -8,7 +8,10 @@ import { VideoContext } from '../contexts/VideoContext';
 function Videolist() {
  
   const { videoList } = useContext(VideoContext);
-  
+  // Check if videoList is empty or undefined
+  if (!videoList || videoList.length === 0) {
+    return <div className="flex justify-center items-center text-gray-500">No videos available</div>;
+  }
   return (
     <>
       {/* Iterate over the videoList array and render a VideoItem for each video */}
@@ -22,3 +25,4 @@ function Videolist() {
 }
 
 export default Videolist;
+

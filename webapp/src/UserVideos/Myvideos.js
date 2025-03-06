@@ -19,7 +19,7 @@ function Myvideos({ darkMode }) {
   const [success, setSuccess] = useState('');
 
   const navigate = useNavigate();
-
+  //sign out
   const handleSignedout = (e) => {
     e.preventDefault();
 
@@ -33,7 +33,7 @@ function Myvideos({ darkMode }) {
     navigate("/");
     console.log('User logged out');
   };
-
+  //delete user
   const handleDeleteUser = async () => {
     if (!userConnect) return;
 
@@ -55,7 +55,7 @@ function Myvideos({ darkMode }) {
       console.error('Failed to delete user', error);
     }
   };
-
+  //edit user details
   const handleEditUserDetails = async (event) => {
     event.preventDefault();
     const readFileAsBase64 = (file) => {
@@ -111,7 +111,7 @@ function Myvideos({ darkMode }) {
       setSuccess('');
     }
   };
-
+  
   const fetchUser = async () => {
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}`, {
@@ -163,7 +163,7 @@ function Myvideos({ darkMode }) {
               >
                 <i className="bi bi-pencil"></i> Edit Details
               </button>
-  
+            {/* Modal for editing user details */}
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog">
                 <div className={`modal-content ${darkMode ? 'dark-mode' : ''}`}>
@@ -261,11 +261,11 @@ function Myvideos({ darkMode }) {
         </div>
       )}
       <div className="row m-4">
-        <VideoProvider userId={id}>  
+          <VideoProvider userId={id}>  
           <Videolist/>
-        </VideoProvider>
+          </VideoProvider>
+        </div>
       </div>
-    </div>
   );
 }
 

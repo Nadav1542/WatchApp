@@ -77,6 +77,7 @@ function Videowatch({  darkMode }) {
       checkJWT();
     }
     if (connectedUser && id) {
+      
       console.log('User id ', connectedUser._id, 'video id' , id);
       updateRecommendation(connectedUser._id, id);
     }
