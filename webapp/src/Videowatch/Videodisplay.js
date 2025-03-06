@@ -1,4 +1,5 @@
 import './Singlevideo.css';
+import '../videoItem/Card.css'
 import { useState, useEffect, useContext } from 'react';
 import Comments from './Comments';
 import { useNavigate, Link } from 'react-router-dom';
@@ -175,18 +176,19 @@ function Videodisplay({ id, creator, darkMode }) {
   }
 
   return (
-    <>
+  <>
       <div className="row m-4">
-        <div>
+        
           <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay />
           <div className="card-body singlevideo">
             <div className="card-text">
-              <>
-                <strong><Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}>{video.creatorName}</Link></strong>
-              </>
-              <h3>{title}</h3>
-              <i>{description}</i>
-              <div>{views} views - {uploadTime}</div>
+              <div className="card-body">
+                        <h6 className="video-title">{video.title}</h6> {/* Video Title */}
+                        </div>
+                        <div className="card-footer">
+                        <strong><Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}><i className="video-uploader">{video.creatorName}</i></Link></strong> {/* Uploader Name */}
+                        <p className="video-uploader">{video.views} views - {formatDate(video.uploadtime)}</p> {/* Video views and upload time */}
+                        </div>
             </div>
             {connectedUser && connectedUser._id === video.creator && (
               <>
@@ -239,7 +241,7 @@ function Videodisplay({ id, creator, darkMode }) {
               </>
             )}
           </div>
-        </div>
+        
       </div>
       <Comments id={id} video={video} setVideo={setVideo} />
     </>

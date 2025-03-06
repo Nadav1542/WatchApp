@@ -29,11 +29,11 @@ function VideoItem({ video }) {
 
 
   return (
-    <div className="card col-md-4 col-lg-3 col-sm-6 border-0 p-2">
+    <div className="card col-md-4 col-lg-3 col-sm-6">
       <Link to={`/videowatch/${encodeURIComponent(video._id)}/${encodeURIComponent(video.creator)}`}>
         <video
           src={`http://localhost:8000/videowatch/${video.source}`} // Video source
-          className="card-img-top" // CSS class for styling
+          className="card-img-top rounded" // CSS class for styling
           ref={videoRef} // Reference to the video element
           onMouseEnter={handleMouseEnter} // Play video on mouse enter
           onMouseLeave={handleMouseLeave} // Pause and reset video on mouse leave
@@ -41,9 +41,11 @@ function VideoItem({ video }) {
           loop // Loop the video
         />
         <div className="card-body">
-          <h4 className="card-text">{video.title}</h4> {/* Video title */}
-          <p className="card-text"><i>{video.creatorName}</i></p>
-          <p className="card-text">{video.views} views - {formatDate(video.uploadtime)}</p> {/* Video views and upload time */}
+        <h4 className="video-title">{video.title}</h4> {/* Video Title */}
+        </div>
+        <div className="card-footer">
+        <i className="video-uploader">{video.creatorName}</i> {/* Uploader Name */}
+        <p className="video-uploader">{video.views} views - {formatDate(video.uploadtime)}</p> {/* Video views and upload time */}
         </div>
       </Link>
     </div>

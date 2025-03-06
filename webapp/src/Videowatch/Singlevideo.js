@@ -1,4 +1,5 @@
 import './Singlevideo.css';
+import '../videoItem/Card.css'
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { VideoContext } from '../contexts/VideoContext';
@@ -30,22 +31,23 @@ function Singlevideo({ video }) {
         <li className="list-group-items m-3 d-flex align-items-center border-0">
             <div className="leftvideos border-0">
                 <Link to={`/videowatch/${encodeURIComponent(video._id)}/${encodeURIComponent(video.creator)}`}>
-                    <video
-                        src={`http://localhost:8000/videowatch/${video.source}`}
-                        className="card-img-top rounded"
-                        alt={video.title}
-                        ref={videoRef}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                        muted
-                        loop
-                    />
-                    <div className="card-body singlevideo">
-                        <p className="card-text">{video.title}</p>
-                        <p className="card-text">{video.description}</p>
-                        <p className="card-text">{video.views} views - {formatDate(video.uploadtime)}</p>
-                    </div>
-                </Link>
+                        <video
+                          src={`http://localhost:8000/videowatch/${video.source}`} // Video source
+                          className="card-img-top rounded" // CSS class for styling
+                          ref={videoRef} // Reference to the video element
+                          onMouseEnter={handleMouseEnter} // Play video on mouse enter
+                          onMouseLeave={handleMouseLeave} // Pause and reset video on mouse leave
+                          muted // Mute the video
+                          loop // Loop the video
+                        />
+                        <div className="card-body">
+                        <h4 className="video-title">{video.title}</h4> {/* Video Title */}
+                        </div>
+                        <div className="card-footer">
+                        <i className="video-uploader">{video.creatorName}</i> {/* Uploader Name */}
+                        <p className="video-uploader">{video.views} views - {formatDate(video.uploadtime)}</p> {/* Video views and upload time */}
+                        </div>
+                      </Link>
             </div>
         </li>
     );

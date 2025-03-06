@@ -1,18 +1,83 @@
-
 .card {
-    padding: 2px;
+    padding: 0;
     background-color: transparent;
-    border-radius: 15px;
+    border: none;
     transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%; /* Ensures it does not exceed container */
+    overflow: hidden; /* Prevents content from spilling out */
 }
+
 .dark-mode .card {
     color: var(--clr-light);
 }
-.dark-mode .card:hover {
-    background-color: #ffffff21;
+
+/* Video Title - Prevent Overflow */
+.video-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f0f0f;
+    line-height: 1.4;
+    margin-bottom: 2px;
+    text-align: left;
+    white-space: normal; /* Allows text to wrap */
+    overflow: hidden; /* Prevents overflow */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limits to 2 lines */
+    -webkit-box-orient: vertical;
+    max-width: 100%; /* Ensures it fits within the card */
 }
+
+/* Uploader and Video Info */
+.video-uploader, .video-info {
+    font-size: 0.85rem;
+    color: #606060;
+    text-align: left;
+    white-space: nowrap; /* Keeps all info in a single line */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* Dark Mode Adjustments */
+.dark-mode .video-title {
+    color: #fff;
+}
+
+.dark-mode .video-uploader,
+.dark-mode .video-info {
+    color: #aaa;
+}
+
+/* Thumbnail Styling */
+.card-img-top {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover; /* Crops video to fit like YouTube */
+    border-radius: 8px;
+}
+
+/* Align Footer and Body Correctly */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 8px 10px;
+    min-height: 60px; /* Ensures the text section has a consistent height */
+}
+
+/* Ensures Footer is Properly Aligned */
+.card-footer {
+    background: transparent !important;
+    border-top: none;
+    padding: 5px 10px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
 .card:hover {
-    background-color: #00000020;
-    transform: scale(1.05); 
+    transform: scale(1.03);
     cursor: pointer;
 }
