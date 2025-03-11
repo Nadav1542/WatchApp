@@ -27,5 +27,10 @@
 .dark-mode .btn-close {
   filter: invert(1);
 }
+.display-video-title {
+  font-size: 1.5rem; /* Increase size */
+  font-weight: bold;  /* Make it bold */
+}
+
 
 
