@@ -192,7 +192,7 @@ function Comments({ id, video, setVideo }) {
           </button>
         </nav>
       </div>
-
+      
       {userConnect && (
         <form onSubmit={handleCommentSubmit} className="mt-3">
           <div className="form-group">
@@ -241,24 +241,25 @@ function Comments({ id, video, setVideo }) {
               )
             ) : (
               <>
-                <Link to={`/Myvideos/${encodeURIComponent(comment.userId)}`}>
-                  <strong>
-                    <p>
-                      <img
-                        src={comment.img}
-                        alt=""
-                        style={{
-                          width: '1.5rem',
-                          height: '1.5rem',
-                          borderRadius: '50%',
-                          marginRight: '0.5rem',
-                        }}
-                      />
-                      {comment.user}:
-                    </p>
-                  </strong>
-                </Link>
-                <i>{comment.text}</i>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+  <Link 
+    to={`/Myvideos/${encodeURIComponent(comment.userId)}`} 
+    style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}
+  >
+    <img
+      src={comment.img}
+      alt=""
+      style={{
+        width: '1.5rem',
+        height: '1.5rem',
+        borderRadius: '50%',
+        marginRight: '0.5rem',
+      }}
+    />
+    <strong style={{ marginRight: '0.3rem', color: 'black' }}>{comment.user}:</strong>
+  </Link>
+  <i>{comment.text}</i>
+</div>
 
                 {userConnect && connectedUser._id === comment.userId && (
                   <div>
@@ -288,7 +289,9 @@ function Comments({ id, video, setVideo }) {
           </div>
         ))}
       </ul>
+      
     </div>
+    
   );
 }
 
