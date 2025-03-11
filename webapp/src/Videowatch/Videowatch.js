@@ -107,7 +107,9 @@ function Videowatch({  darkMode }) {
                 <SearchBar darkMode={darkMode} setFilter={setFilter} />
               </div>
             </div>
-                <Videodisplay id={id} creator={creator} darkMode={darkMode}/>
+
+            <Videodisplay id={id} creator={creator} darkMode={darkMode} />
+          
             </div>
         </div>
       </div>
