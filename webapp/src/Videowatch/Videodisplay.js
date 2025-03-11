@@ -243,7 +243,6 @@ function Videodisplay({ id, creator, darkMode }) {
           <Comments id={id} video={video} setVideo={setVideo} />
             
           </div>
-        <Comments id={id} video={video} setVideo={setVideo} />
       </div>
 
       
