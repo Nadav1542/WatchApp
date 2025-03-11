@@ -178,9 +178,10 @@ function Videodisplay({ id, creator, darkMode }) {
   return (
   <>
       <div className="row m-4">
-        
+      
           <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay />
-          <div className="card-body singlevideo">
+         
+          
             <div className="card-text">
               <div className="card-body">
                         <h6 className="video-title">{video.title}</h6> {/* Video Title */}
@@ -240,10 +241,12 @@ function Videodisplay({ id, creator, darkMode }) {
                 </div>
               </>
             )}
-          </div>
-        
+          
+          <Comments id={id} video={video} setVideo={setVideo} />
       </div>
-      <Comments id={id} video={video} setVideo={setVideo} />
+      
+      
+      
     </>
   );
 }
