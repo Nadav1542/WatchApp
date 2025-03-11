@@ -113,13 +113,6 @@ function Videodisplay({ id, creator, darkMode }) {
 
   const handleTitleChange = (event) => setTitle(event.target.value);
   const handleDescriptionChange = (event) => setDescription(event.target.value);
-  const handleEditTitle = () => setIsEditingTitle(!isEditingTitle);
-  const handleEditDescription = () => setIsEditingDescription(!isEditingDescription);
-
-  const handleSaveTitle = () => {
-    setIsEditingTitle(false);
-    handleEdit();
-  };
 
   const handleSaveDescription = () => {
     setIsEditingDescription(false);
@@ -178,18 +171,16 @@ function Videodisplay({ id, creator, darkMode }) {
   return (
   <>
       <div className="row m-4">
-        
           <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay />
           <div className="card-body singlevideo">
-            <div className="card-text">
-              <div className="card-body">
-                        <h6 className="video-title">{video.title}</h6> {/* Video Title */}
-                        </div>
-                        <div className="card-footer">
-                        <strong><Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}><i className="video-uploader">{video.creatorName}</i></Link></strong> {/* Uploader Name */}
-                        <p className="video-uploader">{video.views} views - {formatDate(video.uploadtime)}</p> {/* Video views and upload time */}
-                        </div>
-            </div>
+              
+                <h6 className="display-video-title">{video.title}</h6> {/* Video Title */} 
+              
+                <div>
+                  <strong> <Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}> <i className="video-uploader">{video.creatorName}</i> </Link> </strong> {/* Uploader Name */}
+                  <p className="video-uploader">{video.views} views - {formatDate(video.uploadtime)}</p> {/* Video views and upload time */} 
+                </div>
+            {/* edit video details */}
             {connectedUser && connectedUser._id === video.creator && (
               <>
                 <button
@@ -206,14 +197,18 @@ function Videodisplay({ id, creator, darkMode }) {
                         <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
+                      
                       <div className="modal-body">
-                        <input
-                          type="text"
+
+                        {/* title change */}
+                        <input type="text"
                           value={title}
                           onChange={handleTitleChange}
                           placeholder="New title"
                           className="form-control d-inline w-auto"
                         />
+
+                        {/* discription change */}
                         <p className="mt-3">
                           <input
                             type="text"
@@ -223,6 +218,8 @@ function Videodisplay({ id, creator, darkMode }) {
                             className="form-control d-inline w-auto"
                           />
                         </p>
+      
+                        {/* delete Video */}
                         {connectedUser && connectedUser._id === video.creator && (
                           <p className="mt-3">
                             <button onClick={handleDelete} className="btn btn-sm btn-outline-danger ms-2" data-bs-dismiss="modal">
@@ -230,6 +227,7 @@ function Videodisplay({ id, creator, darkMode }) {
                             </button>
                           </p>
                         )}
+
                       </div>
                       <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -240,10 +238,12 @@ function Videodisplay({ id, creator, darkMode }) {
                 </div>
               </>
             )}
+            
           </div>
-        
+        <Comments id={id} video={video} setVideo={setVideo} />
       </div>
-      <Comments id={id} video={video} setVideo={setVideo} />
+
+      
     </>
   );
 }
