@@ -2,3 +2,20 @@
     color: gray !important;
 }
 
+.dark-mode textarea::placeholder {
+  color: #ccc !important; /* or any lighter color that fits your theme */
+}
+
+.comment-container {
+  position: relative;
+  padding: 4px;
+}
+
+.comment-actions {
+  display: none;
+}
+
+.comment-container:hover .comment-actions {
+  display: inline-flex;
+  gap: 8px;
+}

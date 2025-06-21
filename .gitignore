@@ -14,6 +14,7 @@
 
 # production
 /webapp/build
+/c++_server/recommendation_server
 
 # misc
 .DS_Store

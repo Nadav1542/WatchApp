@@ -8,11 +8,14 @@ import Videowatch from './Videowatch/Videowatch';
 import Addingvideo from './UserVideos/Addingvideo';
 import Myvideos from './UserVideos/Myvideos';
 import AppProvider from './contexts/AppProvider';
+import ScrollingUp from "./ScrollingUp";
+
 
 function App() {
   return (
     <DarkModeProvider>
       <BrowserRouter>
+        <ScrollingUp/>
         <AppProvider>
         <AppContent />
         </AppProvider>

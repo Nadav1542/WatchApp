@@ -241,7 +241,7 @@ function Comments({ id, video, setVideo }) {
               )
             ) : (
               <>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div className = "comment-container" style={{ display: 'flex', alignItems: 'center' }}>
   <Link 
     to={`/Myvideos/${encodeURIComponent(comment.userId)}`} 
     style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}
@@ -256,13 +256,13 @@ function Comments({ id, video, setVideo }) {
         marginRight: '0.5rem',
       }}
     />
-    <strong style={{ marginRight: '0.3rem', color: 'black' }}>{comment.user}:</strong>
+    <strong style={{ marginRight: '0.3rem'}}>{comment.user}:</strong>
   </Link>
   <i>{comment.text}</i>
-</div>
+
 
                 {userConnect && connectedUser._id === comment.userId && (
-                  <div>
+                  <div className="comment-actions"> 
                     <button
                       className="alert alert-info p-1 m-2"
                       style={{ color: 'blue' }}
@@ -284,6 +284,7 @@ function Comments({ id, video, setVideo }) {
                     </button>
                   </div>
                 )}
+                </div>
               </>
             )}
           </div>
