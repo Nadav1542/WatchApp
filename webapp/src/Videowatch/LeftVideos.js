@@ -15,7 +15,7 @@ function LeftVideos({ videoId, userId }) {
  useEffect(() => {
     const fetchRecommendedVideos = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/users/${userId}/recommendedVideo/${videoId}`);
+        const response = await fetch(`/api/users/${userId}/recommendedVideo/${videoId}`);
         if (response.ok) {
           const data = await response.json();
           setVideoList(data);

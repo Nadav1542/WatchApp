@@ -32,7 +32,7 @@ function Singlevideo({ video }) {
             <div className="leftvideos border-0">
                 <Link to={`/videowatch/${encodeURIComponent(video._id)}/${encodeURIComponent(video.creator)}`}>
                         <video
-                          src={`http://localhost:8000/videowatch/${video.source}`} // Video source
+                          src={`/videowatch/${video.source}`} // Video source
                           className="card-img-top rounded" // CSS class for styling
                           ref={videoRef} // Reference to the video element
                           onMouseEnter={handleMouseEnter} // Play video on mouse enter

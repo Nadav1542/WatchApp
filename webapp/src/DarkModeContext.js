@@ -1,12 +1,13 @@
 // DarkModeContext.js
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 // Create a Context for the dark mode
-const DarkModeContext = createContext();
+export const DarkModeContext = createContext();
+
 
 // Custom hook to use the dark mode context
 export const useDarkMode = () => useContext(DarkModeContext);
+
 
 // DarkModeProvider component manages dark mode state and provides context
 export const DarkModeProvider = ({ children }) => {

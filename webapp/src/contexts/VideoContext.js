@@ -26,7 +26,7 @@ export const VideoProvider = ({ children, userId = null, filter = null }) => {
         let options;
 
         if (filter && !userId) {
-          url = 'http://localhost:8000/api/videos/filter';
+          url = '/api/videos/filter';
           options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -34,8 +34,8 @@ export const VideoProvider = ({ children, userId = null, filter = null }) => {
           };
         } else {
           url = userId
-            ? `http://localhost:8000/api/users/${userId}/videos`
-            : 'http://localhost:8000/api/videos';
+            ? `/api/users/${userId}/videos`
+            : '/api/videos';
           options = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }

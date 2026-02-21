@@ -5,9 +5,11 @@ import Videolist from '../videoItem/Videolist';
 import SearchBar from '../Topbar/SearchBar';
 import { UserContext } from '../contexts/UserContext';
 import { VideoProvider } from '../contexts/VideoContext';
+import { useDarkMode } from '../DarkModeContext';
 import './myvideos.css'
 
-function Myvideos({ darkMode }) {
+function Myvideos() {
+  const { darkMode } = useDarkMode();
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const { deleteUser, setuserConnect, userConnect, connectedUser } = useContext(UserContext);
@@ -38,7 +40,7 @@ function Myvideos({ darkMode }) {
     if (!userConnect) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/api/users/${id}`, {
+      const response = await fetch(`/api/users/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +83,7 @@ function Myvideos({ darkMode }) {
 
     console.log(updateUser);
     try {
-      const response = await fetch(`http://localhost:8000/api/users/${id}`, {
+      const response = await fetch(`/api/users/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +116,7 @@ function Myvideos({ darkMode }) {
   
   const fetchUser = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/users/${id}`, {
+      const response = await fetch(`/api/users/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

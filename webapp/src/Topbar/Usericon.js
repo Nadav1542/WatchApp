@@ -19,7 +19,7 @@ function Usericon() {
             const userId = connectedUser._id; // Extract user ID
             
             // Send sign-out request to the server with userId in the URL
-            const response = await fetch(`http://localhost:8000/api/users/${userId}/signout`, {
+            const response = await fetch(`/api/users/${userId}/signout`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

@@ -3,12 +3,13 @@ import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { VideoContext } from '../contexts/VideoContext';
 import { UserContext } from '../contexts/UserContext';
-
+import { useDarkMode } from '../DarkModeContext';
 
 // Addingvideo component for uploading a new video
-function Addingvideo({ darkMode }) {
+function Addingvideo() {
+    
     // State variables for video details and error handling
-
+    const { darkMode } = useDarkMode();
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const {  setVideolist,videoList } = useContext(VideoContext);
@@ -68,7 +69,7 @@ function Addingvideo({ darkMode }) {
             newFormData.append('file', formData.file)
             
             try {
-                const response = await fetch(`http://localhost:8000/api/users/${connectedUser._id}/videos`, {
+                const response = await fetch(`/api/users/${connectedUser._id}/videos`, {
                     method: 'POST', 
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,

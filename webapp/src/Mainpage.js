@@ -7,12 +7,15 @@ import Menu from './Topbar/Menu';
 import Usericon from './Topbar/Usericon';
 import { UserContext } from './contexts/UserContext';
 import { VideoProvider } from './contexts/VideoContext';
+import {useDarkMode} from './DarkModeContext';
 
 
 
-function Mainpage({darkMode}) {
+function Mainpage() {
   const {setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
-  
+  const {darkMode} = useDarkMode();
+
+
   // Function to check JWT in local storage and connect the user
   const checkJWT = async () => {
     const token = localStorage.getItem('jwtToken');
@@ -24,7 +27,7 @@ function Mainpage({darkMode}) {
         const currentTime = Date.now() / 1000; // Current time in seconds
         if (decodedToken.exp > currentTime) {
           // Token is valid, fetch user details
-          const response = await fetch(`http://localhost:8000/api/users/${decodedToken.id}`, {
+          const response = await fetch(`/api/users/${decodedToken.id}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
             },

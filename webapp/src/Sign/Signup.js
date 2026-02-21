@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom'; 
-import { useState } from 'react'; 
+import { useState, useContext } from 'react'; 
 import './Sign.css'; 
+import {useDarkMode} from '../DarkModeContext';
 
-function Signup({ darkMode }) {
+function Signup() {
+  const { darkMode } = useDarkMode();
+
   const handleDarkModeToggle = () => {
     const event = new Event('toggleDarkMode');
     window.dispatchEvent(event);
@@ -99,7 +102,7 @@ function Signup({ darkMode }) {
       img: base64Image
     };
     try {
-      let response = await fetch('http://localhost:8000/api/users', {
+      let response = await fetch('/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)

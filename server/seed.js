@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { faker } from '@faker-js/faker';
+import { faker } freom '@faker-js/faker';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

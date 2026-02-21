@@ -7,9 +7,10 @@ import { useParams } from 'react-router-dom';
 import Usericon from '../Topbar/Usericon';
 import {jwtDecode} from 'jwt-decode';
 import { UserContext } from '../contexts/UserContext';
+import { useDarkMode } from '../DarkModeContext';
+function Videowatch() {
 
-function Videowatch({  darkMode }) {
-  
+  const { darkMode } = useDarkMode();
   const { id,creator } = useParams();
   const { setuserConnect, connectedUser, setconnectedUser} = useContext(UserContext);
   const [recommendationUpdated, setRecommendationUpdated] = useState(false);
@@ -24,7 +25,7 @@ function Videowatch({  darkMode }) {
         const currentTime = Date.now() / 1000;
   
         if (decodedToken.exp > currentTime) {
-          const response = await fetch(`http://localhost:8000/api/users/${decodedToken.id}`, {
+          const response = await fetch(`/api/users/${decodedToken.id}`, {
             headers: { 'Authorization': `Bearer ${token}` },
           });
   
@@ -54,7 +55,7 @@ function Videowatch({  darkMode }) {
     const updateRecommendation = async (userId, videoId) => {
         try {
           console.log("reached")
-          const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(userId)}/updateRecommend/${encodeURIComponent(videoId)}`, {
+          const response = await fetch(`/api/users/${encodeURIComponent(userId)}/updateRecommend/${encodeURIComponent(videoId)}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ function Videowatch({  darkMode }) {
       updateRecommendation(connectedUser._id, id);
     }
   
-  }, [connectedUser, checkJWT]);
+  }, [connectedUser, checkJWT, id]);
 
   const [filter, setFilter] = useState('')
  

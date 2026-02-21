@@ -13,36 +13,55 @@
 
 using json = nlohmann::json;
 
+// ANSI color codes for terminal
+#define COLOR_RESET   "\033[0m"
+#define COLOR_GREEN   "\033[32m"
+#define COLOR_YELLOW  "\033[33m"
+#define COLOR_BLUE    "\033[34m"
+#define COLOR_MAGENTA "\033[35m"
+#define COLOR_CYAN    "\033[36m"
+#define COLOR_RED     "\033[31m"
+
+// Helper: Shorten MongoDB ObjectId for display (first 4 + last 4 chars)
+std::string shortId(const std::string& id) {
+    if (id.length() <= 10) return id;
+    return id.substr(0, 4) + ".." + id.substr(id.length() - 4);
+}
+
+// Helper: Log with color
+void log(const std::string& color, const std::string& tag, const std::string& message) {
+    std::cout << color << "[" << tag << "] " 
+              << COLOR_RESET << message << std::endl;
+}
+
 std::vector<std::thread> thread_pool;
 std::map<std::string, std::vector<std::string>> user_watched_map; // Map of user IDs to vectors of video IDs they watched
 std::mutex map_mutex; // Mutex for thread-safe access to the maps
 
 void printUserWatchedMap() {
-    std::lock_guard<std::mutex> lock(map_mutex); // Ensure thread-safe access
-    std::cout << "Current state of user_watched_map:" << std::endl;
+    std::lock_guard<std::mutex> lock(map_mutex);
+    std::cout << COLOR_MAGENTA << "\n╔══════════════════════════════════════════════════╗" << COLOR_RESET << std::endl;
+    std::cout << COLOR_MAGENTA << "║           USER WATCH HISTORY MAP                 ║" << COLOR_RESET << std::endl;
+    std::cout << COLOR_MAGENTA << "╠══════════════════════════════════════════════════╣" << COLOR_RESET << std::endl;
 
     for (const auto& entry : user_watched_map) {
         const std::string& user_id = entry.first;
         const std::vector<std::string>& video_list = entry.second;
 
-        std::cout << "User ID: " << user_id << " watched videos: ";
-        for (const auto& video_id : video_list) {
-            std::cout << video_id << " ";
+        std::cout << COLOR_YELLOW << "║ User: " << shortId(user_id) << COLOR_RESET << " → ";
+        for (size_t i = 0; i < video_list.size(); i++) {
+            std::cout << COLOR_GREEN << shortId(video_list[i]) << COLOR_RESET;
+            if (i < video_list.size() - 1) std::cout << ", ";
         }
         std::cout << std::endl;
     }
-    std::cout << "---------------------------" << std::endl;
+    std::cout << COLOR_MAGENTA << "╚══════════════════════════════════════════════════╝\n" << COLOR_RESET << std::endl;
 }
 
 std::vector<std::string> getRecommendedVideos(const std::string& user_id, const std::string& video_id) {
     std::vector<std::string> recommended_videos;
     std::set<std::string> unique_videos; // To avoid duplicates in the recommendation list
     std::lock_guard<std::mutex> lock(map_mutex); // Ensure thread-safe access
-
-    // Check if the user has watched any videos
-    if (user_watched_map.find(user_id) == user_watched_map.end()) {
-        return recommended_videos; // No videos watched, return empty list
-    }
 
     // Find users who watched the same video
     for (const auto& entry : user_watched_map) {
@@ -60,16 +79,23 @@ std::vector<std::string> getRecommendedVideos(const std::string& user_id, const 
     }
 
     // Print the recommended videos before returning
-    std::cout << "Recommended videos for user " << user_id << " based on video " << video_id << ": ";
-    for (const auto& video : recommended_videos) {
-        std::cout << video << " ";
+    std::cout << COLOR_BLUE << "[RECOMMEND] " << COLOR_RESET 
+              << "For user " << COLOR_YELLOW << shortId(user_id) << COLOR_RESET 
+              << " watching " << COLOR_GREEN << shortId(video_id) << COLOR_RESET << " → ";
+    if (recommended_videos.empty()) {
+        std::cout << COLOR_RED << "(no recommendations)" << COLOR_RESET;
+    } else {
+        for (size_t i = 0; i < recommended_videos.size(); i++) {
+            std::cout << COLOR_GREEN << shortId(recommended_videos[i]) << COLOR_RESET;
+            if (i < recommended_videos.size() - 1) std::cout << ", ";
+        }
     }
     std::cout << std::endl;
     return recommended_videos;
 }
 
 void handleClient(int client_sock, int client_id) {
-    std::cout << "Handling client " << client_id << " in thread: " << std::this_thread::get_id() << std::endl;
+    log(COLOR_GREEN, "CONNECT", "Client #" + std::to_string(client_id) + " connected, thread: " + std::to_string(std::hash<std::thread::id>{}(std::this_thread::get_id()) % 10000));
 
     char buffer[4096];
     std::string user_id;
@@ -79,11 +105,10 @@ void handleClient(int client_sock, int client_id) {
     int read_bytes = recv(client_sock, buffer, sizeof(buffer), 0);
     if (read_bytes > 0) {
         std::string message(buffer, read_bytes);
-        std::cout << "Raw message received from client " << client_id << ": " << message << std::endl;
         user_id = message;
-        std::cout << "User ID received: " << user_id << std::endl;
+        log(COLOR_YELLOW, "AUTH", "Client #" + std::to_string(client_id) + " identified as user " + shortId(user_id));
     } else {
-        std::cerr << "Failed to receive user ID from client " << client_id << std::endl;
+        log(COLOR_RED, "ERROR", "Failed to receive user ID from client #" + std::to_string(client_id));
         close(client_sock);
         return;
     }
@@ -94,7 +119,6 @@ void handleClient(int client_sock, int client_id) {
         read_bytes = recv(client_sock, buffer, sizeof(buffer), 0);
         if (read_bytes > 0) {
             std::string message(buffer, read_bytes);
-            std::cout << "Received from user " << user_id << " (client " << client_id << "): " << message << std::endl;
 
             try {
                 // Parse the JSON message
@@ -103,16 +127,16 @@ void handleClient(int client_sock, int client_id) {
                 // Check the type of the message
                 if (json_message["type"] == "WATCHED_VIDEO") {
                     std::string video_id = json_message["videoId"];
-                    std::string user_id = json_message["userId"];
+                    std::string msg_user_id = json_message["userId"];
                     {
                         std::lock_guard<std::mutex> lock(map_mutex);
-                        user_watched_map[user_id].push_back(video_id);  // Add video ID to the list of videos watched by the user
-                        std::cout << "User " << user_id << " watched video " << video_id << std::endl;
+                        user_watched_map[msg_user_id].push_back(video_id);
                     }
-                    printUserWatchedMap();  // Print the map for debugging
+                    log(COLOR_GREEN, "WATCHED", "User " + shortId(msg_user_id) + " watched video " + shortId(video_id));
+                    printUserWatchedMap();
                 } else if (json_message["type"] == "GET_RECOMMENDATIONS") {
                     std::string video_id = json_message["videoId"];
-                    std::cout << "Generating recommendations for user " << user_id << std::endl;
+                    log(COLOR_BLUE, "REQUEST", "User " + shortId(user_id) + " requesting recommendations for video " + shortId(video_id));
 
                     std::vector<std::string> recommendations = getRecommendedVideos(user_id, video_id);
 
@@ -123,13 +147,13 @@ void handleClient(int client_sock, int client_id) {
 
                     std::string response = response_json.dump();
                     send(client_sock, response.c_str(), response.size(), 0);
-                    std::cout << "Sent recommendations to user " << user_id << ": " << response << std::endl;
+                    log(COLOR_CYAN, "RESPONSE", "Sent " + std::to_string(recommendations.size()) + " recommendations to user " + shortId(user_id));
                 }
             } catch (const std::exception& e) {
-                std::cerr << "Failed to parse message as JSON: " << e.what() << std::endl;
+                log(COLOR_RED, "ERROR", std::string("JSON parse failed: ") + e.what());
             }
         } else if (read_bytes == 0) {
-            std::cout << "User " << user_id << " (client " << client_id << ") disconnected." << std::endl;
+            log(COLOR_YELLOW, "DISCONNECT", "User " + shortId(user_id) + " (client #" + std::to_string(client_id) + ") disconnected");
             break;
         } else {
             perror("Error reading from client");
@@ -143,7 +167,7 @@ int main() {
     const int server_port = 5555;
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
-        std::cerr << "Error creating socket" << std::endl;
+        log(COLOR_RED, "FATAL", "Error creating socket");
         return 1;
     }
 
@@ -154,16 +178,23 @@ int main() {
     server_addr.sin_port = htons(server_port);
 
     if (bind(sock, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
-        std::cerr << "Error binding socket" << std::endl;
+        log(COLOR_RED, "FATAL", "Error binding socket - port " + std::to_string(server_port) + " may be in use");
         close(sock);
         return 1;
     }
 
     if (listen(sock, 5) < 0) {
-        std::cerr << "Error listening on socket" << std::endl;
+        log(COLOR_RED, "FATAL", "Error listening on socket");
         close(sock);
         return 1;
     }
+
+    std::cout << COLOR_GREEN << "\n";
+    std::cout << "╔═══════════════════════════════════════════════════════════╗\n";
+    std::cout << "║     RECOMMENDATION SERVER RUNNING ON PORT " << server_port << "            ║\n";
+    std::cout << "║     Waiting for connections...                            ║\n";
+    std::cout << "╚═══════════════════════════════════════════════════════════╝\n";
+    std::cout << COLOR_RESET << std::endl;
 
     int client_id = 0;
     while (true) {
@@ -171,12 +202,11 @@ int main() {
         socklen_t addr_len = sizeof(client_addr);
         int client_sock = accept(sock, (struct sockaddr*)&client_addr, &addr_len);
         if (client_sock < 0) {
-            std::cerr << "Error accepting client" << std::endl;
+            log(COLOR_RED, "ERROR", "Error accepting client");
             continue;
         }
 
         client_id++;
-        std::cout << "Client " << client_id << " connected." << std::endl;
         std::thread client_thread(handleClient, client_sock, client_id);
         thread_pool.push_back(std::move(client_thread));
     }

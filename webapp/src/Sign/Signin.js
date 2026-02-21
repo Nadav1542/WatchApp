@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import './Sign.css';
 import React, { useState, useEffect,useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import { useDarkMode } from '../DarkModeContext';
 
-function Signin({ darkMode }) {
+function Signin() {
+  const { darkMode } = useDarkMode();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -14,7 +16,7 @@ function Signin({ darkMode }) {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/api/tokens', {
+      const response = await fetch('/api/tokens', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

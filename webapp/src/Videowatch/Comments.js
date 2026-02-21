@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Comments.css';
-
 import { UserContext } from '../contexts/UserContext';
 
 
@@ -28,7 +27,7 @@ function Comments({ id, video, setVideo }) {
         userId: connectedUser._id,
       };
       try {
-        const response = await fetch(`http://localhost:8000/api/videos/${id}/comments`, {
+        const response = await fetch(`/api/videos/${id}/comments`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -60,7 +59,7 @@ function Comments({ id, video, setVideo }) {
     event.preventDefault();
     if (editedComment.trim()) {
       try {
-        const response = await fetch(`http://localhost:8000/api/videos/${id}/comments/${index}`, {
+        const response = await fetch(`/api/videos/${id}/comments/${index}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -92,7 +91,7 @@ function Comments({ id, video, setVideo }) {
   const handleDeleteComment = async (index) => {
     if(!connectedUser) return;
     try {
-      const response = await fetch(`http://localhost:8000/api/videos/${id}/comments/${index}`, {
+      const response = await fetch(`/api/videos/${id}/comments/${index}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
@@ -117,7 +116,7 @@ function Comments({ id, video, setVideo }) {
   const handleLikeVideo = async () => {
     if (!userConnect) return; // Return early if the user is not connected
     try {
-      const response = await fetch(`http://localhost:8000/api/videos/${id}/like`, {
+      const response = await fetch(`/api/videos/${id}/like`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +138,7 @@ function Comments({ id, video, setVideo }) {
   const handleDislikeVideo = async () => {
     if (!userConnect) return; // Return early if the user is not connected
     try {
-      const response = await fetch(`http://localhost:8000/api/videos/${id}/dislike`, {
+      const response = await fetch(`/api/videos/${id}/dislike`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

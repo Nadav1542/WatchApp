@@ -31,7 +31,7 @@ function Videodisplay({ id, creator, darkMode }) {
         const decodedToken = jwtDecode(token);
         const currentTime = Date.now() / 1000;
         if (decodedToken.exp > currentTime) {
-          const response = await fetch(`http://localhost:8000/api/users/${decodedToken.id}`, {
+          const response = await fetch(`/api/users/${decodedToken.id}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
             },
@@ -66,7 +66,7 @@ function Videodisplay({ id, creator, darkMode }) {
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
+        const response = await fetch(`/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
@@ -91,7 +91,7 @@ function Videodisplay({ id, creator, darkMode }) {
 
     const incrementViews = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}/views`, {
+        const response = await fetch(`/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}/views`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ function Videodisplay({ id, creator, darkMode }) {
 
     const updatedVideo = { title, description };
     try {
-      const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
+      const response = await fetch(`/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ function Videodisplay({ id, creator, darkMode }) {
     if (!connectedUser) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
+      const response = await fetch(`/api/users/${encodeURIComponent(creator)}/videos/${encodeURIComponent(id)}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ function Videodisplay({ id, creator, darkMode }) {
   <>
       <div className="row m-4">
       
-          <video src={`http://localhost:8000/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay />
+          <video src={`/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay />
           <div className="card-body singlevideo">
               
                 <h6 className="display-video-title">{video.title}</h6> {/* Video Title */} 

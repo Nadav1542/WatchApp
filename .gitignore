@@ -15,6 +15,10 @@
 # production
 /webapp/build
 /c++_server/recommendation_server
+/c++_server/CMakeFiles
+/c++_server/Makefile
+/c++_server/cmake_install.cmake
+/c++_server/CMakeCache.txt
 
 # misc
 .DS_Store
