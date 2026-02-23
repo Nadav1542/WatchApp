@@ -1,5 +1,3 @@
-import './Singlevideo.css';
-import '../videoItem/Card.css'
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { VideoContext } from '../contexts/VideoContext';
@@ -28,24 +26,24 @@ function Singlevideo({ video }) {
     };
 
     return (
-        <li className="list-group-items m-3 d-flex align-items-center border-0">
-            <div className="leftvideos border-0">
-                <Link to={`/videowatch/${encodeURIComponent(video._id)}/${encodeURIComponent(video.creator)}`}>
+        <li className="m-3 flex items-center border-0 list-none">
+            <div className="border-0">
+                <Link to={`/videowatch/${encodeURIComponent(video._id)}/${encodeURIComponent(video.creator)}`} className="!no-underline !text-inherit">
                         <video
-                          src={`/videowatch/${video.source}`} // Video source
-                          className="card-img-top rounded" // CSS class for styling
-                          ref={videoRef} // Reference to the video element
-                          onMouseEnter={handleMouseEnter} // Play video on mouse enter
-                          onMouseLeave={handleMouseLeave} // Pause and reset video on mouse leave
-                          muted // Mute the video
-                          loop // Loop the video
+                          src={`/videowatch/${video.source}`}
+                          className="w-[90%] aspect-video object-cover rounded-lg"
+                          ref={videoRef}
+                          onMouseEnter={handleMouseEnter}
+                          onMouseLeave={handleMouseLeave}
+                          muted
+                          loop
                         />
-                        <div className="card-body">
-                        <h4 className="video-title">{video.title}</h4> {/* Video Title */}
+                        <div className="flex flex-col justify-start px-2.5 py-1">
+                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white leading-snug mb-0.5 line-clamp-2">{video.title}</h4>
                         </div>
-                        <div className="card-footer">
-                        <i className="video-uploader">{video.creatorName}</i> {/* Uploader Name */}
-                        <p className="video-uploader">{video.views} views - {formatDate(video.uploadtime)}</p> {/* Video views and upload time */}
+                        <div className="bg-transparent border-t-0 px-2.5 py-0.5 flex flex-col">
+                          <i className="text-xs text-gray-500 dark:text-gray-400 truncate">{video.creatorName}</i>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{video.views} views - {formatDate(video.uploadtime)}</p>
                         </div>
                       </Link>
             </div>

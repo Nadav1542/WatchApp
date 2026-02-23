@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'; 
 import { useState, useContext } from 'react'; 
-import './Sign.css'; 
 import {useDarkMode} from '../DarkModeContext';
 
 function Signup() {
@@ -126,59 +125,59 @@ function Signup() {
 
   return (
     <>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-7 p-0 bg-body-tertiary rounded">
-            <form id="registration-form" onSubmit={handleSubmit} className="cardreg p-4 shadow-lg needs-validation" noValidate>
-              <div className="d-flex justify-content-end">
-                <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>
+      <div className="max-w-3xl mx-auto px-4">
+        <div className="flex justify-center">
+          <div className="w-full md:w-7/12 p-0 rounded">
+            <form id="registration-form" onSubmit={handleSubmit} className="bg-gray-500/20 dark:bg-black/80 rounded p-4 shadow-lg" noValidate>
+              <div className="flex justify-end">
+                <button className="px-3 py-1.5 bg-gray-900 text-gray-100 dark:bg-gray-100 dark:text-gray-900 rounded whitespace-nowrap" type="button" onClick={handleDarkModeToggle}>
                   <i className={darkMode ? 'bi bi-sun' : 'bi bi-moon-stars-fill'}></i>
                   {darkMode ? ' Light Mode' : ' Dark Mode'}
                 </button>
               </div>
-              <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
+              <div className="flex justify-center items-center flex-col mb-3 text-center">
                 <h2 className="mb-0">Sign Up</h2>
               </div>
 
-              <div className="validinput">Enter your name</div>
-              <div className="form-floating mb-3">
-                <input type="text" name="username" className="form-control" id="floatingInput" onChange={handleChange} placeholder="text" required />
+              <div className="text-xs text-gray-500 dark:text-gray-100">Enter your name</div>
+              <div className="relative mb-3">
+                <input type="text" name="username" className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600 peer placeholder-transparent" id="floatingInput" onChange={handleChange} placeholder="Username" required />
               
-                <label className="float" htmlFor="floatingInput">Username</label>
+                <label className="absolute left-3 -top-2.5 text-xs text-gray-500 bg-white dark:bg-transparent px-1 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs" htmlFor="floatingInput">Username</label>
               </div>
 
-              <div className="validinput">Enter a display name</div>
-              <div className="form-floating mb-3">
-                <input type="text" name="displayname" className="form-control" id="floatingInput" onChange={handleChange} placeholder="text" required />
-                <label htmlFor="floatingInput">Display name</label>
+              <div className="text-xs text-gray-500 dark:text-gray-100">Enter a display name</div>
+              <div className="relative mb-3">
+                <input type="text" name="displayname" className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600 peer placeholder-transparent" id="floatingDisplayname" onChange={handleChange} placeholder="Display name" required />
+                <label htmlFor="floatingDisplayname" className="absolute left-3 -top-2.5 text-xs text-gray-500 bg-white dark:bg-transparent px-1 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs">Display name</label>
               </div>
 
-              <div className="validinput">The password must be a minimum of 8 characters in length and contain at least one alphabetical character</div>
-              <div className="form-floating mb-3">
-                <input type="password" name="password" className="form-control" id="floatingPassword" onChange={handleChange} placeholder="Password" required />
-                <label htmlFor="floatingPassword">Password</label>
+              <div className="text-xs text-gray-500 dark:text-gray-100">The password must be a minimum of 8 characters in length and contain at least one alphabetical character</div>
+              <div className="relative mb-3">
+                <input type="password" name="password" className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600 peer placeholder-transparent" id="floatingPassword" onChange={handleChange} placeholder="Password" required />
+                <label htmlFor="floatingPassword" className="absolute left-3 -top-2.5 text-xs text-gray-500 bg-white dark:bg-transparent px-1 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs">Password</label>
               </div>
 
-              <div className="validinput">Enter the password again</div>
-              <div className="form-floating mb-3">
-                <input type="password" name="confirmpassword" className="form-control" id="floatingPassword" onChange={handleChange} placeholder="Password" required />
-                <label htmlFor="floatingPassword">Confirm Password</label>
+              <div className="text-xs text-gray-500 dark:text-gray-100">Enter the password again</div>
+              <div className="relative mb-3">
+                <input type="password" name="confirmpassword" className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600 peer placeholder-transparent" id="floatingConfirmPassword" onChange={handleChange} placeholder="Confirm Password" required />
+                <label htmlFor="floatingConfirmPassword" className="absolute left-3 -top-2.5 text-xs text-gray-500 bg-white dark:bg-transparent px-1 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs">Confirm Password</label>
               </div>
 
               <div className="mb-3">
-                <label htmlFor="profile-picture" className="form-label">Profile Picture</label>
-                <input className="form-control" name="img" type="file" id="profile-picture" onChange={handleImageChange} required />
-                {formData.img && <img src={formData.img} alt="Selected" style={{ maxWidth: '60%', maxHeight: '100px' }} />}
+                <label htmlFor="profile-picture" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Profile Picture</label>
+                <input className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600" name="img" type="file" id="profile-picture" onChange={handleImageChange} required />
+                {formData.img && <img src={formData.img} alt="Selected" className="max-w-[60%] max-h-[100px] mt-2" />}
               </div>
 
-              {errorMessage && <div className="alert alert-danger" style={{ color: 'red'}}>{errorMessage}</div>}
-              {signedUp && <div className="alert alert-success m-2" style={{ color: 'Green', textAlign: 'center'}}><strong>You signed up successfully!</strong> to connect, click the Sign In button.</div>}
-              <div className="d-flex justify-content-between">
-                {!signedUp && <button className="btn btn-sign" type="submit" id="register-button">Sign Up</button>}
+              {errorMessage && <div className="p-3 text-red-600 bg-red-100 rounded dark:bg-red-900/30">{errorMessage}</div>}
+              {signedUp && <div className="p-3 m-2 text-green-600 bg-green-100 rounded text-center dark:bg-green-900/30"><strong>You signed up successfully!</strong> to connect, click the Sign In button.</div>}
+              <div className="flex justify-between mt-4">
+                {!signedUp && <button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded" type="submit" id="register-button">Sign Up</button>}
                 <div>
-                  {signedUp && <div><Link to='/signin'><button className="btn btn-sign mt-2" type="button" id="register-button">Sign In</button></Link></div>}
+                  {signedUp && <div><Link to='/signin'><button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded mt-2" type="button" id="register-button">Sign In</button></Link></div>}
                 </div>
-                <Link to='/'><button className="btn btn-sign">Home</button></Link>
+                <Link to='/'><button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded">Home</button></Link>
               </div>
             </form>
           </div>

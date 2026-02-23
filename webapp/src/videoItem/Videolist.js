@@ -1,5 +1,4 @@
 import VideoItem from './VideoItem';
-import './Card.css';
 import React from 'react';
 import { useContext } from 'react';
 import { VideoContext } from '../contexts/VideoContext';

@@ -6,7 +6,6 @@ import SearchBar from '../Topbar/SearchBar';
 import { UserContext } from '../contexts/UserContext';
 import { VideoProvider } from '../contexts/VideoContext';
 import { useDarkMode } from '../DarkModeContext';
-import './myvideos.css'
 
 function Myvideos() {
   const { darkMode } = useDarkMode();
@@ -19,6 +18,7 @@ function Myvideos() {
   const [img, setImg] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
   //sign out
@@ -140,14 +140,14 @@ function Myvideos() {
 
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
-      <div className="row align-items-center mb-3">
-        <div className="col-auto">
+      <div className="flex items-center mb-3">
+        <div className="shrink-0">
           <Menu/>
         </div>
-        <div className="col-auto">
+        <div className="shrink-0">
               <button
                 style={{ marginLeft: '10px' }}
-                className="btn btn-danger"
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors disabled:opacity-50"
                 type="button"
                 onClick={handleDeleteUser}
                 disabled={!userConnect || id !== connectedUser._id}
@@ -156,30 +156,43 @@ function Myvideos() {
               </button>
   
               <button
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                onClick={() => { setShowModal(true); setError(''); setSuccess(''); }}
                 style={{ marginLeft: '10px' }}
-                className="btn btn-warning"
+                className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors font-medium"
                 type="button"
                 disabled={!userConnect || id !== connectedUser._id}
               >
                 <i className="bi bi-pencil"></i> Edit Details
               </button>
+
             {/* Modal for editing user details */}
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog">
-                <div className={`modal-content ${darkMode ? 'dark-mode' : ''}`}>
-                  <div className="modal-header">
-                    <h1 className="modal-title fs-5" id="exampleModalLabel">Edit details</h1>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            {showModal && (
+              <div
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+                onClick={() => setShowModal(false)}
+              >
+                <div
+                  className="bg-white dark:!bg-gray-800 dark:!text-white dark:!border-gray-600 rounded-lg w-full max-w-lg shadow-xl"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between p-4 border-b dark:border-gray-600">
+                    <h1 className="text-lg font-semibold">Edit details</h1>
+                    <button
+                      className="text-xl text-gray-500 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
+                      onClick={() => setShowModal(false)}
+                    >
+                      ✕
+                    </button>
                   </div>
-                  <form id="registration-form" onSubmit={handleEditUserDetails}>
-                    <div className="modal-body">
+
+                  <form onSubmit={(e) => { handleEditUserDetails(e); }}>
+                    {/* Body */}
+                    <div className="p-4">
                       <input
                         type="text"
                         name="displayname"
-                        className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
-                        id="floatingInput"
+                        className="w-full px-3 py-2 border rounded mb-3 dark:!bg-transparent dark:!text-gray-100 dark:!border-gray-600 dark:placeholder:!text-gray-400"
                         placeholder="New display name"
                         value={displayName}
                         onChange={(e) => setDisplayName(e.target.value)}
@@ -187,8 +200,7 @@ function Myvideos() {
                       <input
                         type="text"
                         name="username"
-                        className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
-                        id="floatingInput"
+                        className="w-full px-3 py-2 border rounded mb-3 dark:!bg-transparent dark:!text-gray-100 dark:!border-gray-600 dark:placeholder:!text-gray-400"
                         placeholder="New username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -196,8 +208,7 @@ function Myvideos() {
                       <input
                         type="password"
                         name="password"
-                        className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
-                        id="floatingPassword"
+                        className="w-full px-3 py-2 border rounded mb-3 dark:!bg-transparent dark:!text-gray-100 dark:!border-gray-600 dark:placeholder:!text-gray-400"
                         placeholder="New password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -205,27 +216,38 @@ function Myvideos() {
                       <input
                         type="file"
                         name="profile-picture"
-                        className={`form-control mb-3 ${darkMode ? 'dark-mode-input' : ''}`}
-                        id="floatingInput"
+                        className="w-full px-3 py-2 border rounded mb-3 dark:!bg-transparent dark:!text-gray-100 dark:!border-gray-600"
                         placeholder="New profile picture"
                         onChange={(e) => setImg(e.target.files[0])}
                       />
-                      {error && <div className="alert alert-danger">{error}</div>}
-                      {success && <div className="alert alert-success">{success}</div>}
+                      {error && <div className="p-3 mb-3 text-sm text-red-700 bg-red-100 rounded dark:bg-red-900/30 dark:text-red-400">{error}</div>}
+                      {success && <div className="p-3 mb-3 text-sm text-green-700 bg-green-100 rounded dark:bg-green-900/30 dark:text-green-400">{success}</div>}
                     </div>
-                    <div className="modal-footer">
-                      <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" className="btn btn-primary">Save changes</button>
+
+                    {/* Footer */}
+                    <div className="flex justify-end gap-2 p-4 border-t dark:border-gray-600">
+                      <button
+                        type="button"
+                        onClick={() => setShowModal(false)}
+                        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="submit"
+                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                      >
+                        Save changes
+                      </button>
                     </div>
                   </form>
                 </div>
               </div>
-            </div>
+            )}
   
           {userConnect && (
             <button
-              style={{ marginLeft: "50px" }}
-              className="btn btn-sign"
+              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors ml-12"
               type="button"
               id="register-button"
               onClick={handleSignedout}
@@ -234,35 +256,28 @@ function Myvideos() {
             </button>
           )}
         </div>
-        <div className="col">
+        <div className="grow">
           <SearchBar darkMode={darkMode} setFilter={setFilter} />
         </div>
       </div>
       {user && (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="flex items-center">
           <img
             src={user.img}
             alt="Profile"
-            style={{
-              width: '10rem',
-              height: '10rem',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              marginLeft: '30px',
-              marginRight: '30px'
-            }}
+            className="w-40 h-40 rounded-full object-cover ml-8 mr-8"
           />
           <div>
             <div>
-              <span style={{ fontSize: '2em', fontWeight: 'bold' }}>{user.displayname}</span>
+              <span className="text-3xl font-bold">{user.displayname}</span>
             </div>
             <div>
-              <span style={{ fontSize: '0.9em' }}>{user.username}</span>
+              <span className="text-sm">{user.username}</span>
             </div>
           </div>
         </div>
       )}
-      <div className="row m-4">
+      <div className="flex flex-wrap m-4">
           <VideoProvider userId={id}>  
           <Videolist/>
           </VideoProvider>

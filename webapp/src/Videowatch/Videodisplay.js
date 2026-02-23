@@ -1,5 +1,3 @@
-import './Singlevideo.css';
-import '../videoItem/Card.css'
 import { useState, useEffect, useContext } from 'react';
 import Comments from './Comments';
 import { useNavigate, Link } from 'react-router-dom';
@@ -19,6 +17,7 @@ function Videodisplay({ id, creator, darkMode }) {
   const [uploadTime, setUploadTime] = useState('');
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const checkJWT = async () => {
     let token = localStorage.getItem('jwtToken');
@@ -170,73 +169,98 @@ function Videodisplay({ id, creator, darkMode }) {
 
   return (
   <>
-      <div className="row m-4">
+      <div className="flex flex-wrap m-4">
       
-          <video src={`/videowatch/${video.source}`} className="card-img-top rounded" controls autoPlay />
-          <div className="card-body singlevideo">
+          <video src={`/videowatch/${video.source}`} className="w-full aspect-video object-cover rounded-lg" controls autoPlay />
+          <div className="flex flex-col justify-start px-2.5 py-2 dark:text-gray-100">
               
-                <h6 className="display-video-title">{video.title}</h6> {/* Video Title */} 
+                <h6 className="text-2xl font-bold">{video.title}</h6>
               
                 <div>
-                  <strong> <Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}> <i className="video-uploader">{video.creatorName}</i> </Link> </strong> {/* Uploader Name */}
-                  <p className="video-uploader">{video.views} views - {formatDate(video.uploadtime)}</p> {/* Video views and upload time */} 
+                  <strong> <Link to={`/Myvideos/${encodeURIComponent(video.creator)}`}> <i className="text-sm text-gray-500 dark:text-gray-400">{video.creatorName}</i> </Link> </strong>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{video.views} views - {formatDate(video.uploadtime)}</p>
                 </div>
             {/* edit video details */}
             {connectedUser && connectedUser._id === video.creator && (
               <>
                 <button
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  className="btn btn-sm btn-outline-primary edit-button mt-3"
+                  onClick={() => setShowModal(true)}
+                  className="mt-3 px-3 py-1.5 text-sm border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition-colors dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-400 dark:hover:text-white"
                 >
                   <i className="bi bi-pencil"></i> Edit video details
                 </button>
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div className="modal-dialog">
-                    <div className={`modal-content ${darkMode ? 'dark-mode-input' : ''}`}>
-                      <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      
-                      <div className="modal-body">
 
+                {/* Edit Modal */}
+                {showModal && (
+                  <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <div
+                      className="bg-white dark:!bg-gray-800 dark:!text-white dark:!border-gray-600 rounded-lg w-full max-w-lg shadow-xl"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {/* Header */}
+                      <div className="flex items-center justify-between p-4 border-b dark:border-gray-600">
+                        <h1 className="text-lg font-semibold">Edit video details</h1>
+                        <button
+                          className="text-xl text-gray-500 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
+                          onClick={() => setShowModal(false)}
+                        >
+                          ✕
+                        </button>
+                      </div>
+
+                      {/* Body */}
+                      <div className="p-4">
                         {/* title change */}
                         <input type="text"
                           value={title}
                           onChange={handleTitleChange}
                           placeholder="New title"
-                          className="form-control d-inline w-auto"
+                          className="w-full px-3 py-2 border rounded mb-3 dark:!bg-transparent dark:!text-gray-100 dark:!border-gray-600 dark:placeholder:!text-gray-400"
                         />
 
-                        {/* discription change */}
-                        <p className="mt-3">
-                          <input
-                            type="text"
-                            value={description}
-                            onChange={handleDescriptionChange}
-                            placeholder="New description"
-                            className="form-control d-inline w-auto"
-                          />
-                        </p>
-      
+                        {/* description change */}
+                        <input
+                          type="text"
+                          value={description}
+                          onChange={handleDescriptionChange}
+                          placeholder="New description"
+                          className="w-full px-3 py-2 border rounded mb-3 dark:!bg-transparent dark:!text-gray-100 dark:!border-gray-600 dark:placeholder:!text-gray-400"
+                        />
+
                         {/* delete Video */}
                         {connectedUser && connectedUser._id === video.creator && (
-                          <p className="mt-3">
-                            <button onClick={handleDelete} className="btn btn-sm btn-outline-danger ms-2" data-bs-dismiss="modal">
+                          <div className="mt-3">
+                            <button
+                              onClick={() => { handleDelete(); setShowModal(false); }}
+                              className="px-3 py-1.5 text-sm border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors"
+                            >
                               <i className="bi bi-trash"></i> Delete video
                             </button>
-                          </p>
+                          </div>
                         )}
-
                       </div>
-                      <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleSaveDescription}>Save changes</button>
+
+                      {/* Footer */}
+                      <div className="flex justify-end gap-2 p-4 border-t dark:border-gray-600">
+                        <button
+                          onClick={() => setShowModal(false)}
+                          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+                        >
+                          Close
+                        </button>
+                        <button
+                          onClick={() => { handleSaveDescription(); setShowModal(false); }}
+                          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                        >
+                          Save changes
+                        </button>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </>
             )}
           

@@ -1,4 +1,3 @@
-import './Addingvideo.css';
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { VideoContext } from '../contexts/VideoContext';
@@ -99,41 +98,41 @@ function Addingvideo() {
     };
 
     return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-7 p-0 bg-body-tertiary rounded">
-                    <form id="upload-video" className="cardreg p-4 shadow-lg" onSubmit={handleUpload}>
-                        <div className="d-flex justify-content-end">
-                            <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>
+        <div className="max-w-3xl mx-auto mt-[5%] mb-[5%] px-4">
+            <div className="flex justify-center">
+                <div className="w-full md:w-7/12 p-0 rounded">
+                    <form id="upload-video" className="bg-gray-500/20 dark:bg-black/80 rounded p-4 shadow-lg" onSubmit={handleUpload}>
+                        <div className="flex justify-end">
+                            <button className="px-3 py-1.5 bg-gray-900 text-gray-100 dark:bg-gray-100 dark:text-gray-900 rounded whitespace-nowrap" type="button" onClick={handleDarkModeToggle}>
                                 <i className={darkMode ? 'bi bi-sun' : 'bi bi-moon-stars-fill'}></i>
                                 {darkMode ? ' Light Mode' : ' Dark Mode'}
                             </button>
                         </div>
-                        <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
+                        <div className="flex justify-center items-center flex-col mb-3 text-center">
                             <h2 className="mb-3">Upload New Video</h2>
                         </div>
 
                         {/* Video Title */}
-                        <div className="validinput">Enter video title</div>
-                        <div className="form-floating mb-3">
+                        <div className="text-xs text-gray-500 dark:text-gray-100 font-medium mb-1">Enter video title</div>
+                        <div className="relative mb-3">
                             <input
                                 type="text"
                                 value={formData.title}
                                 name="title"
                                 onChange={handleChange}
-                                className="form-control"
+                                className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600 peer placeholder-transparent"
                                 id="videoTitle"
-                                placeholder="Enter video title"
+                                placeholder="Video Title"
                                 required
                             />
-                            <label htmlFor="videoTitle">Video Title</label>
+                            <label htmlFor="videoTitle" className="absolute left-3 -top-2.5 text-xs text-gray-500 bg-white dark:bg-transparent px-1 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs">Video Title</label>
                         </div>
 
                         {/* Video Description */}
                         <div className="mb-3">
-                            <label htmlFor="videoDescription" className="form-label validinput">Enter video description</label>
+                            <label htmlFor="videoDescription" className="block text-xs text-gray-500 dark:text-gray-100 font-medium mb-1">Enter video description</label>
                             <textarea
-                                className="form-control"
+                                className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600"
                                 name="description"
                                 value={formData.description}
                                 onChange={handleChange}
@@ -145,38 +144,38 @@ function Addingvideo() {
                         </div>
 
                         {/* Upload Video */}
-                        <div className="validinput mb-2">Upload your video</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-100 font-medium mb-2">Upload your video</div>
                         <input
                             type="file"
                             name="videoFile"
                             onChange={handleFileChange}
-                            className="form-control mb-2"
+                            className="w-full px-3 py-2 border rounded mb-2 dark:bg-transparent dark:text-gray-100 dark:border-gray-600"
                             id="videoFile"
                             required
                         />
-                        {error && <p style={{ color: 'red' }}>{error}</p>}
+                        {error && <p className="!text-red-600">{error}</p>}
 
                         {/* Video Category */}
-                        <div className="validinput">Select category</div>
-                        <div className="form-floating mb-4">
+                        <div className="text-xs text-gray-500 dark:text-gray-100 font-medium">Select category</div>
+                        <div className="relative mb-4">
                             <select
-                                className="form-select p-2"
+                                className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600"
                                 name="videoCategory"
                                 id="videoCategory"
                                 required
                             >
-                                <option className="options" value="" disabled>Select category</option>
-                                <option className="options" value="Education">Education</option>
-                                <option className="options" value="Entertainment">Entertainment</option>
-                                <option className="options" value="Sports">Sports</option>
-                                <option className="options" value="News">News</option>
-                                <option className="options" value="Music">Music</option>
-                                <option className="options" value="Other">Other</option>
+                                <option className="dark:bg-gray-900" value="" disabled>Select category</option>
+                                <option className="dark:bg-gray-900" value="Education">Education</option>
+                                <option className="dark:bg-gray-900" value="Entertainment">Entertainment</option>
+                                <option className="dark:bg-gray-900" value="Sports">Sports</option>
+                                <option className="dark:bg-gray-900" value="News">News</option>
+                                <option className="dark:bg-gray-900" value="Music">Music</option>
+                                <option className="dark:bg-gray-900" value="Other">Other</option>
                             </select>
                         </div>
-                        <div className="d-flex justify-content-between">
-                            <button className="btn btn-primary" type="submit">Upload Video</button>
-                            <Link to='/'><button className="btn btn-sign">Home</button></Link>
+                        <div className="flex justify-between">
+                            <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded" type="submit">Upload Video</button>
+                            <Link to='/'><button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded">Home</button></Link>
                         </div>
                     </form>
                 </div>

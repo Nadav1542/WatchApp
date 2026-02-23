@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Singlevideo from './Singlevideo';
-import './videostyle.css';
 import { useContext } from 'react';
 import { VideoContext } from '../contexts/VideoContext';
 function LeftVideos({ videoId, userId }) {

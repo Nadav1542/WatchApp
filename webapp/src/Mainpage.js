@@ -64,14 +64,14 @@ console.log(filter)
 
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
-      <div className="row align-items-center mb-3">
-        <div className="col-auto">
+      <div className="flex items-center mb-3">
+        <div className="shrink-0">
           <Menu/>
         </div>
-        <div className="col-auto">
+        <div className="shrink-0">
           <Usericon/>
         </div>
-        <div className="col">
+        <div className="grow">
           <SearchBar darkMode={darkMode} setFilter={setFilter} />
         </div>
       </div>
@@ -79,7 +79,7 @@ console.log(filter)
       <div className="flex justify-center">
         <Quicksearch darkMode={darkMode} />
       </div>
-    <div className="row m-4">
+    <div className="flex flex-wrap m-4">
       <VideoProvider filter={filter}>
         <Videolist />
         </VideoProvider>

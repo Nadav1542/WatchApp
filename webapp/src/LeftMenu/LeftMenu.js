@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import Menubutton from "./Menubutton"; 
 import buttons from '../data/buttons.json'; 
 import userbuttons from '../data/userbuttons.json'; 
-import './Itemslist.css'; 
 import { UserContext } from '../contexts/UserContext';
 
 function LeftMenu() {
@@ -11,7 +10,7 @@ function LeftMenu() {
     const {  userConnect } = useContext(UserContext);
     return (
         <>
-            <div className="bg-light transparent-bg"> {/* Container div with background styling */}
+            <div className="!bg-transparent"> {/* Container div with background styling */}
                 
                 {/* Conditionally render buttons based on user connection status */}
                 {!userConnect && (

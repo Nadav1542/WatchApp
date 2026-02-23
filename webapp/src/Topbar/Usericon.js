@@ -51,42 +51,34 @@ function Usericon() {
 
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="flex items-center">
             {userConnect && connectedUser ? (
                 <>
                     {/* Link to user's videos page */}
-                    <Link to={`/Myvideos/${encodeURIComponent(connectedUser._id)}`} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+                    <Link to={`/Myvideos/${encodeURIComponent(connectedUser._id)}`} className="!no-underline flex items-center !text-inherit">
                         {/* Display user's profile picture */}
                         <img
-                            data-bs-toggle="popover"
-                            data-bs-title="Popover title"
                             src={connectedUser.img}
                             alt="Profile"
-                            style={{
-                                width: '3.5rem',
-                                height: '3.5rem',
-                                borderRadius: '50%'
-                            }}
+                            className="w-14 h-14 rounded-full"
                         />
                         {/* Display greeting with user's display name */}
-                        <i style={{ marginLeft: '1rem' }}>Hello {connectedUser.displayname}!</i>
+                        <i className="ml-4">Hello {connectedUser.displayname}!</i>
                     </Link>
                     {/* Logout button */}
                     <button
-                        style={{ marginLeft: '2rem' }}
-                        className="btn btn-sign"
+                        className="!bg-red-600 hover:!bg-red-700 !text-white px-4 py-2 rounded ml-8 font-medium"
                         onClick={handleSignedout}
                         type="button"
-                        id="register-button"
                     >
                         <i className="bi bi-box-arrow-left"></i> Log out
                     </button>
                 </>
             ) : (
-                <Link to="/signin" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+                <Link to="/signin" className="!no-underline flex items-center !text-inherit">
                     {/* Display default user icon and welcome message */}
-                    <i className="bi bi-person-circle" style={{ fontSize: '1.5rem' }}></i>
-                    <i style={{ marginLeft: '1rem' }}>Welcome!</i>
+                    <i className="bi bi-person-circle text-2xl"></i>
+                    <i className="ml-4">Welcome!</i>
                 </Link>
             )}
         </div>

@@ -90,21 +90,21 @@ function Videowatch() {
 
   return (
     <div className={darkMode ? 'dark-mode' : ''}>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-3">
+      <div className="w-full px-4">
+        <div className="flex">
+          <div className="w-1/4">
          
           <LeftVideos videoId={id} userId={connectedUser ? connectedUser._id : null} /> {/* Only render LeftVideos after update */}
           </div>
-          <div className="col-9">
-            <div className="row align-items-center mb-3">
-              <div className="col-auto">
+          <div className="w-3/4">
+            <div className="flex items-center mb-3">
+              <div className="shrink-0">
                 <Menu/>
               </div>
-              <div className="col-auto">
+              <div className="shrink-0">
                 <Usericon/>
               </div>
-              <div className="col">
+              <div className="grow">
                 <SearchBar darkMode={darkMode} setFilter={setFilter} />
               </div>
             </div>

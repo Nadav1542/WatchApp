@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import './Comments.css';
 import { UserContext } from '../contexts/UserContext';
 
 
@@ -177,16 +176,16 @@ function Comments({ id, video, setVideo }) {
   };
 
   return (
-    <div className="comments-section">
-      <div className="row">
-        <nav className="nav">
-          <button className="nav-link btn" onClick={handleLikeVideo} disabled={!userConnect}>
+    <div className="mt-4">
+      <div className="flex">
+        <nav className="flex gap-1">
+          <button className="px-3 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 disabled:text-gray-400 disabled:hover:bg-transparent" onClick={handleLikeVideo} disabled={!userConnect}>
             <i className="bi bi-hand-thumbs-up"></i> {video.likes}
           </button>
-          <button className="nav-link btn" onClick={handleDislikeVideo} disabled={!userConnect}>
+          <button className="px-3 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 disabled:text-gray-400 disabled:hover:bg-transparent" onClick={handleDislikeVideo} disabled={!userConnect}>
             <i className="bi bi-hand-thumbs-down"></i> {video.dislikes}
           </button>
-          <button className="nav-link btn" onClick={handleShareVideo}>
+          <button className="px-3 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800" onClick={handleShareVideo}>
             <i className="bi bi-share"></i>
           </button>
         </nav>
@@ -194,44 +193,44 @@ function Comments({ id, video, setVideo }) {
       
       {userConnect && (
         <form onSubmit={handleCommentSubmit} className="mt-3">
-          <div className="form-group">
+          <div>
             <label htmlFor="newComment">Add a Comment:</label>
             <textarea
               id="newComment"
-              className="form-control"
+              className="w-full px-3 py-2 border rounded mt-1 dark:bg-transparent dark:text-gray-100 dark:border-gray-600 dark:placeholder:text-gray-300"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Write your comment here..."
               required
             ></textarea>
           </div>
-          <button type="submit" className="btn btn-primary mt-2">
+          <button type="submit" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded mt-2">
             Submit
           </button>
         </form>
       )}
 
-      <ul className="list-group mt-3">
+      <ul className="mt-3 space-y-2">
         {video.comments.map((comment, index) => (
-          <div key={index} className="list-group-items">
+          <div key={index}>
             {editIndex === index ? (
               userConnect && (
                 <form onSubmit={(e) => handleEditCommentSubmit(e, index)}>
-                  <div className="form-group">
+                  <div>
                     <textarea
-                      className="form-control"
+                      className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600"
                       value={editedComment}
                       onChange={(e) => setEditedComment(e.target.value)}
                       placeholder="Edit your comment..."
                       required
                     ></textarea>
                   </div>
-                  <button type="submit" className="btn btn-primary m-2">
+                  <button type="submit" className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded m-2">
                     Save
                   </button>
                   <button
                     type="button"
-                    className="btn btn-secondary m-2"
+                    className="px-3 py-1.5 bg-gray-500 hover:bg-gray-600 text-white rounded m-2"
                     onClick={() => setEditIndex(null)}
                   >
                     Cancel
@@ -240,31 +239,25 @@ function Comments({ id, video, setVideo }) {
               )
             ) : (
               <>
-                <div className = "comment-container" style={{ display: 'flex', alignItems: 'center' }}>
+                <div className="group relative p-1 flex items-center">
   <Link 
     to={`/Myvideos/${encodeURIComponent(comment.userId)}`} 
-    style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}
+    className="flex items-center !no-underline"
   >
     <img
       src={comment.img}
       alt=""
-      style={{
-        width: '1.5rem',
-        height: '1.5rem',
-        borderRadius: '50%',
-        marginRight: '0.5rem',
-      }}
+      className="w-6 h-6 rounded-full mr-2"
     />
-    <strong style={{ marginRight: '0.3rem'}}>{comment.user}:</strong>
+    <strong className="mr-1">{comment.user}:</strong>
   </Link>
   <i>{comment.text}</i>
 
 
                 {userConnect && connectedUser._id === comment.userId && (
-                  <div className="comment-actions"> 
+                  <div className="hidden group-hover:inline-flex gap-2"> 
                     <button
-                      className="alert alert-info p-1 m-2"
-                      style={{ color: 'blue' }}
+                      className="px-2 py-1 text-sm text-blue-600 bg-blue-100 rounded hover:bg-blue-200 m-2 dark:bg-blue-900/30 dark:text-blue-400"
                       onClick={() => {
                         setEditIndex(index);
                         setEditedComment(comment.text);
@@ -274,8 +267,7 @@ function Comments({ id, video, setVideo }) {
                       Edit
                     </button>
                     <button
-                      className="alert alert-danger p-1 m-2"
-                      style={{ color: 'red' }}
+                      className="px-2 py-1 text-sm text-red-600 bg-red-100 rounded hover:bg-red-200 m-2 dark:bg-red-900/30 dark:text-red-400"
                       onClick={() => handleDeleteComment(index)}
                     >
                       <i className="bi bi-trash m-1"></i>

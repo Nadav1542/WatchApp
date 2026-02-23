@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import './Searchbar.css';
 
 // SearchBar component for displaying a search input and dark mode toggle button
 function SearchBar({ darkMode, setFilter = null }) { // Fix props destructuring here
@@ -18,16 +17,16 @@ function SearchBar({ darkMode, setFilter = null }) { // Fix props destructuring 
   return (
     <>
       {/* SearchBar */}
-      <form className="d-flex p-4">
+      <form className="flex p-4">
         {/* Search input field */}
         <input
-         ref={searchBox} onKeyUp={search} className="form-control me-2" type="search" placeholder="Search" />
+         ref={searchBox} onKeyUp={search} className="w-full px-3 py-2 border rounded mr-2 dark:bg-transparent dark:text-gray-100 dark:border-gray-600 focus:bg-transparent dark:focus:text-gray-100" type="search" placeholder="Search" />
         {/* Search button */}
-        <button className="btn btn-outline-red" type="button" style={{ whiteSpace: 'nowrap' }} onClick={search}>
+        <button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded whitespace-nowrap" type="button" onClick={search}>
           <i className="bi bi-search"></i> Search
         </button>
         {/* Dark mode toggle button */}
-        <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>
+        <button className="px-3 py-2 ml-2 bg-gray-900 text-gray-100 dark:bg-gray-100 dark:text-gray-900 rounded whitespace-nowrap" type="button" onClick={handleDarkModeToggle}>
           <i className={darkMode ? 'bi bi-sun' : 'bi bi-moon-stars-fill'}></i>
           {darkMode ? '   Light Mode' : '   Dark Mode'}
         </button>

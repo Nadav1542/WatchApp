@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import './Sign.css';
 import React, { useState, useEffect,useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { useDarkMode } from '../DarkModeContext';
@@ -58,61 +57,61 @@ function Signin() {
 
   return (
     <>
-      <div className="container mt-5">
-        <div className="row justify-content-center">
-          <div className="col-md-7 p-0 bg-body-tertiary rounded mt-5">
+      <div className="max-w-3xl mx-auto mt-5 px-4">
+        <div className="flex justify-center">
+          <div className="w-full md:w-7/12 p-0 rounded mt-5">
             <form
               id="registration-form"
-              className="cardreg p-4 shadow-lg"
+              className="bg-gray-500/20 dark:bg-black/80 rounded p-4 shadow-lg"
               onSubmit={handleSubmit}
               noValidate
             >
-              <div className="d-flex justify-content-end">
-                <button className="btn btn-dark ms-2" type="button" style={{ whiteSpace: 'nowrap' }} onClick={handleDarkModeToggle}>
+              <div className="flex justify-end">
+                <button className="px-3 py-1.5 bg-gray-900 text-gray-100 dark:bg-gray-100 dark:text-gray-900 rounded whitespace-nowrap" type="button" onClick={handleDarkModeToggle}>
                   <i className={darkMode ? 'bi bi-sun' : 'bi bi-moon-stars-fill'}></i>
                   {darkMode ? ' Light Mode' : ' Dark Mode'}
                 </button>
               </div>
 
-              <div className="d-flex justify-content-center align-items-center flex-column mb-3 text-center">
+              <div className="flex justify-center items-center flex-col mb-3 text-center">
                 <h2 className="mb-3">Sign In</h2>
-                <div className="sign-in-message">Sign in to like videos, comment, and subscribe.</div>
+                <div className="text-sm text-gray-500 dark:text-gray-300">Sign in to like videos, comment, and subscribe.</div>
               </div>
 
-              <div className="validinput">{error === "Username not found" ? <p style={{ color: 'red' }}>{error}</p> : "Enter your name"}</div>
-              <div className="form-floating mb-3">
+              <div className="text-xs text-gray-500 dark:text-gray-100">{error === "Username not found" ? <p className="!text-red-600">{error}</p> : "Enter your name"}</div>
+              <div className="relative mb-3">
                 <input
                   type="text"
                   name="username"
-                  className="form-control"
+                  className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600 peer placeholder-transparent"
                   id="floatingInput"
                   onChange={(e) => { setUsername(e.target.value) }}
-                  placeholder="text"
+                  placeholder="Username"
                   required
                 />
-                <label htmlFor="floatingInput">Username</label>
+                <label htmlFor="floatingInput" className="absolute left-3 -top-2.5 text-xs text-gray-500 bg-white dark:bg-transparent px-1 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs">Username</label>
               </div>
 
-              <div className="validinput">{error === "Incorrect password" ? <p style={{ color: 'red' }}>{error}</p> : "Enter your password"}</div>
-              <div className="form-floating mb-3">
+              <div className="text-xs text-gray-500 dark:text-gray-100">{error === "Incorrect password" ? <p className="!text-red-600">{error}</p> : "Enter your password"}</div>
+              <div className="relative mb-3">
                 <input
                   type="password"
                   name="password"
-                  className="form-control"
+                  className="w-full px-3 py-2 border rounded dark:bg-transparent dark:text-gray-100 dark:border-gray-600 peer placeholder-transparent"
                   id="floatingPassword"
                   onChange={(e) => { setPassword(e.target.value) }}
                   placeholder="Password"
                   required
                 />
-                <label htmlFor="floatingPassword">Password</label>
+                <label htmlFor="floatingPassword" className="absolute left-3 -top-2.5 text-xs text-gray-500 bg-white dark:bg-transparent px-1 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs">Password</label>
               </div>
 
-              {error && <div className="alert alert-danger" style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>{error}</div>}
-              {userConnect && <div className="alert alert-success" style={{ color: 'green', textAlign: 'center', marginTop: '1rem' }}><strong>You signed in successfully.</strong> Click the Home button</div>}
-              <div className="d-flex justify-content-between">
-                {!userConnect && <button className="btn btn-sign" type="submit" id="sign-in-button">Sign In</button>}
-                <Link to='/'><button className="btn btn-sign">Home</button></Link>
-                {!userConnect && <Link to='/signup'><button className="btn btn-sign" type="button" id="register-button">Sign Up</button></Link>}
+              {error && <div className="p-3 text-red-600 bg-red-100 rounded text-center mt-4 dark:bg-red-900/30">{error}</div>}
+              {userConnect && <div className="p-3 text-green-600 bg-green-100 rounded text-center mt-4 dark:bg-green-900/30"><strong>You signed in successfully.</strong> Click the Home button</div>}
+              <div className="flex justify-between mt-4">
+                {!userConnect && <button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded" type="submit" id="sign-in-button">Sign In</button>}
+                <Link to='/'><button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded">Home</button></Link>
+                {!userConnect && <Link to='/signup'><button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded" type="button" id="register-button">Sign Up</button></Link>}
               </div>
             </form>
           </div>

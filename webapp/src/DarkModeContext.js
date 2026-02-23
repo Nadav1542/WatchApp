@@ -23,9 +23,11 @@ export const DarkModeProvider = ({ children }) => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
     // Update body class based on darkMode state
     if (darkMode) {
-      document.body.classList.add('dark-mode'); // Apply dark mode styles
+      document.body.classList.add('dark-mode'); // Apply dark mode styles (existing CSS)
+      document.body.classList.add('dark'); // Apply dark mode styles (Tailwind)
     } else {
-      document.body.classList.remove('dark-mode'); // Remove dark mode styles
+      document.body.classList.remove('dark-mode'); // Remove dark mode styles (existing CSS)
+      document.body.classList.remove('dark'); // Remove dark mode styles (Tailwind)
     }
   }, [darkMode]);
 
